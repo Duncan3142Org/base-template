@@ -1,0 +1,52 @@
+# ------------------
+# Allowed <type> values:
+# ------------------
+#   feat:     A new feature (triggers a MINOR version bump)
+#   fix:      A bug fix (triggers a PATCH version bump)
+#   perf:     A code change that improves performance
+#   docs:     Documentation only changes
+#   style:    Changes that do not affect the meaning of the code
+#             (white-space, formatting, missing semi-colons, etc)
+#   refactor: A code change that neither fixes a bug nor adds a feature
+#   test:     Adding missing tests or correcting existing tests
+#   build:    Changes that affect the build system or external dependencies
+#             (e.g., npm, webpack, vite)
+#   ci:       Changes to CI configuration files and scripts
+#             (e.g., GitHub Actions, GitLab CI)
+#   chore:    Other changes that don't modify src or test files
+#             (e.g., updating .gitignore, release tooling)
+#   revert:   Reverts a previous commit
+#
+# -> A "!" after the type/scope (e.g., feat(api)!:) OR a
+#    "BREAKING CHANGE:" footer triggers a MAJOR version bump.
+# ------------------
+# Header: <type>(<scope>): <subject>
+# ------------------
+# -> Must be a single line.
+# -> Subject should be 50 chars or less, and written in the imperative.
+#    This is col 50 ----------------------------->
+# -> <scope> is optional and indicates the part of the codebase.
+#
+<type>:
+
+# ------------------
+# Body (Optional)
+# ------------------
+# -> Explain *what* was changed and *why*.
+# -> Not *how* (the code shows how).
+# -> Use full sentences and wrap lines at 72 characters.
+#    This is col 72 --------------------------------------------------->
+# -> Motivation for the change, and contrast with previous behavior.
+#
+
+# ------------------
+# Footer (Optional)
+# ------------------
+# -> Use for BREAKING CHANGES or referencing issues.
+#
+# For breaking changes:
+# BREAKING CHANGE: <description of the breaking change and migration steps>
+#
+# To reference issues (e.g., closing a ticket):
+# Closes: #123
+# Refs: #456

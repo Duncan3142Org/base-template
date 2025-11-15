@@ -1,0 +1,32 @@
+name: Mirror Repo
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: "Mirror Repo"
+  cancel-in-progress: false
+
+jobs:
+  repo-mirror:
+    environment: GitLab
+    runs-on: ubuntu-22.04
+    # Prevent triggering on branch creation
+    if: github.event.before != '0000000000000000000000000000000000000000'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push to GitLab
+        env:
+          GITLAB_ACCESS_TOKEN: ${{ secrets.GITLAB_MIRROR_PAT }}
+          GITLAB_PROJECT_PATH: ${{ vars.GITLAB_MIRROR_GROUP }}/${{ github.event.repository.name }}
+        run: |
+          echo "Pushing to GitLab..."
+          git remote add gitlab "https://oauth2:${GITLAB_ACCESS_TOKEN}@gitlab.com/${GITLAB_PROJECT_PATH}.git"
+          git push gitlab main
+          echo "Sync complete."

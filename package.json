@@ -1,0 +1,27 @@
+{
+	"name": "@duncan3142/base-template",
+	"description": "Base GitHub repo template",
+	"author": "Duncan3142",
+	"version": "0.0.0",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Duncan3142/base-template.git"
+	},
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com"
+	},
+	"type": "module",
+	"license": "AGPL-3.0-only",
+	"engines": {
+		"node": ">=24",
+		"npm": ">=11"
+	},
+	"files": [],
+	"devDependencies": {
+		"@commitlint/cli": "^20.3.1",
+		"@commitlint/config-conventional": "^20.3.1",
+		"@duncan3142/prettier-config": "^0.1.10",
+		"husky": "^9.1.7",
+		"prettier": "^3.8.1"
+	}
+}
