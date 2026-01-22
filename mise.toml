@@ -7,12 +7,16 @@ usage = "2"
 run = "mise run ./tasks/init-repo.sh"
 
 [tasks.ci]
-depends = ["check-format"]
+depends = ["check-format", "danger"]
 run = "mise run ./tasks/ci.sh"
 
 [tasks.check-format]
 depends = "install"
 run = "mise run ./tasks/format.sh --check"
+
+[tasks.danger]
+depends = "install"
+run = "mise run ./tasks/danger.sh"
 
 [tasks.install]
 run = "mise run ./tasks/install.sh"
