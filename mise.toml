@@ -1,3 +1,38 @@
 [tools]
 node = "24"
 npm = "11"
+usage = "2"
+
+[tasks.init-repo]
+run = "mise run ./tasks/init-repo.sh"
+
+[tasks.cd]
+depends = ["release"]
+run = "mise run ./tasks/cd.sh"
+
+[tasks.release]
+depends = ["build"]
+run = "mise run ./tasks/release.sh"
+
+[tasks.ci]
+depends = ["check-format", "danger", "test", "build"]
+run = "mise run ./tasks/ci.sh"
+
+[tasks.test]
+depends = ["install"]
+run = "mise run ./tasks/test.sh"
+
+[tasks.build]
+depends = ["install"]
+run = "mise run ./tasks/build.sh"
+
+[tasks.check-format]
+depends = "install"
+run = "mise run ./tasks/format.sh --check"
+
+[tasks.danger]
+depends = "install"
+run = "mise run ./tasks/danger.sh"
+
+[tasks.install]
+run = "mise run ./tasks/install.sh"

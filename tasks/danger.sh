@@ -3,4 +3,4 @@
 set -ueC
 set -o pipefail
 
-exit 0
+npm exec -- danger ci --fail-on-warnings=true

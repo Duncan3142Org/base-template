@@ -1,4 +1,4 @@
-[license-shield]: https://img.shields.io/github/license/Duncan3142/base-template.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/github/license/Duncan3142Org/base-template.svg?style=for-the-badge
 [license-url]: ./LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/duncan3142
@@ -12,7 +12,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-	<a href="https://github.com/Duncan3142/base-template">
+	<a href="https://github.com/Duncan3142Org/base-template">
 		<svg viewBox="0 0 512 512" height="128">
 			<path style="fill:#167EE6;" d="M439.652,512H72.348c-9.217,0-16.696-7.479-16.696-16.696V16.696C55.652,7.479,63.131,0,72.348,0
 				h233.739c4.424,0,8.674,1.761,11.804,4.892l133.565,133.565c3.131,3.13,4.892,7.379,4.892,11.804v345.043
@@ -41,7 +41,7 @@
 <p align="center">
 	Github base repository template
 	<br />
-	<a href="https://github.com/Duncan3142/base-template"><strong>Explore the docs</strong></a>
+	<a href="https://github.com/Duncan3142Org/base-template"><strong>Explore the docs</strong></a>
 </p>
 
 </div>
@@ -110,6 +110,6 @@ Distributed under the AGPL License. See [LICENSE.txt](./LICENSE.txt) for more in
 
 Duncan Giles - duncan3142@gmail.com
 
-Project Link: [https://github.com/Duncan3142/base-template](https://github.com/Duncan3142/base-template)
+Project Link: [https://github.com/Duncan3142Org/base-template](https://github.com/Duncan3142Org/base-template)
 
 <p align="right">(<a href="#top">back to top</a>)</p>

@@ -23,8 +23,8 @@ echo "🎯 Target Repository: $REPO"
 
 echo "⚙️  Enforcing repository standards..."
 gh repo edit "$REPO" \
-    --enable-rebase-merge=true \
-    --enable-squash-merge=false \
+    --enable-rebase-merge=false \
+    --enable-squash-merge=true \
     --enable-merge-commit=false \
     --enable-auto-merge=true \
     --delete-branch-on-merge=true \

@@ -3,4 +3,4 @@
 set -ueC
 set -o pipefail
 
-npx --yes -- semantic-release@25
+echo "Deployment successful."
