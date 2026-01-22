@@ -1,3 +1,10 @@
 [tools]
 node = "24"
 npm = "11"
+
+[tasks.ci]
+depends = ["check-format"]
+run = "mise run ./tasks/ci.sh"
+
+[tasks.check-format]
+run = "mise run ./tasks/format.sh --check"

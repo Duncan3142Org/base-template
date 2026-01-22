@@ -3,4 +3,6 @@
 set -ueC
 set -o pipefail
 
-exit 0
+echo "Running CI pipeline..."
+
+# exit 0
