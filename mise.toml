@@ -7,4 +7,8 @@ depends = ["check-format"]
 run = "mise run ./tasks/ci.sh"
 
 [tasks.check-format]
+depends = "install"
 run = "mise run ./tasks/format.sh --check"
+
+[tasks.install]
+run = "mise run ./tasks/install.sh"
