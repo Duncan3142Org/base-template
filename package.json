@@ -1,11 +1,11 @@
 {
-	"name": "@duncan3142/base-template",
+	"name": "@duncan3142org/base-template",
 	"description": "Base GitHub repo template",
-	"author": "Duncan3142",
+	"author": "Duncan3142Org",
 	"version": "0.0.0",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/Duncan3142/base-template.git"
+		"url": "git+https://github.com/Duncan3142Org/base-template.git"
 	},
 	"publishConfig": {
 		"registry": "https://npm.pkg.github.com"

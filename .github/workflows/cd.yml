@@ -11,37 +11,39 @@ concurrency:
   group: "CD"
   cancel-in-progress: false
 
+env:
+  BOT_NAME: "${{ vars.DEPLOYMENT_APP_NAME }}[bot]"
+  BOT_EMAIL: "${{vars.DEPLOYMENT_APP_ID}}+${{vars.DEPLOYMENT_APP_SLUG}}[bot]@users.noreply.github.com"
+
 jobs:
-  auth:
-    name: Auth
+  cd:
+    name: CD
     if: (github.actor_id != vars.DEPLOYMENT_ACTOR_ID) && (github.event.before != '0000000000000000000000000000000000000000')
+    environment: GitHub
     runs-on: ubuntu-22.04
-    outputs:
-      token: ${{ steps.token.outputs.token }}
     steps:
       - uses: actions/create-github-app-token@v2
         id: token
         with:
           app-id: ${{ vars.DEPLOYMENT_APP_ID }}
           private-key: ${{ secrets.DEPLOYMENT_APP_SECRET }}
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ github.event.repository.name }}
           permission-contents: write
           permission-packages: write
           permission-issues: write
           permission-pull-requests: write
-
-  cd:
-    name: CD
-    needs: auth
-    environment: GitHub
-    env:
-      GITHUB_PKG_TOKEN: ${{ needs.auth.outputs.token }}
-      GITHUB_TOKEN: ${{ needs.auth.outputs.token }}
-    runs-on: ubuntu-22.04
-    steps:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-          token: ${{ env.GITHUB_TOKEN }}
+          token: ${{ steps.token.outputs.token }}
       - uses: jdx/mise-action@v3
       - name: CD
         run: mise run cd
+        env:
+          GITHUB_PKG_TOKEN: ${{ steps.token.outputs.token }}
+          GITHUB_TOKEN: ${{ steps.token.outputs.token }}
+          GIT_AUTHOR_NAME: ${{ env.BOT_NAME }}
+          GIT_AUTHOR_EMAIL: ${{ env.BOT_EMAIL }}
+          GIT_COMMITTER_NAME: ${{ env.BOT_NAME }}
+          GIT_COMMITTER_EMAIL: ${{ env.BOT_EMAIL }}
