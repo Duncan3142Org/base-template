@@ -3,6 +3,4 @@
 set -ueC
 set -o pipefail
 
-echo "Running CI pipeline..."
-
-# exit 0
+echo "CI checks passed."

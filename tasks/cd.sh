@@ -3,4 +3,4 @@
 set -ueC
 set -o pipefail
 
-exit 0
+echo "Deployment successful."

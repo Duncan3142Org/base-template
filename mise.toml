@@ -6,6 +6,14 @@ usage = "2"
 [tasks.init-repo]
 run = "mise run ./tasks/init-repo.sh"
 
+[tasks.cd]
+depends = ["release"]
+run = "mise run ./tasks/cd.sh"
+
+[tasks.release]
+depends = ["install"]
+run = "mise run ./tasks/release.sh"
+
 [tasks.ci]
 depends = ["check-format", "danger"]
 run = "mise run ./tasks/ci.sh"
