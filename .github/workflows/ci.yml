@@ -12,6 +12,11 @@ concurrency:
   group: "CI"
   cancel-in-progress: true
 
+permissions:
+  pull-requests: write
+  statuses: write
+  contents: read
+
 env:
   GITHUB_PKG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
