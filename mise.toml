@@ -1,6 +1,10 @@
 [tools]
 node = "24"
 npm = "11"
+usage = "2"
+
+[tasks.init-repo]
+run = "mise run ./tasks/init-repo.sh"
 
 [tasks.ci]
 depends = ["check-format"]
