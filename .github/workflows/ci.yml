@@ -12,6 +12,9 @@ concurrency:
   group: "CI"
   cancel-in-progress: true
 
+env:
+  GITHUB_PKG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   ci:
     name: CI
