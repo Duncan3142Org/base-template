@@ -11,12 +11,20 @@ depends = ["release"]
 run = "mise run ./tasks/cd.sh"
 
 [tasks.release]
-depends = ["install"]
+depends = ["build"]
 run = "mise run ./tasks/release.sh"
 
 [tasks.ci]
-depends = ["check-format", "danger"]
+depends = ["check-format", "danger", "test", "build"]
 run = "mise run ./tasks/ci.sh"
+
+[tasks.test]
+depends = ["install"]
+run = "mise run ./tasks/test.sh"
+
+[tasks.build]
+depends = ["install"]
+run = "mise run ./tasks/build.sh"
 
 [tasks.check-format]
 depends = "install"
