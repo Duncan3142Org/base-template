@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/Duncan3142Org/base-template/compare/v1.0.0...v1.1.0) (2026-01-23)
+
+
+### Features
+
+* devcontainer ([#3](https://github.com/Duncan3142Org/base-template/issues/3)) ([99a4159](https://github.com/Duncan3142Org/base-template/commit/99a4159d6f1cf94a8c2e969afe83ca11022a7350))
+
 # 1.0.0 (2026-01-23)
 
 
