@@ -1,0 +1,24 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/universal
+{
+	"name": "Base Template",
+
+	"dockerComposeFile": "./compose.yml",
+	"service": "devcon",
+	"workspaceFolder": "/workspace",
+
+	"features": {},
+
+	"postCreateCommand": "./.devcontainer/command/post-create.sh",
+	"postStartCommand": "./.devcontainer/command/post-start.sh",
+
+	"containerUser": "root",
+	"remoteUser": "root",
+	"updateRemoteUserUID": true,
+
+	"customizations": {
+		"vscode": {
+			"extensions": []
+		}
+	}
+}

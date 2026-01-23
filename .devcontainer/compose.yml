@@ -1,0 +1,39 @@
+networks:
+  monitoring:
+    driver: bridge
+
+volumes:
+  otel_lgtm_data:
+
+services:
+  devcon:
+    build:
+      context: ./devcontainer/
+      dockerfile: Dockerfile
+    image: devcon:latest
+
+    # Keep container running indefinitely
+    command: sleep infinity
+
+    # Mount project folder and Docker socket
+    volumes:
+      - ..:/workspace
+      - ${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock
+
+    env_file:
+      - ./devcontainer/.env
+    networks:
+      - monitoring
+
+  # ------------------- #
+  #      OTel-LGTM      #
+  # ------------------- #
+  otel-lgtm:
+    image: grafana/otel-lgtm:0.11.14
+    restart: unless-stopped
+    ports:
+      - "3000:3000" # Grafana UI
+    volumes:
+      - otel_lgtm_data:/data
+    networks:
+      - monitoring

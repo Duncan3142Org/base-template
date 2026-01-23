@@ -81,7 +81,7 @@
 ### Built With
 
 - [GitHub](https://github.com/)
-- [Mise](https://mise.dev/)
+- [Mise](https://mise.jdx.dev/)
 - [Node.js](https://nodejs.org/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
