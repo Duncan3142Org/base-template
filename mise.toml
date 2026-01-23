@@ -4,35 +4,38 @@ npm = "11"
 usage = "2"
 
 [tasks.init-repo]
-run = "mise run ./tasks/init-repo.sh"
+file = "./.github/init-repo.sh"
 
 [tasks.cd]
 depends = ["release"]
-run = "mise run ./tasks/cd.sh"
+file = "./.github/cd.sh"
 
 [tasks.release]
 depends = ["build"]
-run = "mise run ./tasks/release.sh"
+file = "./tasks/release.sh"
 
 [tasks.ci]
-depends = ["check-format", "danger", "test", "build"]
-run = "mise run ./tasks/ci.sh"
+depends = ["format check", "danger ci", "test", "build"]
+file = "./.github/ci.sh"
 
 [tasks.test]
-depends = ["install"]
-run = "mise run ./tasks/test.sh"
+file = "./tasks/test.sh"
 
 [tasks.build]
-depends = ["install"]
-run = "mise run ./tasks/build.sh"
+file = "./tasks/build.sh"
 
-[tasks.check-format]
-depends = "install"
-run = "mise run ./tasks/format.sh --check"
+[tasks.format]
+file = "./tasks/format.sh"
 
 [tasks.danger]
+file = "./.github/danger.sh"
+
+[tasks.update]
 depends = "install"
-run = "mise run ./tasks/danger.sh"
+file = "./tasks/update.sh"
+
+[tasks.clean]
+file = "./tasks/clean.sh"
 
 [tasks.install]
-run = "mise run ./tasks/install.sh"
+file = "./tasks/install.sh"
