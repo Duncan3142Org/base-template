@@ -17,6 +17,7 @@ permissions:
 env:
   BOT_NAME: "${{ vars.DEPLOYMENT_APP_NAME }}[bot]"
   BOT_EMAIL: "${{vars.DEPLOYMENT_ACTOR_ID}}+${{vars.DEPLOYMENT_APP_SLUG}}[bot]@users.noreply.github.com"
+  MISE_ENV: ci
 
 jobs:
   cd:

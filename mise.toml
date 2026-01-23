@@ -1,22 +1,9 @@
+[settings]
+lockfile = true
+
 [tools]
 node = "24"
 npm = "11"
-usage = "2"
-
-[tasks.init-repo]
-file = "./.github/init-repo.sh"
-
-[tasks.cd]
-depends = ["release"]
-file = "./.github/cd.sh"
-
-[tasks.release]
-depends = ["build"]
-file = "./tasks/release.sh"
-
-[tasks.ci]
-depends = ["format check", "danger ci", "test", "build"]
-file = "./.github/ci.sh"
 
 [tasks.test]
 file = "./tasks/test.sh"
@@ -26,16 +13,6 @@ file = "./tasks/build.sh"
 
 [tasks.format]
 file = "./tasks/format.sh"
-
-[tasks.danger]
-file = "./.github/danger.sh"
-
-[tasks.update]
-depends = "install"
-file = "./tasks/update.sh"
-
-[tasks.clean]
-file = "./tasks/clean.sh"
 
 [tasks.install]
 file = "./tasks/install.sh"
