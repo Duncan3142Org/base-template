@@ -11,6 +11,9 @@ concurrency:
   group: "CD"
   cancel-in-progress: false
 
+permissions:
+  packages: write
+
 env:
   BOT_NAME: "${{ vars.DEPLOYMENT_APP_NAME }}[bot]"
   BOT_EMAIL: "${{vars.DEPLOYMENT_APP_ID}}+${{vars.DEPLOYMENT_APP_SLUG}}[bot]@users.noreply.github.com"
@@ -39,9 +42,11 @@ jobs:
           token: ${{ steps.token.outputs.token }}
       - uses: jdx/mise-action@v3
       - name: CD
-        run: mise run cd
+        run: |
+          mise run install
+          mise run cd
         env:
-          GITHUB_PKG_TOKEN: ${{ steps.token.outputs.token }}
+          GITHUB_PKG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ steps.token.outputs.token }}
           GIT_AUTHOR_NAME: ${{ env.BOT_NAME }}
           GIT_AUTHOR_EMAIL: ${{ env.BOT_EMAIL }}

@@ -31,4 +31,6 @@ jobs:
       - uses: jdx/mise-action@v3
       - uses: actions/checkout@v6
       - name: CI
-        run: mise run ci
+        run: |
+          mise run install
+          mise run ci
