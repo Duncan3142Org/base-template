@@ -98,12 +98,12 @@ fi
 echo "⚙️  Setting up Git hooks and commit template..."
 npm exec -- husky
 git config commit.template .gitmessage
-echo   "✅  Git hooks and commit template configured."
+echo "  ✅  Git hooks and commit template configured."
 
 echo "-----------------------------------------------------------------"
 echo "⚠️  MANUAL ACTION REQUIRED: GitHub Archive Program"
 echo "    The GitHub API does not expose the 'Preserve this repository'"
 echo "    toggle. You must enable this manually:"
 echo ""
-echo "   🔗  https://github.com/$REPO/settings"
+echo "   🔗  https://github.com/$REPO/settings#features"
 echo "-----------------------------------------------------------------"
