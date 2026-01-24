@@ -7,16 +7,16 @@ set -o pipefail
 
 # Tool checks
 if ! command -v gh &> /dev/null; then
-  echo "❌ Error: GitHub CLI (gh) is not installed." >&2
+  echo "❌  Error: GitHub CLI (gh) is not installed." >&2
   exit 1
 fi
 
-echo "🔍 Resolving repository from local git context..."
+echo "🔍  Resolving repository from local git context..."
 if ! REPO=$(gh repo view --json nameWithOwner --jq .nameWithOwner 2>/dev/null); then
-  echo "❌ Error: Could not detect GitHub repository in the current directory." >&2
+  echo "  ❌  Error: Could not detect GitHub repository in the current directory." >&2
   exit 1
 fi
-echo "🎯 Target Repository: $REPO"
+echo "  🎯  Target Repository: $REPO"
 
 # Repository settings
 echo "⚙️  Enforcing repository standards..."
@@ -27,21 +27,21 @@ gh repo edit "$REPO" \
     --enable-auto-merge=true \
     --delete-branch-on-merge=true \
     --allow-update-branch=true
-echo "   ✅ Merge settings applied."
-
 # Squash Message
 gh api \
   --method PATCH \
   -H "Accept: application/vnd.github+json" \
-  "/repos/$GITHUB_ORG/$REPO" \
+  "/repos/$REPO" \
   -f squash_merge_commit_title="PR_TITLE" \
-  -f squash_merge_commit_message="PR_BODY"
+  -f squash_merge_commit_message="PR_BODY" \
+  --silent
+echo "  ✅ Merge settings applied."
 
 # Configure environments
 echo "⚙️  Configuring repository environments..."
 configure_environment() {
   local env_name="$1"
-  echo "🌍 Configuring Environment: '$env_name'..."
+  echo "  🌍  Configuring Environment: '$env_name'..."
 
   # Create/update environment with settings
   gh api \
@@ -77,34 +77,33 @@ EOF
       --silent
   fi
 
-  echo "   ✅ Environment configured."
+  echo "  ✅  Environment configured."
 }
 
 configure_environment "GitHub"
 configure_environment "GitLab"
 
 # Set up template remote based on 'clone-of' property
-echo "🔍 Checking for 'clone-of' property to set up template remote..."
+echo "🔍  Checking for 'clone-of' property to set up template remote..."
 TEMPLATE_URL=$(gh api "repos/:owner/:repo/properties/values" --jq '.[] | select(.property_name == "clone-of") | .value')
 if [ -n "$TEMPLATE_URL" ] && [ "$TEMPLATE_URL" != "null" ]; then
-    echo "Found template source: $TEMPLATE_URL"
-    git remote add template "$TEMPLATE_URL"
-    git fetch template
+  echo "  ✅  Found template source: $TEMPLATE_URL"
+  git remote add template "$TEMPLATE_URL"
+  git fetch template
 else
-    echo "Error: This repo does not have a 'clone-of' property set."
-    exit 1
+  echo "  ⚠️  This repo does not have a 'clone-of' property set."
 fi
 
 # Set up Git hooks and commit template
 echo "⚙️  Setting up Git hooks and commit template..."
 npm exec -- husky
 git config commit.template .gitmessage
-echo "✅ Git hooks and commit template configured."
+echo   "✅  Git hooks and commit template configured."
 
-echo "----------------------------------------------------------------"
+echo "-----------------------------------------------------------------"
 echo "⚠️  MANUAL ACTION REQUIRED: GitHub Archive Program"
-echo "   The GitHub API does not expose the 'Preserve this repository'"
-echo "   toggle. You must enable this manually:"
+echo "    The GitHub API does not expose the 'Preserve this repository'"
+echo "    toggle. You must enable this manually:"
 echo ""
-echo "   🔗 https://github.com/$REPO/settings"
-echo "----------------------------------------------------------------"
+echo "   🔗  https://github.com/$REPO/settings"
+echo "-----------------------------------------------------------------"
