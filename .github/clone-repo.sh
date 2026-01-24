@@ -26,7 +26,7 @@ if ! gh auth status &> /dev/null; then
     exit 1
 fi
 
-# 2. Check if Repo Already Exists
+# Check if Repo Already Exists
 echo -e "${BLUE}🔍 Checking if repository $TARGET_ORG/$NEW_REPO_NAME exists...${NC}"
 if gh repo view "$TARGET_ORG/$NEW_REPO_NAME" &> /dev/null; then
     echo -e "${RED}❌ Error: Repository '$TARGET_ORG/$NEW_REPO_NAME' already exists!${NC}"
@@ -34,12 +34,12 @@ if gh repo view "$TARGET_ORG/$NEW_REPO_NAME" &> /dev/null; then
     exit 1
 fi
 
-# 3. Create Empty Repository
+# Create Empty Repository
 echo -e "${BLUE}📦 Creating empty repository on GitHub...${NC}"
 gh repo create "$TARGET_ORG/$NEW_REPO_NAME" \
   --public
 
-# 4. Configure Remotes
+# Configure Remotes
 echo -e "${BLUE}🔗 Configuring remotes...${NC}"
 if git remote | grep -q "^origin$"; then
     git remote rename origin template
@@ -47,11 +47,11 @@ if git remote | grep -q "^origin$"; then
 fi
 git remote add origin "https://github.com/$TARGET_ORG/$NEW_REPO_NAME.git"
 
-# 5. Side-Load History
+# Side-Load History
 echo -e "${BLUE}📤 Pushing history to temporary bootstrap branch...${NC}"
 git push origin "HEAD:refs/heads/$TEMP_BOOTSTRAP_BRANCH" --no-tags
 
-# 6. Construct 'main' via API, bypassing rulesets
+# Construct 'main' via API, bypassing rulesets
 echo -e "${BLUE}🏗️  Constructing 'main' branch via API...${NC}"
 LATEST_SHA=$(git rev-parse HEAD)
 
@@ -59,15 +59,15 @@ gh api "repos/$TARGET_ORG/$NEW_REPO_NAME/git/refs" \
   -f ref="refs/heads/main" \
   -f sha="$LATEST_SHA"
 
-# 7. Set Default Branch to 'main'
+# Set Default Branch to 'main'
 echo -e "${BLUE}⚙️  Setting default branch to 'main'...${NC}"
 gh repo edit "$TARGET_ORG/$NEW_REPO_NAME" --default-branch "main"
 
-# 8. Cleanup Bootstrap Branch
+# Cleanup Bootstrap Branch
 echo -e "${BLUE}🧹 Cleaning up temporary branch...${NC}"
 gh api -X DELETE "repos/$TARGET_ORG/$NEW_REPO_NAME/git/refs/heads/$TEMP_BOOTSTRAP_BRANCH"
 
-# 9. Local Tracking Setup
+# Local Tracking Setup
 echo -e "${BLUE}📡 Setting local tracking information...${NC}"
 git fetch origin
 git branch --set-upstream-to=origin/main main
