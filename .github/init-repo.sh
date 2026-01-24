@@ -75,10 +75,10 @@ EOF
 configure_environment "GitHub"
 configure_environment "GitLab"
 
-
-TEMPLATE_URL=$(gh repo view "$REPO" --json templateRepository --jq '.templateRepository.url')
-if [[ -n "$TEMPLATE_URL" && "$TEMPLATE_URL" != "null" ]]; then
+TEMPLATE_NAME=$(gh repo view "$REPO" --json templateRepository --jq '.templateRepository | "\(.owner.login)/\(.name)"')
+if [[ -n "$TEMPLATE_NAME" && "$TEMPLATE_NAME" != "null" ]]; then
   TEMPLATE_REMOTE_NAME="template"
+	TEMPLATE_URL="https://github.com/${TEMPLATE_NAME}.git"
   git remote add "$TEMPLATE_REMOTE_NAME" "$TEMPLATE_URL" 2>/dev/null || true
   echo "   ✅ Remote '$TEMPLATE_REMOTE_NAME' configured -> $TEMPLATE_URL"
 else
