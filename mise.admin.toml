@@ -9,7 +9,7 @@ usage = "2"
 GITHUB_ORG = "Duncan3142Org"
 
 [tasks.clone]
-file = "./.github/clone.sh"
+file = "./.github/admin/clone.sh"
 
 [tasks.sync]
-file = "./.github/sync.sh"
+file = "./.github/admin/sync.sh"
