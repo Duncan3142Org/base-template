@@ -1,13 +1,9 @@
 #!/usr/bin/env bash
 
+#MISE description "Sync repo configurations and settings"
+
 set -ueC
 set -o pipefail
-
-# ==============================================================================
-# Script: configure-github-repo.sh
-# Purpose: Enforces Engineering Standards on GitHub Repositories
-# Usage: Executed via Mise task
-# ==============================================================================
 
 if ! command -v gh &> /dev/null; then
   echo "❌ Error: GitHub CLI (gh) is not installed." >&2

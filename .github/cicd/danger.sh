@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+#MISE description "Danger"
+
 set -ueC
 set -o pipefail
 

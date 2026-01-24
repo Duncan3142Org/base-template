@@ -14,5 +14,12 @@ file = "./tasks/build.sh"
 [tasks.format]
 file = "./tasks/format.sh"
 
+[tasks.update]
+depends = "install"
+file = "./tasks/update.sh"
+
+[tasks.clean]
+file = "./tasks/clean.sh"
+
 [tasks.install]
 file = "./tasks/install.sh"

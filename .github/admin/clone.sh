@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#MISE description "Clone repo"
+
 set -ueC
 set -o pipefail
 
@@ -26,13 +28,13 @@ if ! gh auth status &> /dev/null; then
     exit 1
 fi
 
-# Pick repo name
-echo -e "Proposed Repository Name: ${GREEN}$NEW_REPO_NAME${NC}"
-read -p "Is this correct? (Y/n): " confirm
-confirm=${confirm:-Y}
+# Confirm repo name
+echo -e "Confirm Repository Name: \"${GREEN}$NEW_REPO_NAME${NC}\""
+read -p -r "Is this correct? (N/y): " confirm
+confirm=${confirm:-N}
 
 if [[ "$confirm" =~ ^[Nn]$ ]]; then
-    read -p "Enter the desired repository name: " input_name
+    read -p -r "Enter the desired repository name: " input_name
     if [[ -n "$input_name" ]]; then
         NEW_REPO_NAME="$input_name"
     else

@@ -1,5 +1,16 @@
 [settings]
 lockfile = true
 
-[tasks.init-repo]
-file = "./.github/init-repo.sh"
+[tools]
+usage = "2"
+"github:cli/cli" = "latest"
+
+[env]
+IS_TEMPLATE = true
+# TEMPLATE_REPO = "https://github.com/Duncan3142Org/base-template.git"
+
+[tasks.clone]
+file = "./.github/clone.sh"
+
+[tasks.sync]
+file = "./.github/sync.sh"
