@@ -33,6 +33,12 @@ if [[ "$CURRENT_BRANCH" != "main" ]]; then
 		exit 1
 fi
 
+# Assert no uncommitted changes
+if [[ -n $(git status --porcelain) ]]; then
+		echo -e "${RED}Error: You have uncommitted changes. Please run this script with a clean working directory.${NC}"
+		exit 1
+fi
+
 # Confirm repo name
 echo -e "Confirm target repository name: \"${GREEN}$new_repo_name${NC}\""
 read -p -r "Is this correct? (N/y): " confirm
@@ -63,11 +69,29 @@ bootstrap_branch="bootstrap/${new_repo_name}"
 echo -e "${BLUE}🌱 Creating bootstrap branch '$bootstrap_branch'...${NC}"
 git checkout -b "$bootstrap_branch" main
 
-# Prep content for side-loading and commit
-# ::TODO:: package.json - replace current package name with new name. Set version to 0.0.0
-# ::TODO:: README.md - replace current package name with new name.
+# Update package.json
+# - Sets name to @duncan3142org/<new-repo-name>
+# - Resets version to 0.0.0
+# - Updates description
+echo -e "${BLUE}🛠️  Updating package.json...${NC}"
+jq --arg name "@${GITHUB_ORG,,}/${new_repo_name}" \
+   --arg desc "Service initialized from base-template" \
+   '.name = $name | .version = "0.0.0" | .description = $desc' \
+   package.json > package.json.tmp && mv package.json.tmp package.json
+# 2. Update README.md
+# - Replace "base-template" with new repo name
+echo -e "${BLUE}📝 Updating README.md...${NC}"
+sed -i "s/base-template/${new_repo_name}/g" README.md
+# 3. Remove CHANGELOG.md to regenerate
+echo -e "${BLUE}🧹 Removing CHANGELOG.md for regeneration...${NC}"
 rm CHANGELOG.md
-npm i
+# 4. Install dependencies to regenerate package-lock.json
+echo -e "${BLUE}📦 Regenerate package-lock.json...${NC}"
+npm install --package-lock-only --ignore-scripts
+# 5. Format on files
+echo -e "${BLUE}🎨 Formatting modified files...${NC}"
+mise run format write
+# Stage modified files
 git add CHANGELOG.md README.md package.json package-lock.json
 # Prompt user to update description in README.md and package.json, plus any other files.
 # Ask user to stage changes and confirm before proceeding.
