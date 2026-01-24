@@ -1,3 +1,9 @@
+## 1.2.0 (2026-01-24)
+
+* clone repo (#5) ([](7796b8e))
+
+* template setup (#4) ([](6d15dab))
+
 # [1.1.0](https://github.com/Duncan3142Org/base-template/compare/v1.0.0...v1.1.0) (2026-01-23)
 
 
