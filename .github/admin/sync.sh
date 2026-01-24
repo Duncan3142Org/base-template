@@ -29,6 +29,14 @@ gh repo edit "$REPO" \
     --allow-update-branch=true
 echo "   ✅ Merge settings applied."
 
+# Squash Message
+gh api \
+  --method PATCH \
+  -H "Accept: application/vnd.github+json" \
+  "/repos/$GITHUB_ORG/$REPO" \
+  -f squash_merge_commit_title="PR_TITLE" \
+  -f squash_merge_commit_message="PR_BODY"
+
 # Configure environments
 echo "⚙️  Configuring repository environments..."
 configure_environment() {
