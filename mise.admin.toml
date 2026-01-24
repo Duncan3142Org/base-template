@@ -6,8 +6,7 @@ usage = "2"
 "github:cli/cli" = "latest"
 
 [env]
-IS_TEMPLATE = true
-# TEMPLATE_REPO = "https://github.com/Duncan3142Org/base-template.git"
+GITHUB_ORG = "Duncan3142Org"
 
 [tasks.clone]
 file = "./.github/clone.sh"

@@ -5,6 +5,7 @@
 set -ueC
 set -o pipefail
 
+# Tool checks
 if ! command -v gh &> /dev/null; then
   echo "❌ Error: GitHub CLI (gh) is not installed." >&2
   exit 1
@@ -17,6 +18,7 @@ if ! REPO=$(gh repo view --json nameWithOwner --jq .nameWithOwner 2>/dev/null); 
 fi
 echo "🎯 Target Repository: $REPO"
 
+# Repository settings
 echo "⚙️  Enforcing repository standards..."
 gh repo edit "$REPO" \
     --enable-rebase-merge=false \
@@ -27,6 +29,8 @@ gh repo edit "$REPO" \
     --allow-update-branch=true
 echo "   ✅ Merge settings applied."
 
+# Configure environments
+echo "⚙️  Configuring repository environments..."
 configure_environment() {
   local env_name="$1"
   echo "🌍 Configuring Environment: '$env_name'..."
@@ -71,15 +75,23 @@ EOF
 configure_environment "GitHub"
 configure_environment "GitLab"
 
-TEMPLATE_NAME=$(gh repo view "$REPO" --json templateRepository --jq '.templateRepository | "\(.owner.login)/\(.name)"')
-if [[ -n "$TEMPLATE_NAME" && "$TEMPLATE_NAME" != "null" ]]; then
-  TEMPLATE_REMOTE_NAME="template"
-	TEMPLATE_URL="https://github.com/${TEMPLATE_NAME}.git"
-  git remote add "$TEMPLATE_REMOTE_NAME" "$TEMPLATE_URL" 2>/dev/null || true
-  echo "   ✅ Remote '$TEMPLATE_REMOTE_NAME' configured -> $TEMPLATE_URL"
+# Set up template remote based on 'clone-of' property
+echo "🔍 Checking for 'clone-of' property to set up template remote..."
+TEMPLATE_URL=$(gh api "repos/:owner/:repo/properties/values" --jq '.[] | select(.property_name == "clone-of") | .value')
+if [ -n "$TEMPLATE_URL" ] && [ "$TEMPLATE_URL" != "null" ]; then
+    echo "Found template source: $TEMPLATE_URL"
+    git remote add template "$TEMPLATE_URL"
+    git fetch template
 else
-  echo "   ℹ️  Skipping: This repository is not linked to a GitHub Template."
+    echo "Error: This repo does not have a 'clone-of' property set."
+    exit 1
 fi
+
+# Set up Git hooks and commit template
+echo "⚙️  Setting up Git hooks and commit template..."
+npm exec -- husky
+git config commit.template .gitmessage
+echo "✅ Git hooks and commit template configured."
 
 echo "----------------------------------------------------------------"
 echo "⚠️  MANUAL ACTION REQUIRED: GitHub Archive Program"
@@ -88,7 +100,3 @@ echo "   toggle. You must enable this manually:"
 echo ""
 echo "   🔗 https://github.com/$REPO/settings"
 echo "----------------------------------------------------------------"
-
-npm exec -- husky
-git config commit.template .gitmessage
-echo "✅ Git hooks and commit template configured."
