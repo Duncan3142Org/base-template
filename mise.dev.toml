@@ -7,9 +7,6 @@ docker-cli = "latest"
 "github:cli/cli" = "latest"
 "github:hadolint/hadolint" = "latest"
 
-[tasks.init-repo]
-file = "./.github/init-repo.sh"
-
 [tasks.update]
 depends = "install"
 file = "./tasks/update.sh"

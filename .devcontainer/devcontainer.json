@@ -18,7 +18,35 @@
 
 	"customizations": {
 		"vscode": {
-			"extensions": []
+			"extensions": [
+				"streetsidesoftware.code-spell-checker",
+				"stackbreak.comment-divider",
+				"ms-azuretools.vscode-containers",
+				"effectful-tech.effect-vscode",
+				"dbaeumer.vscode-eslint",
+				"tamasfe.even-better-toml",
+				"PeterSchmalfeldt.explorer-exclude",
+				"github.vscode-github-actions",
+				"exiasr.hadolint",
+				"hashicorp.terraform",
+				"ms-vscode.hexeditor",
+				"antfu.iconify",
+				"wix.vscode-import-cost",
+				"heaths.vscode-guid",
+				"ms-playwright.playwright",
+				"ms-ossdata.vscode-pgsql",
+				"esbenp.prettier-vscode",
+				"timonwong.shellcheck",
+				"Tyriar.sort-lines",
+				"stylelint.vscode-stylelint",
+				"Gruntfuggly.todo-tree",
+				"antfu.unocss",
+				"pflannery.vscode-versionlens",
+				"vitest.explorer",
+				"redhat.vscode-yaml",
+				"GitHub.copilot-chat",
+				"GraphQL.vscode-graphql"
+			]
 		}
 	}
 }

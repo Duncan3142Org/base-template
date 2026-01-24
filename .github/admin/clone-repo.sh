@@ -26,6 +26,24 @@ if ! gh auth status &> /dev/null; then
     exit 1
 fi
 
+# Pick repo name
+echo -e "Proposed Repository Name: ${GREEN}$NEW_REPO_NAME${NC}"
+read -p "Is this correct? (Y/n): " confirm
+confirm=${confirm:-Y}
+
+if [[ "$confirm" =~ ^[Nn]$ ]]; then
+    read -p "Enter the desired repository name: " input_name
+    if [[ -n "$input_name" ]]; then
+        NEW_REPO_NAME="$input_name"
+    else
+        echo -e "${RED}Error: No repository name provided. Aborting.${NC}"
+        exit 1
+    fi
+elif [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+    echo -e "${RED}Error: Invalid input. Please enter 'Y' or 'n'.${NC}"
+    exit 1
+fi
+
 # Check if Repo Already Exists
 echo -e "${BLUE}🔍 Checking if repository $TARGET_ORG/$NEW_REPO_NAME exists...${NC}"
 if gh repo view "$TARGET_ORG/$NEW_REPO_NAME" &> /dev/null; then
@@ -36,8 +54,7 @@ fi
 
 # Create Empty Repository
 echo -e "${BLUE}📦 Creating empty repository on GitHub...${NC}"
-gh repo create "$TARGET_ORG/$NEW_REPO_NAME" \
-  --public
+gh repo create "$TARGET_ORG/$NEW_REPO_NAME" --public
 
 # Configure Remotes
 echo -e "${BLUE}🔗 Configuring remotes...${NC}"
@@ -54,7 +71,6 @@ git push origin "HEAD:refs/heads/$TEMP_BOOTSTRAP_BRANCH" --no-tags
 # Construct 'main' via API, bypassing rulesets
 echo -e "${BLUE}🏗️  Constructing 'main' branch via API...${NC}"
 LATEST_SHA=$(git rev-parse HEAD)
-
 gh api "repos/$TARGET_ORG/$NEW_REPO_NAME/git/refs" \
   -f ref="refs/heads/main" \
   -f sha="$LATEST_SHA"
