@@ -4,6 +4,7 @@ lockfile = true
 [tools]
 usage = "2"
 "github:cli/cli" = "latest"
+terraform = "latest"
 
 [env]
 GITHUB_ORG = "Duncan3142Org"
