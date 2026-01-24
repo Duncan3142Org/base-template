@@ -1,0 +1,15 @@
+[settings]
+lockfile = true
+
+[tools]
+usage = "2"
+"github:cli/cli" = "latest"
+
+[env]
+GITHUB_ORG = "Duncan3142Org"
+
+[tasks.clone]
+file = "./.github/admin/clone.sh"
+
+[tasks.sync]
+file = "./.github/admin/sync.sh"

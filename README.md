@@ -83,6 +83,7 @@
 - [GitHub](https://github.com/)
 - [Mise](https://mise.jdx.dev/)
 - [Node.js](https://nodejs.org/)
+- [Dev Containers](https://containers.dev/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -92,9 +93,15 @@
 
 ### Prerequisites
 
-- None
+- [Docker Engine](https://docs.docker.com/engine/)
 
 ### Usage
+
+This repo is intended to be used as a GitHub repository template.
+To create a new repository from this template:
+
+- `export MISE_ENV=admin` (sets mise to use admin scripts)
+- `mise run clone` (runs the clone script to create a new repo from the template)
 
 <!-- LICENSE -->
 

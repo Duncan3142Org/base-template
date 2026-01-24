@@ -3,15 +3,15 @@ lockfile = true
 
 [tasks.cd]
 depends = ["release"]
-file = "./.github/cd.sh"
+file = "./.github/cicd/cd.sh"
 
 [tasks.release]
 depends = ["build"]
-file = "./.github/release.sh"
+file = "./.github/cicd/release.sh"
 
 [tasks.ci]
 depends = ["format check", "danger ci", "test", "build"]
-file = "./.github/ci.sh"
+file = "./.github/cicd/ci.sh"
 
 [tasks.danger]
-file = "./.github/danger.sh"
+file = "./.github/cicd/danger.sh"
