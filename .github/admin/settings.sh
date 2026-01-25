@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#MISE description "Sync repo configurations and settings"
+#MISE description "Sync repo settings"
 
 set -ueC
 set -o pipefail
@@ -36,52 +36,6 @@ gh api \
   -f squash_merge_commit_message="PR_BODY" \
   --silent
 echo "  ✅ Merge settings applied."
-
-# Configure environments
-echo "⚙️  Configuring repository environments..."
-configure_environment() {
-  local env_name="$1"
-  echo "  🌍  Configuring Environment: '$env_name'..."
-
-  # Create/update environment with settings
-  gh api \
-    --method PUT \
-    -H "Accept: application/vnd.github+json" \
-    -H "X-GitHub-Api-Version: 2022-11-28" \
-    "/repos/$REPO/environments/$env_name" \
-    --silent \
-    --input - <<EOF
-{
-  "deployment_branch_policy": {
-    "protected_branches": false,
-    "custom_branch_policies": true
-  },
-  "can_admins_bypass": false
-}
-EOF
-
-  local existing_policies
-  existing_policies=$(gh api \
-    -H "Accept: application/vnd.github+json" \
-    -H "X-GitHub-Api-Version: 2022-11-28" \
-    "/repos/$REPO/environments/$env_name/deployment-branch-policies" \
-    --jq '.[].name' 2>/dev/null || echo "")
-
-  if ! echo "$existing_policies" | grep -q "^main$"; then
-    gh api \
-      --method POST \
-      -H "Accept: application/vnd.github+json" \
-      -H "X-GitHub-Api-Version: 2022-11-28" \
-      "/repos/$REPO/environments/$env_name/deployment-branch-policies" \
-      -f name="main" \
-      --silent
-  fi
-
-  echo "  ✅  Environment configured."
-}
-
-configure_environment "GitHub"
-configure_environment "GitLab"
 
 # Set up template remote based on 'clone-of' property
 echo "🔍  Checking for 'clone-of' property to set up template remote..."

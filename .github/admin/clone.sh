@@ -88,11 +88,15 @@ rm CHANGELOG.md
 # 4. Install dependencies to regenerate package-lock.json
 echo -e "${BLUE}📦 Regenerate package-lock.json...${NC}"
 npm install --package-lock-only --ignore-scripts
-# 5. Format on files
+# 5. Update Terraform workspace name
+# - Replace "base-template" with new repo name in versions.tf
+echo -e "${BLUE}🏗️  Updating Terraform versions.tf...${NC}"
+sed -i "s/base-template/${new_repo_name}/g" .github/environments/versions.tf
+# 6. Format on files
 echo -e "${BLUE}🎨 Formatting modified files...${NC}"
 mise run format write
 # Stage modified files
-git add CHANGELOG.md README.md package.json package-lock.json
+git add CHANGELOG.md README.md package.json package-lock.json .github/environments/versions.tf
 # Prompt user to update description in README.md and package.json, plus any other files.
 # Ask user to stage changes and confirm before proceeding.
 # Wait for confirmation before proceeding.
