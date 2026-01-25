@@ -17,8 +17,10 @@ terraform {
 }
 
 provider "github" {
-  # Authentication is handled by Terraform Cloud Variable Sets:
-  # - GITHUB_APP_ID
-  # - GITHUB_APP_INSTALLATION_ID
-  # - GITHUB_APP_PEM_FILE
+  owner = var.repository_owner
+  app_auth {
+    id              = var.github_app_id
+    installation_id = var.github_app_installation_id
+    pem_file        = var.github_app_pem_file
+  }
 }

@@ -19,3 +19,19 @@ variable "gitlab_mirror_pat" {
   description = "Secret value for GITLAB_MIRROR_PAT in GitLab environment"
   sensitive   = true
 }
+
+variable "github_app_id" {
+  type        = string
+  description = "The GitHub App ID"
+}
+
+variable "github_app_installation_id" {
+  type        = string
+  description = "The GitHub App Installation ID"
+}
+
+variable "github_app_pem_file" {
+  type        = string
+  description = "The GitHub App PEM file content"
+  sensitive   = true
+}
