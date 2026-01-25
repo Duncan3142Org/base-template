@@ -18,7 +18,7 @@ if ! REPO=$(gh repo view --json nameWithOwner --jq .nameWithOwner 2>/dev/null); 
 fi
 echo "  🎯  Target Repository: $REPO"
 
-# Repository settings
+# Pull request settings
 echo "⚙️  Enforcing repository standards..."
 gh repo edit "$REPO" \
     --enable-rebase-merge=false \
@@ -27,7 +27,6 @@ gh repo edit "$REPO" \
     --enable-auto-merge=true \
     --delete-branch-on-merge=true \
     --allow-update-branch=true
-# Squash Message
 gh api \
   --method PATCH \
   -H "Accept: application/vnd.github+json" \
@@ -37,7 +36,7 @@ gh api \
   --silent
 echo "  ✅ Merge settings applied."
 
-# Set up template remote based on 'clone-of' property
+# 'clone-of' remote
 echo "🔍  Checking for 'clone-of' property to set up template remote..."
 TEMPLATE_URL=$(gh api "repos/:owner/:repo/properties/values" --jq '.[] | select(.property_name == "clone-of") | .value')
 if [ -n "$TEMPLATE_URL" ] && [ "$TEMPLATE_URL" != "null" ]; then
@@ -48,11 +47,11 @@ else
   echo "  ⚠️  This repo does not have a 'clone-of' property set."
 fi
 
-# Set up Git hooks and commit template
-echo "⚙️  Setting up Git hooks and commit template..."
+# Git hooks and commit message template
+echo "⚙️  Setting up Git hooks and commit message template..."
 npm exec -- husky
 git config commit.template .gitmessage
-echo "  ✅  Git hooks and commit template configured."
+echo "  ✅  Git hooks and commit message template configured."
 
 echo "-----------------------------------------------------------------"
 echo "⚠️  MANUAL ACTION REQUIRED: GitHub Archive Program"

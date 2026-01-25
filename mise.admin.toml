@@ -4,6 +4,7 @@ lockfile = true
 [tools]
 usage = "2"
 "github:cli/cli" = "latest"
+"github:docker/docker-credential-helpers" = "latest"
 terraform = "latest"
 
 [env]
