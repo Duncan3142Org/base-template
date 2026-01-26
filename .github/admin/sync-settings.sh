@@ -36,23 +36,6 @@ gh api \
   --silent
 echo "  ✅ Merge settings applied."
 
-# 'clone-of' remote
-echo "🔍  Checking for 'clone-of' property to set up template remote..."
-TEMPLATE_URL=$(gh api "repos/:owner/:repo/properties/values" --jq '.[] | select(.property_name == "clone-of") | .value')
-if [ -n "$TEMPLATE_URL" ] && [ "$TEMPLATE_URL" != "null" ]; then
-  echo "  ✅  Found template source: $TEMPLATE_URL"
-  git remote add template "$TEMPLATE_URL"
-  git fetch template
-else
-  echo "  ⚠️  This repo does not have a 'clone-of' property set."
-fi
-
-# Git hooks and commit message template
-echo "⚙️  Setting up Git hooks and commit message template..."
-npm exec -- husky
-git config commit.template .gitmessage
-echo "  ✅  Git hooks and commit message template configured."
-
 echo "-----------------------------------------------------------------"
 echo "⚠️  MANUAL ACTION REQUIRED: GitHub Archive Program"
 echo "    The GitHub API does not expose the 'Preserve this repository'"

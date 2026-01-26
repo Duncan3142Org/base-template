@@ -1,6 +1,9 @@
 [settings]
 lockfile = true
 
+[tools]
+"npm:danger" = "13"
+
 [tasks.cd]
 depends = ["release"]
 file = "./.github/cicd/cd.sh"

@@ -8,4 +8,4 @@
 set -ueC
 set -o pipefail
 
-npm exec -- prettier "--${usage_mode?}" --cache --cache-location='.prettier/cache' --cache-strategy content .
+prettier "--${usage_mode?}" --cache --cache-location='.prettier/cache' --cache-strategy content .

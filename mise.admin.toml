@@ -3,19 +3,22 @@ lockfile = true
 
 [tools]
 usage = "2"
-"github:cli/cli" = "latest"
+"github:cli/cli" = "2"
 "github:docker/docker-credential-helpers" = "latest"
-terraform = "latest"
+terraform = "1"
 
 [env]
 GITHUB_ORG = "Duncan3142Org"
 
-[tasks.clone]
-file = "./.github/admin/clone.sh"
+[tasks.clone-repo]
+file = "./.github/admin/clone-repo.sh"
 
-[tasks.settings]
-file = "./.github/admin/settings.sh"
+[tasks.sync-repo]
+run.tasks = ["sync-repo-settings", "sync-repo-environments"]
 
-[tasks.environments]
-file = "./.github/admin/environments.sh"
+[tasks.sync-repo-settings]
+file = "./.github/admin/sync-settings.sh"
+
+[tasks.sync-repo-environments]
+file = "./.github/admin/sync-environments.sh"
 dir = ".github/environments"

@@ -3,5 +3,15 @@ lockfile = true
 
 [tools]
 usage = "2"
-docker-cli = "latest"
-"github:hadolint/hadolint" = "latest"
+"github:cli/cli" = "2"
+docker-cli = "29"
+"github:hadolint/hadolint" = "2"
+"npm:@google/gemini-cli" = "latest"
+"npm:husky" = "9"
+"npm:@commitlint/cli" = "20"
+
+[tasks.init]
+file = "./dev-tasks/init.sh"
+
+[tasks.update]
+file = "./dev-tasks/update.sh"

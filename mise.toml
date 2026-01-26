@@ -4,6 +4,7 @@ lockfile = true
 [tools]
 node = "24"
 npm = "11"
+"npm:prettier" = "3"
 
 [tasks.test]
 file = "./tasks/test.sh"
@@ -13,10 +14,6 @@ file = "./tasks/build.sh"
 
 [tasks.format]
 file = "./tasks/format.sh"
-
-[tasks.update]
-depends = "install"
-file = "./tasks/update.sh"
 
 [tasks.clean]
 file = "./tasks/clean.sh"
