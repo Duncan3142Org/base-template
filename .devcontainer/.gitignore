@@ -1,5 +1,7 @@
 # Config
 !.config/
 
-# Terraformrc
-!.terraformrc
+# Docker
+!.dockerignore
+devcontainer/secrets/*
+!devcontainer/secrets/.gitkeep

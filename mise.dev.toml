@@ -1,6 +1,10 @@
 [settings]
 lockfile = true
 
+[env]
+GITHUB_PKG_TOKEN = "{{ read_file(path='/run/secrets/github_pkg_token') | trim }}"
+GH_TOKEN = "{{ read_file(path='/run/secrets/gh_token') | trim }}"
+
 [tools]
 usage = "2"
 "github:cli/cli" = "2"

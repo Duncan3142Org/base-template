@@ -7,7 +7,7 @@
 			{
 				"preset": "conventionalcommits",
 				"writerOpts": {
-					"commitPartial": "* {{#if scope}}**{{scope}}:** {{/if}}{{#if subject}}{{{subject}}}{{else}}{{{header}}}{{/if}} ([{{shortHash}}]({{hash}}))\n\n{{#if body}}\n  {{body}}\n{{/if}}"
+					"commitPartial": "* {{#if scope}}**{{scope}}:** {{/if}}{{#if subject}}{{{subject}}}{{else}}{{{header}}}{{/if}} ([{{shortHash}}]({{hash}})){{#if body}}\n\n  {{body}}{{/if}}"
 				}
 			}
 		],

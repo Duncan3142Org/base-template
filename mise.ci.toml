@@ -3,6 +3,9 @@ lockfile = true
 
 [tools]
 "npm:danger" = "13"
+"npm:semantic-release" = "25"
+"npm:@semantic-release/changelog" = "6"
+"npm:@semantic-release/git" = "10"
 
 [tasks.cd]
 depends = ["release"]

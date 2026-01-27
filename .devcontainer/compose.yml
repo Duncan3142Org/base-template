@@ -22,6 +22,15 @@ services:
 
     env_file:
       - ./devcontainer/.env
+    secrets:
+      - source: github_pkg_token
+        target: github_pkg_token
+      - source: gh_token
+        target: gh_token
+      - source: tf_token
+        target: tf_token
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     networks:
       - monitoring
 
@@ -37,3 +46,11 @@ services:
       - otel_lgtm_data:/data
     networks:
       - monitoring
+
+secrets:
+  github_pkg_token:
+    file: ./devcontainer/secrets/github_pkg_token
+  gh_token:
+    file: ./devcontainer/secrets/gh_token
+  tf_token:
+    file: ./devcontainer/secrets/tf_token
