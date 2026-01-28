@@ -1,6 +1,3 @@
-[settings]
-lockfile = true
-
 [env]
 GITHUB_ORG = "Duncan3142Org"
 GITHUB_PKG_TOKEN = "{{ read_file(path='/run/secrets/github_pkg_token') | trim }}"
