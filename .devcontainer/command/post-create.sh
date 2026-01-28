@@ -5,8 +5,6 @@ set -o pipefail
 
 curl https://mise.run | sh
 
-mise reshim
-
 mise install
 
 cat >> "/root/.bashrc" << 'EOF'
