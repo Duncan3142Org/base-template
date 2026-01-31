@@ -29,8 +29,8 @@ services:
         target: gh_token
       - source: tf_token
         target: tf_token
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    # extra_hosts:
+    #   - "host.docker.internal:host-gateway"
     networks:
       - monitoring
 

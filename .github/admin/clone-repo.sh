@@ -92,7 +92,7 @@ npm install --package-lock-only --ignore-scripts
 # - Replace "base-template" with new repo name in versions.tf
 echo -e "${BLUE}🏗️  Updating Terraform versions.tf...${NC}"
 sed -i "s/base-template/${new_repo_name}/g" .github/environments/versions.tf
-# 6. Format on files
+# 6. Format files
 echo -e "${BLUE}🎨 Formatting modified files...${NC}"
 mise run format write
 # Stage modified files
@@ -111,7 +111,7 @@ while read -r -p "> " user_input; do
 		fi
 done
 # Commit changes
-git commit -m "chore: bootstrap repository"
+git commit -m "chore: bootstrap repository [no ci]"
 
 # Create empty GitHub repository
 echo -e "${BLUE}📦 Creating empty repository on GitHub...${NC}"

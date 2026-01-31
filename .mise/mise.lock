@@ -55,6 +55,21 @@ version = "0.26.0"
 backend = "npm:@google/gemini-cli"
 env = ["dev"]
 
+[[tools."npm:@semantic-release/changelog"]]
+version = "6.0.3"
+backend = "npm:@semantic-release/changelog"
+env = ["cd"]
+
+[[tools."npm:@semantic-release/git"]]
+version = "10.0.1"
+backend = "npm:@semantic-release/git"
+env = ["cd"]
+
+[[tools."npm:danger"]]
+version = "13.0.5"
+backend = "npm:danger"
+env = ["ci"]
+
 [[tools."npm:husky"]]
 version = "9.1.7"
 backend = "npm:husky"
@@ -64,9 +79,21 @@ env = ["dev"]
 version = "3.8.1"
 backend = "npm:prettier"
 
+[[tools."npm:semantic-release"]]
+version = "25.0.3"
+backend = "npm:semantic-release"
+env = ["cd"]
+
+[[tools.terraform]]
+version = "1.14.4"
+backend = "aqua:hashicorp/terraform"
+env = ["admin"]
+"platforms.linux-x64" = { checksum = "sha256:4a24b18865d9419ba7882567cb7429dd1525b3e2029a9e38f612d476ba8c3dea", url = "https://releases.hashicorp.com/terraform/1.14.4/terraform_1.14.4_linux_amd64.zip"}
+
 [[tools.usage]]
 version = "2.15.1"
 backend = "aqua:jdx/usage"
+env = ["admin"]
 "platforms.linux-arm64" = { checksum = "sha256:ed29b55da771ff17e80c3ab55956da4bcd878163b870810444b4fd359636fe18", url = "https://github.com/jdx/usage/releases/download/v2.15.1/usage-aarch64-unknown-linux-musl.tar.gz"}
 "platforms.linux-x64" = { checksum = "sha256:8b2c0ba6dd2b8af81d464bcdf5101ed75a841d56df9d1cae3b3e01c753c794d5", url = "https://github.com/jdx/usage/releases/download/v2.15.1/usage-x86_64-unknown-linux-musl.tar.gz"}
 "platforms.macos-arm64" = { checksum = "sha256:5a5f5acf65c1c31fec45b12a084c96bfe1ffca66d0b5a8aefbbb83137a413da3", url = "https://github.com/jdx/usage/releases/download/v2.15.1/usage-universal-apple-darwin.tar.gz"}

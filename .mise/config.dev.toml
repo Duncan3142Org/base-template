@@ -12,6 +12,7 @@ docker-cli = "29"
 "npm:@commitlint/cli" = "20"
 
 [tasks.init]
+depends = "install"
 file = "./dev-tasks/init.sh"
 
 [tasks.update]
