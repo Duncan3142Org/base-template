@@ -1,3 +1,10 @@
+## 1.3.0 (2026-01-31)
+
+* repo clone & environment management (#9) ([](5d17f2a))
+
+  feat: clone repo task
+feat: terraform environment and secrets management
+
 ## 1.2.0 (2026-01-24)
 
 * clone repo (#5) ([](7796b8e))
