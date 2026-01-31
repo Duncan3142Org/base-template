@@ -26,12 +26,6 @@ if ! gh auth status &> /dev/null; then
     exit 1
 fi
 
-# Assert no uncommitted changes
-if [[ -n $(git status --porcelain) ]]; then
-    echo -e "${RED}Error: You have uncommitted changes. Please stash or commit them before running this script.${NC}"
-    exit 1
-fi
-
 # --- Add 'template' remote using 'clone-of' property ---
 echo "🔍  Checking for 'clone-of' property to set up template remote..."
 TEMPLATE_URL=$(gh api "repos/:owner/:repo/properties/values" --jq '.[] | select(.property_name == "clone-of") | .value')
@@ -41,28 +35,27 @@ if [ -n "$TEMPLATE_URL" ] && [ "$TEMPLATE_URL" != "null" ]; then
   git fetch "$TEMPLATE_REMOTE_NAME"
 else
   echo "  ⚠️  This repo does not have a 'clone-of' property set."
+  exit 0
 fi
 
-# --- Fetch template remote ---
-echo -e "${BLUE}Fetching '${TEMPLATE_REMOTE_NAME}' remote...${NC}"
-git fetch "$TEMPLATE_REMOTE_NAME"
+# Assert no uncommitted changes
+if [[ -n $(git status --porcelain) ]]; then
+    echo -e "${RED}Error: You have uncommitted changes. Please stash or commit them before running this script.${NC}"
+    exit 1
+fi
+
+# --- Fetch origin ---
+git fetch origin
 
 # --- Switch to/Create local 'template' branch ---
 if git show-ref --verify --quiet "refs/heads/${TEMPLATE_BRANCH}"; then
     echo -e "${BLUE}Switching to local '${TEMPLATE_BRANCH}' branch...${NC}"
     git checkout "${TEMPLATE_BRANCH}"
-
-    # If origin/template exists, sync with it first
-    if git show-ref --verify --quiet "refs/remotes/origin/${TEMPLATE_BRANCH}"; then
-        echo -e "${BLUE}Syncing with 'origin/${TEMPLATE_BRANCH}'...${NC}"
-        git merge "origin/${TEMPLATE_BRANCH}"
-    fi
-
+    git pull
 elif git show-ref --verify --quiet "refs/remotes/origin/${TEMPLATE_BRANCH}"; then
     echo -e "${BLUE}Local '${TEMPLATE_BRANCH}' does not exist, but found on origin.${NC}"
     echo -e "${BLUE}Creating local '${TEMPLATE_BRANCH}' tracking 'origin/${TEMPLATE_BRANCH}'...${NC}"
     git checkout -b "${TEMPLATE_BRANCH}" "origin/${TEMPLATE_BRANCH}"
-
 else
     echo -e "${BLUE}Branch '${TEMPLATE_BRANCH}' not found locally or on origin.${NC}"
     echo -e "${BLUE}Creating '${TEMPLATE_BRANCH}' from '${TEMPLATE_REMOTE_NAME}/main'...${NC}"
