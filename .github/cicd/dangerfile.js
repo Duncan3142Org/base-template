@@ -29,7 +29,7 @@ ${errorList}
 }
 
 function validateBody() {
-	const prBody = danger.github.pr.body || ""
+	const prBody = danger.github.pr.body ?? ""
 
 	const validate = () => {
 		if (prBody.length === 0) {
