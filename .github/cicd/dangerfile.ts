@@ -1,4 +1,4 @@
-import { danger, fail, markdown } from "danger"
+import { danger, fail, markdown, schedule } from "danger"
 import load from "@commitlint/load"
 import lint from "@commitlint/lint"
 import { remark } from "remark"
@@ -89,5 +89,5 @@ function validateBody() {
 	}
 }
 
-await validateTitle()
+schedule(validateTitle)
 validateBody()
