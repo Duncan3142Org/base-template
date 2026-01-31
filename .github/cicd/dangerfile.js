@@ -1,7 +1,7 @@
 import { danger, fail, markdown } from "danger"
 import load from "@commitlint/load"
 import lint from "@commitlint/lint"
-import { Parser } from "commonmark"
+import { remark } from "remark"
 
 async function validateTitle() {
 	const prTitle = danger.github.pr.title
@@ -31,66 +31,50 @@ ${errorList}
 function validateBody() {
 	const prBody = danger.github.pr.body || ""
 
-	let isValid = true
-
-	if (prBody.length > 0) {
-		const parser = new Parser()
-		const ast = parser.parse(prBody)
-		let topLevelNodeCount = 0
-
-		const walker = ast.walker()
-		let event
+	const validate = () => {
+		if (prBody.length === 0) {
+			return true
+		}
 
 		const isChangesHeader = (node) => {
 			if (node.type !== "paragraph") {
 				return false
 			}
-			const firstChild = node.firstChild
-			if (
-				firstChild &&
-				firstChild.type === "emph" &&
-				firstChild.firstChild &&
-				/^Changes:$/.test(firstChild.firstChild.literal || "") &&
-				!firstChild.next
-			) {
-				return true
+			// Must have exactly one child (the emphasis node)
+			if (node.children.length !== 1) {
+				return false
 			}
+
+			const [firstChild] = node.children
+			if (firstChild.type !== "emphasis") {
+				return false
+			}
+			if (firstChild.children.length !== 1) {
+				return false
+			}
+
+			const [innerNode] = firstChild.children
+			if (innerNode.type !== "text") {
+				return false
+			}
+
+			return /^Changes:$/.test(innerNode.value)
+		}
+
+		const result = remark().parse(prBody)
+		const children = result.children
+
+		if (children.length === 0) {
+			return true
+		}
+		const [first, ...rest] = children
+		if (!isChangesHeader(first)) {
 			return false
 		}
-
-		const isTopLevelNode = (node) => {
-			return node.parent?.type === "document" && event.entering
-		}
-
-		const getNext = () => {
-			event = walker.next()
-			return event !== null && event !== undefined
-		}
-
-		while (getNext()) {
-			const node = event.node
-			if (node.type === "document") {
-				continue
-			}
-
-			if (!isTopLevelNode(node)) {
-				continue
-			}
-
-			topLevelNodeCount++
-
-			if (topLevelNodeCount === 1 && !isChangesHeader(node)) {
-				isValid = false
-				break
-				// All subsequent nodes must be lists elements
-			} else if (node.type !== "list") {
-				isValid = false
-				break
-			}
-		}
+		return rest.every((node) => node.type === "list")
 	}
 
-	if (!isValid) {
+	if (!validate()) {
 		fail("PR Body must consist of a *Changes:* header, followed by a lists of changes.")
 		markdown(`
 ### ❌ Invalid PR Body Structure
