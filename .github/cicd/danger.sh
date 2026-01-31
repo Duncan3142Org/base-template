@@ -11,4 +11,4 @@ npm install --no-save \
   danger@13 \
   remark@15
 
-danger ci --fail-on-warnings=true --dangerfile .github/cicd/dangerfile.mjs
+danger ci --fail-on-warnings=true --dangerfile .github/cicd/dangerfile.ts
