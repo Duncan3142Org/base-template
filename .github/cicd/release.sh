@@ -10,4 +10,5 @@ npx --yes \
   -p semantic-release@25 \
   -p @semantic-release/changelog@6 \
   -p @semantic-release/git@10 \
-  semantic-release --dry-run="${usage_dry:-false}"
+  semantic-release --dry-run="${usage_dry:-false}" \
+  --branches main

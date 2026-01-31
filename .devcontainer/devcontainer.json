@@ -48,7 +48,8 @@
 				"GraphQL.vscode-graphql",
 				"eamodio.gitlens",
 				"Anthropic.claude-code",
-				"google.gemini-cli-vscode-ide-companion"
+				"google.gemini-cli-vscode-ide-companion",
+				"bierner.comment-tagged-templates"
 			]
 		}
 	}

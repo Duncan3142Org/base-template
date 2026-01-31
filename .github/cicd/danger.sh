@@ -5,4 +5,10 @@
 set -ueC
 set -o pipefail
 
-danger ci --fail-on-warnings=true --dangerfile .github/cicd/dangerfile.ts
+npm install --no-save \
+  @commitlint/lint@20 \
+  @commitlint/load@20 \
+  danger@13 \
+  remark@15
+
+danger ci --failOnErrors --failOnWarnings --dangerfile .github/cicd/dangerfile.js
