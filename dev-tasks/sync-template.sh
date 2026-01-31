@@ -28,13 +28,16 @@ fi
 
 # --- Add 'template' remote using 'clone-of' property ---
 echo "🔍  Checking for 'clone-of' property to set up template remote..."
+# We use :owner/:repo placeholder which gh automatically resolves to current repo
 TEMPLATE_URL=$(gh api "repos/:owner/:repo/properties/values" --jq '.[] | select(.property_name == "clone-of") | .value')
+
 if [ -n "$TEMPLATE_URL" ] && [ "$TEMPLATE_URL" != "null" ]; then
   echo "  ✅  Found template source: $TEMPLATE_URL"
-  git remote add "$TEMPLATE_REMOTE_NAME" "$TEMPLATE_URL"
-  git fetch "$TEMPLATE_REMOTE_NAME"
+  # Attempt to add remote; ignore error if it already exists (e.g. from init.sh)
+  git remote add "$TEMPLATE_REMOTE_NAME" "$TEMPLATE_URL" 2>/dev/null || true
 else
   echo "  ⚠️  This repo does not have a 'clone-of' property set."
+  echo "      Skipping template sync."
   exit 0
 fi
 
@@ -44,14 +47,20 @@ if [[ -n $(git status --porcelain) ]]; then
     exit 1
 fi
 
-# --- Fetch origin ---
+# --- Fetch Remotes ---
+echo -e "${BLUE}Fetching remotes...${NC}"
 git fetch origin
+git fetch "$TEMPLATE_REMOTE_NAME"
 
 # --- Switch to/Create local 'template' branch ---
 if git show-ref --verify --quiet "refs/heads/${TEMPLATE_BRANCH}"; then
     echo -e "${BLUE}Switching to local '${TEMPLATE_BRANCH}' branch...${NC}"
     git checkout "${TEMPLATE_BRANCH}"
+    
+    # Update local TEMPLATE branch with its upstream (origin/TEMPLATE) if tracked
+    echo -e "${BLUE}Pulling latest changes from origin...${NC}"
     git pull
+    
 elif git show-ref --verify --quiet "refs/remotes/origin/${TEMPLATE_BRANCH}"; then
     echo -e "${BLUE}Local '${TEMPLATE_BRANCH}' does not exist, but found on origin.${NC}"
     echo -e "${BLUE}Creating local '${TEMPLATE_BRANCH}' tracking 'origin/${TEMPLATE_BRANCH}'...${NC}"
