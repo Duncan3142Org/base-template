@@ -32,7 +32,7 @@ if [[ -n $(git status --porcelain) ]]; then
     exit 1
 fi
 
-# --- 1. Add 'template' remote using 'clone-of' property ---
+# --- Add 'template' remote using 'clone-of' property ---
 echo "🔍  Checking for 'clone-of' property to set up template remote..."
 TEMPLATE_URL=$(gh api "repos/:owner/:repo/properties/values" --jq '.[] | select(.property_name == "clone-of") | .value')
 if [ -n "$TEMPLATE_URL" ] && [ "$TEMPLATE_URL" != "null" ]; then
@@ -43,27 +43,40 @@ else
   echo "  ⚠️  This repo does not have a 'clone-of' property set."
 fi
 
-# --- 2. Fetch template remote ---
+# --- Fetch template remote ---
 echo -e "${BLUE}Fetching '${TEMPLATE_REMOTE_NAME}' remote...${NC}"
 git fetch "$TEMPLATE_REMOTE_NAME"
 
-# --- 3. Merge/Create local 'template' branch ---
+# --- Switch to/Create local 'template' branch ---
 if git show-ref --verify --quiet "refs/heads/${TEMPLATE_BRANCH}"; then
     echo -e "${BLUE}Switching to local '${TEMPLATE_BRANCH}' branch...${NC}"
     git checkout "${TEMPLATE_BRANCH}"
 
-    echo -e "${BLUE}Merging '${TEMPLATE_REMOTE_NAME}/main' into '${TEMPLATE_BRANCH}'...${NC}"
-    git merge "${TEMPLATE_REMOTE_NAME}/main"
-    echo -e "${GREEN}Successfully merged '${TEMPLATE_REMOTE_NAME}/main' into '${TEMPLATE_BRANCH}'.${NC}"
+    # If origin/template exists, sync with it first
+    if git show-ref --verify --quiet "refs/remotes/origin/${TEMPLATE_BRANCH}"; then
+        echo -e "${BLUE}Syncing with 'origin/${TEMPLATE_BRANCH}'...${NC}"
+        git merge "origin/${TEMPLATE_BRANCH}"
+    fi
+
+elif git show-ref --verify --quiet "refs/remotes/origin/${TEMPLATE_BRANCH}"; then
+    echo -e "${BLUE}Local '${TEMPLATE_BRANCH}' does not exist, but found on origin.${NC}"
+    echo -e "${BLUE}Creating local '${TEMPLATE_BRANCH}' tracking 'origin/${TEMPLATE_BRANCH}'...${NC}"
+    git checkout -b "${TEMPLATE_BRANCH}" "origin/${TEMPLATE_BRANCH}"
+
 else
-    echo -e "${BLUE}Local '${TEMPLATE_BRANCH}' branch does not exist. Creating it from '${TEMPLATE_REMOTE_NAME}/main'...${NC}"
+    echo -e "${BLUE}Branch '${TEMPLATE_BRANCH}' not found locally or on origin.${NC}"
+    echo -e "${BLUE}Creating '${TEMPLATE_BRANCH}' from '${TEMPLATE_REMOTE_NAME}/main'...${NC}"
     git checkout -b "${TEMPLATE_BRANCH}" "${TEMPLATE_REMOTE_NAME}/main"
-    echo -e "${GREEN}Created '${TEMPLATE_BRANCH}' branch tracking '${TEMPLATE_REMOTE_NAME}/main'.${NC}"
 fi
+
+# --- Merge upstream changes ---
+echo -e "${BLUE}Merging '${TEMPLATE_REMOTE_NAME}/main' into '${TEMPLATE_BRANCH}'...${NC}"
+git merge "${TEMPLATE_REMOTE_NAME}/main" --no-edit
+echo -e "${GREEN}Successfully merged '${TEMPLATE_REMOTE_NAME}/main' into '${TEMPLATE_BRANCH}'.${NC}"
 
 echo -e ""
 echo -e "${GREEN}Sync complete.${NC}"
-echo -e "You are now on the '${TEMPLATE_BRANCH}' branch with the latest changes from the source template."
-echo -e "To merge these updates into your main branch, run:"
-echo -e "  git checkout main"
-echo -e "  git merge ${TEMPLATE_BRANCH}"
+echo -e "You are now on the '${TEMPLATE_BRANCH}' branch."
+echo -e "To apply these updates:"
+echo -e "1. Push the updated template branch: git push origin ${TEMPLATE_BRANCH}"
+echo -e "2. Create a PR to merge '${TEMPLATE_BRANCH}' into 'main'."
