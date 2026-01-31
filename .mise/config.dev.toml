@@ -11,6 +11,10 @@ docker-cli = "29"
 "npm:husky" = "9"
 "npm:@commitlint/cli" = "20"
 
+[tasks.sync-template]
+depends = "init"
+file = "./dev-tasks/sync-template.sh"
+
 [tasks.init]
 depends = "install"
 file = "./dev-tasks/init.sh"
