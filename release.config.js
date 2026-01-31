@@ -1,6 +1,9 @@
 import { readFileSync } from "node:fs"
 
-const commitPartial = readFileSync("./.github/cicd/commit-partial.hbs", "utf8")
+const commitPartial = readFileSync(
+	new URL("./.github/cicd/commit-partial.hbs", import.meta.url),
+	"utf8"
+)
 
 export default {
 	branches: ["main"],
