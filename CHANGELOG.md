@@ -1,3 +1,12 @@
+## 1.4.0 (2026-01-31)
+
+* semantic release notes (#10) ([]()), closes [#10]()
+
+*Changes:*
+- Add PR description to release notes
+- Enforce PR description format
+- Fail on Danger errors and warnings
+
 ## 1.3.0 (2026-01-31)
 
 * repo clone & environment management (#9) ([](5d17f2a))
