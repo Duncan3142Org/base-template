@@ -1,2 +1,7 @@
 # Config
 !.config/
+
+# Docker
+!.dockerignore
+devcontainer/secrets/*
+!devcontainer/secrets/.gitkeep

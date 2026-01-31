@@ -32,6 +32,12 @@ node_modules
 !.npmrc
 !.npmignore
 
+# Mise
+!.mise/
+
 # Prettier
 !.prettierignore
 !.prettierrc.js
+
+# Terraform
+!.terraform.lock.hcl

@@ -88,11 +88,15 @@ rm CHANGELOG.md
 # 4. Install dependencies to regenerate package-lock.json
 echo -e "${BLUE}📦 Regenerate package-lock.json...${NC}"
 npm install --package-lock-only --ignore-scripts
-# 5. Format on files
+# 5. Update Terraform workspace name
+# - Replace "base-template" with new repo name in versions.tf
+echo -e "${BLUE}🏗️  Updating Terraform versions.tf...${NC}"
+sed -i "s/base-template/${new_repo_name}/g" .github/environments/versions.tf
+# 6. Format files
 echo -e "${BLUE}🎨 Formatting modified files...${NC}"
 mise run format write
 # Stage modified files
-git add CHANGELOG.md README.md package.json package-lock.json
+git add CHANGELOG.md README.md package.json package-lock.json .github/environments/versions.tf
 # Prompt user to update description in README.md and package.json, plus any other files.
 # Ask user to stage changes and confirm before proceeding.
 # Wait for confirmation before proceeding.
@@ -107,7 +111,7 @@ while read -r -p "> " user_input; do
 		fi
 done
 # Commit changes
-git commit -m "chore: bootstrap repository"
+git commit -m "chore: bootstrap repository [no ci]"
 
 # Create empty GitHub repository
 echo -e "${BLUE}📦 Creating empty repository on GitHub...${NC}"
@@ -132,8 +136,8 @@ gh api \
 # Add clone remote to local repo
 git remote add "${new_repo_name}" "https://github.com/$GITHUB_ORG/$new_repo_name.git"
 
-# Set bootstrap branch upstream to new repo
-git branch --set-upstream-to="${new_repo_name}/bootstrap" "$bootstrap_branch"
+# Set bootstrap branch upstream to new repo template branch
+git branch --set-upstream-to="${new_repo_name}/$TEMPLATE_BRANCH" "$bootstrap_branch"
 
 # Push bootstrap branch to new repo
 echo -e "${BLUE}📤 Pushing to clone bootstrap branch...${NC}"

@@ -1,7 +1,0 @@
-[settings]
-lockfile = true
-
-[tools]
-usage = "2"
-docker-cli = "latest"
-"github:hadolint/hadolint" = "latest"

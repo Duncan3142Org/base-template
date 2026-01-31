@@ -45,7 +45,10 @@
 				"vitest.explorer",
 				"redhat.vscode-yaml",
 				"GitHub.copilot-chat",
-				"GraphQL.vscode-graphql"
+				"GraphQL.vscode-graphql",
+				"eamodio.gitlens",
+				"Anthropic.claude-code",
+				"google.gemini-cli-vscode-ide-companion"
 			]
 		}
 	}

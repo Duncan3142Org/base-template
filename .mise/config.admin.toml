@@ -1,0 +1,23 @@
+[env]
+GITHUB_ORG = "Duncan3142Org"
+GITHUB_PKG_TOKEN = "{{ read_file(path='/run/secrets/github_pkg_token') | trim }}"
+GH_TOKEN = "{{ read_file(path='/run/secrets/gh_token') | trim }}"
+TF_TOKEN_app_terraform_io = "{{ read_file(path='/run/secrets/tf_token') | trim }}"
+
+[tools]
+usage = "2"
+"github:cli/cli" = "2"
+terraform = "1"
+
+[tasks.clone-repo]
+file = "./.github/admin/clone-repo.sh"
+
+[tasks.sync-repo]
+run.tasks = ["sync-repo-settings", "sync-repo-environments"]
+
+[tasks.sync-repo-settings]
+file = "./.github/admin/sync-settings.sh"
+
+[tasks.sync-repo-environments]
+file = "./.github/admin/sync-environments.sh"
+dir = ".github/environments"
