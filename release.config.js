@@ -40,7 +40,9 @@ export default {
 			"@semantic-release/github",
 			{
 				successComment:
-					":tada: This PR is included in version ${nextRelease.version} :tada:\n\nThe release is available on:\n\n- [GitHub release](${releases.find(r => r.name === 'github').url})\n- [GitHub package](https://github.com/" +
+					":tada: This PR is included in version ${nextRelease.version} :tada:\n\nThe release is available on:\n\n- [GitHub release](https://github.com/" +
+					repoPath +
+					"/releases/tag/${nextRelease.gitTag})\n- [GitHub package](https://github.com/" +
 					repoPath +
 					"/pkgs/npm/" +
 					pkgName +
