@@ -8,12 +8,6 @@ variable "repository_name" {
   description = "The name of the repository"
 }
 
-variable "repository_default_branch" {
-  type        = string
-  description = "The default branch of the repository"
-  default     = "main"
-}
-
 variable "deployment_app_secret" {
   type        = string
   description = "Secret value for DEPLOYMENT_APP_SECRET in GitHub environment"
