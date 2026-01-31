@@ -19,10 +19,7 @@
 	"files": [],
 	"devDependencies": {
 		"@commitlint/config-conventional": "^20.3.1",
-		"@commitlint/lint": "^20.4.0",
-		"@commitlint/load": "^20.4.0",
 		"@duncan3142/prettier-config": "^0.1.10",
-		"@types/node": "^24.10.9",
-		"danger": "^13.0.5"
+		"@types/node": "^24.10.9"
 	}
 }
