@@ -1,5 +1,6 @@
 [settings]
 lockfile = true
+experimental = true
 
 [tools]
 node = "24"
