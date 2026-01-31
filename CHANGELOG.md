@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/Duncan3142Org/base-template/compare/v1.4.0...v1.4.1) (2026-01-31)
+
+
+### Bug Fixes
+
+* release notes ([#11](https://github.com/Duncan3142Org/base-template/issues/11)) ([b2d5ac9]())
+
 ## 1.4.0 (2026-01-31)
 
 * semantic release notes (#10) ([]()), closes [#10]()
