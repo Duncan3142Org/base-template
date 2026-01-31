@@ -56,11 +56,11 @@ git fetch "$TEMPLATE_REMOTE_NAME"
 if git show-ref --verify --quiet "refs/heads/${TEMPLATE_BRANCH}"; then
     echo -e "${BLUE}Switching to local '${TEMPLATE_BRANCH}' branch...${NC}"
     git checkout "${TEMPLATE_BRANCH}"
-    
+
     # Update local TEMPLATE branch with its upstream (origin/TEMPLATE) if tracked
     echo -e "${BLUE}Pulling latest changes from origin...${NC}"
     git pull
-    
+
 elif git show-ref --verify --quiet "refs/remotes/origin/${TEMPLATE_BRANCH}"; then
     echo -e "${BLUE}Local '${TEMPLATE_BRANCH}' does not exist, but found on origin.${NC}"
     echo -e "${BLUE}Creating local '${TEMPLATE_BRANCH}' tracking 'origin/${TEMPLATE_BRANCH}'...${NC}"
@@ -73,12 +73,14 @@ fi
 
 # --- Merge upstream changes ---
 echo -e "${BLUE}Merging '${TEMPLATE_REMOTE_NAME}/main' into '${TEMPLATE_BRANCH}'...${NC}"
-git merge "${TEMPLATE_REMOTE_NAME}/main" --no-edit
-echo -e "${GREEN}Successfully merged '${TEMPLATE_REMOTE_NAME}/main' into '${TEMPLATE_BRANCH}'.${NC}"
-
-echo -e ""
-echo -e "${GREEN}Sync complete.${NC}"
-echo -e "You are now on the '${TEMPLATE_BRANCH}' branch."
-echo -e "To apply these updates:"
-echo -e "1. Push the updated template branch: git push origin ${TEMPLATE_BRANCH}"
-echo -e "2. Create a PR to merge '${TEMPLATE_BRANCH}' into 'main'."
+if git merge "${TEMPLATE_REMOTE_NAME}/main" --no-edit; then
+    echo -e "${GREEN}Successfully merged '${TEMPLATE_REMOTE_NAME}/main' into '${TEMPLATE_BRANCH}'.${NC}"
+    git push
+    echo -e "${GREEN}Sync complete.${NC}"
+else
+    echo -e "${RED}Merge conflicts detected!${NC}"
+    echo -e "Please resolve the conflicts manually, then run:"
+    echo -e "  git add <resolved-files>"
+    echo -e "  git commit"
+    exit 0
+fi

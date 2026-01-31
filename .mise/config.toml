@@ -2,6 +2,9 @@
 lockfile = true
 experimental = true
 
+[env]
+TEMPLATE_BRANCH = "TEMPLATE"
+
 [tools]
 node = "24"
 npm = "11"

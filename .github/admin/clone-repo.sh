@@ -137,7 +137,7 @@ gh api \
 git remote add "${new_repo_name}" "https://github.com/$GITHUB_ORG/$new_repo_name.git"
 
 # Set bootstrap branch upstream to new repo template branch
-git branch --set-upstream-to="${new_repo_name}/TEMPLATE" "$bootstrap_branch"
+git branch --set-upstream-to="${new_repo_name}/$TEMPLATE_BRANCH" "$bootstrap_branch"
 
 # Push bootstrap branch to new repo
 echo -e "${BLUE}📤 Pushing to clone bootstrap branch...${NC}"
