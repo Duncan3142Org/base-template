@@ -2,7 +2,7 @@
 	"name": "@duncan3142org/base-template",
 	"description": "Base repo template",
 	"author": "Duncan3142Org",
-	"version": "1.4.1",
+	"version": "1.4.2",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/Duncan3142Org/base-template.git"
