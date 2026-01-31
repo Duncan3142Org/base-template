@@ -71,6 +71,9 @@ function validateBody() {
 		if (!isChangesHeader(first)) {
 			return false
 		}
+		if (rest.length === 0) {
+			return false
+		}
 		return rest.every((node) => node.type === "list")
 	}
 
