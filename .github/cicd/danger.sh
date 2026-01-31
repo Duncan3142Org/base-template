@@ -10,4 +10,4 @@ npm install --no-save \
   @commitlint/load@20 \
   remark@15
 
-danger ci --fail-on-warnings=true --dangerfile .github/cicd/dangerfile.js
+danger ci --fail-on-warnings=true --dangerfile .github/cicd/dangerfile.mjs
