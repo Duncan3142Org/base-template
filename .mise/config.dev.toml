@@ -1,15 +1,6 @@
 [env]
-GITHUB_PKG_TOKEN = "{{ read_file(path='/run/secrets/github_pkg_token') | trim }}"
 GH_TOKEN = "{{ read_file(path='/run/secrets/gh_token') | trim }}"
-
-[tools]
-usage = "2"
-"github:cli/cli" = "2"
-docker-cli = "29"
-"github:hadolint/hadolint" = "2"
-"npm:@google/gemini-cli" = "latest"
-"npm:husky" = "9"
-"npm:@commitlint/cli" = "20"
+GITHUB_PKG_TOKEN = "{{ read_file(path='/run/secrets/github_pkg_token') | trim }}"
 
 [tasks.sync-template]
 depends = "init"

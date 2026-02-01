@@ -1,0 +1,14 @@
+[settings]
+lockfile = true
+experimental = true
+
+[tools]
+usage = "2"
+terraform = "1"
+"npm:husky" = "9"
+docker-cli = "29"
+"github:cli/cli" = "2"
+"npm:@commitlint/cli" = "20"
+"npm:@google/gemini-cli" = "latest"
+"github:hadolint/hadolint" = "2"
+"npm:@anthropic-ai/claude-code" = "2"
