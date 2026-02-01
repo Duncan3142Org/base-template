@@ -9,12 +9,19 @@ assert(RELEASE_CLI_DIR, "RELEASE_CLI_DIR is not defined")
 
 const cliDirUrl = pathToFileURL(join(RELEASE_CLI_DIR, "/"))
 
+/**
+ * @param {string} path
+ * @param {URL} base
+ */
 const readFile = (path, base) => {
 	return readFileSync(new URL(path, base), "utf8")
 }
 
 const commitPartial = readFile("./commit-partial.hbs", cliDirUrl)
 
+/**
+ * @returns {{repoPath: string, pkgName: string}}
+ */
 const pkgMeta = () => {
 	const pkg = JSON.parse(readFile("./package.json", import.meta.url))
 	const repoRegex = /^git\+https:\/\/github\.com\/([a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+)\.git$/
@@ -23,6 +30,9 @@ const pkgMeta = () => {
 	return { repoPath, pkgName }
 }
 
+/**
+ * @param {string} name
+ */
 const plugin = (name) => {
 	return `${RELEASE_CLI_DIR}/node_modules/${name}`
 }
