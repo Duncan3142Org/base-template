@@ -19,6 +19,7 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
+				"Anthropic.claude-code",
 				"streetsidesoftware.code-spell-checker",
 				"stackbreak.comment-divider",
 				"ms-azuretools.vscode-containers",
@@ -26,30 +27,22 @@
 				"dbaeumer.vscode-eslint",
 				"tamasfe.even-better-toml",
 				"PeterSchmalfeldt.explorer-exclude",
+				"google.gemini-cli-vscode-ide-companion",
 				"github.vscode-github-actions",
+				"GitHub.copilot-chat",
+				"GitHub.vscode-pull-request-github",
+				"eamodio.gitlens",
 				"exiasr.hadolint",
 				"hashicorp.terraform",
 				"ms-vscode.hexeditor",
-				"antfu.iconify",
-				"wix.vscode-import-cost",
 				"heaths.vscode-guid",
-				"ms-playwright.playwright",
-				"ms-ossdata.vscode-pgsql",
 				"esbenp.prettier-vscode",
 				"timonwong.shellcheck",
 				"Tyriar.sort-lines",
-				"stylelint.vscode-stylelint",
 				"Gruntfuggly.todo-tree",
-				"antfu.unocss",
 				"pflannery.vscode-versionlens",
 				"vitest.explorer",
-				"redhat.vscode-yaml",
-				"GitHub.copilot-chat",
-				"GraphQL.vscode-graphql",
-				"eamodio.gitlens",
-				"Anthropic.claude-code",
-				"google.gemini-cli-vscode-ide-companion",
-				"bierner.comment-tagged-templates"
+				"redhat.vscode-yaml"
 			]
 		}
 	}
