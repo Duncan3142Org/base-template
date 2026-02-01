@@ -1,0 +1,15 @@
+name: "Release"
+description: "Runs Semantic Release to publish a new package version"
+runs:
+  using: "composite"
+  steps:
+    - name: Install Dependencies
+      shell: bash
+      working-directory: ${{ github.action_path }}
+      run: npm ci
+
+    - name: Run Semantic Release
+      shell: bash
+      env:
+        RELEASE_CLI_DIR: ${{ github.action_path }}
+      run: ${{ github.action_path }}/node_modules/.bin/semantic-release

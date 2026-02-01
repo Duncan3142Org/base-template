@@ -5,4 +5,4 @@ package-lock.json
 CHANGELOG.md
 
 # Semantic Release
-.github/cicd/commit-partial.hbs
+.github/actions/release/commit-partial.hbs

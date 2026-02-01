@@ -10,5 +10,4 @@ runs:
 
     - name: Run Danger
       shell: bash
-      working-directory: ${{ github.action_path }}
       run: ${{ github.action_path }}/node_modules/.bin/danger ci --failOnErrors --failOnWarnings --dangerfile ${{ github.action_path }}/dangerfile.js

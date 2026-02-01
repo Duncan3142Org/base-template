@@ -1,7 +1,3 @@
 [tasks.cd]
-depends = ["release"]
-file = "./.github/cicd/cd.sh"
-
-[tasks.release]
 depends = ["build"]
-file = "./.github/cicd/release.sh"
+file = "./.github/cicd/cd.sh"
