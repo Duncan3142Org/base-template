@@ -3,6 +3,5 @@
 set -ueC
 set -o pipefail
 
+mise install
 mise reshim
-
-exit 0

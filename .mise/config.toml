@@ -3,6 +3,7 @@ lockfile = true
 experimental = true
 
 [env]
+GITHUB_ORG = "Duncan3142Org"
 TEMPLATE_BRANCH = "TEMPLATE"
 
 [tools]
