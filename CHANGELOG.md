@@ -1,3 +1,14 @@
+## [1.4.3](https://github.com/Duncan3142Org/base-template/compare/v1.4.2...v1.4.3) (2026-02-01)
+
+
+### Bug Fixes
+
+* danger action ([#13](https://github.com/Duncan3142Org/base-template/issues/13)) ([ed600f3]())
+
+*Changes:*
+- Danger action
+- Devcontainer extensions
+
 ## [1.4.2](https://github.com/Duncan3142Org/base-template/compare/v1.4.1...v1.4.2) (2026-01-31)
 
 
