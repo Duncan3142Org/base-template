@@ -110,6 +110,12 @@ echo -e "   After making your changes, stage them with 'git add <files>'."
 echo -e "   When ready, enter '${GREEN}proceed${NC}' to continue."
 while read -r -p "> " user_input; do
 		if [[ "$user_input" == "proceed" ]]; then
+				# Check for unstaged changes or untracked files (second column non-space in porcelain output)
+				if git status --porcelain | grep -qE '^.[^ ]'; then
+						echo -e "   ${RED}Error: You have unstaged changes or untracked files.${NC}"
+						echo -e "   Stage them with 'git add <files>', then enter '${GREEN}proceed${NC}' to continue."
+						continue
+				fi
 				break
 		else
 				echo -e "   Enter '${GREEN}proceed${NC}' to continue."
