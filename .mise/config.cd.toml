@@ -1,3 +1,6 @@
+[settings]
+locked = true
+
 [tasks.cd]
 depends = ["build"]
 file = "./.github/cicd/cd.sh"
