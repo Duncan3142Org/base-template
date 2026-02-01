@@ -22,7 +22,7 @@ file = "./dev-tasks/init.sh"
 [tasks.update]
 file = "./dev-tasks/update.sh"
 
-[tasks.release]
+[tasks.release-dry]
 depends = ["build"]
 env = { RELEASE_CLI_DIR = "./.github/actions/release" }
 run = "./.github/actions/release/node_modules/.bin/semantic-release --dry"

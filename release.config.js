@@ -1,18 +1,22 @@
 import assert from "node:assert"
 import { readFileSync } from "node:fs"
 import { env } from "node:process"
+import { pathToFileURL } from "node:url"
+import { join } from "node:path"
 
 const { RELEASE_CLI_DIR } = env
 assert(RELEASE_CLI_DIR, "RELEASE_CLI_DIR is not defined")
+
+const cliDirUrl = pathToFileURL(join(RELEASE_CLI_DIR, "/"))
 
 const readFile = (path, base) => {
 	return readFileSync(new URL(path, base), "utf8")
 }
 
-const commitPartial = readFile("commit-partial.hbs", RELEASE_CLI_DIR)
+const commitPartial = readFile("./commit-partial.hbs", cliDirUrl)
 
 const pkgMeta = () => {
-	const pkg = JSON.parse(readFileSync("./package.json", import.meta.url))
+	const pkg = JSON.parse(readFile("./package.json", import.meta.url))
 	const repoRegex = /^git\+https:\/\/github\.com\/([a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+)\.git$/
 	const [, repoPath] = repoRegex.exec(pkg.repository.url)
 	const [, pkgName] = pkg.name.split("/")

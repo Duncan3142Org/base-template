@@ -10,4 +10,6 @@ runs:
 
     - name: Run Semantic Release
       shell: bash
+      env:
+        RELEASE_CLI_DIR: ${{ github.action_path }}
       run: ${{ github.action_path }}/node_modules/.bin/semantic-release
