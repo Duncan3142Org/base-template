@@ -1,3 +1,13 @@
+## [1.4.7](https://github.com/Duncan3142Org/base-template/compare/v1.4.6...v1.4.7) (2026-02-01)
+
+
+### Bug Fixes
+
+* clean clone ([#17](https://github.com/Duncan3142Org/base-template/issues/17)) ([a40666c]())
+
+*Changes:*
+- check for unstaged files before proceeding with clone
+
 ## [1.4.6](https://github.com/Duncan3142Org/base-template/compare/v1.4.5...v1.4.6) (2026-02-01)
 
 
