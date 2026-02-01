@@ -48,7 +48,7 @@ function validateBody() {
 				return false
 			}
 			// Must have exactly one child (the emphasis token)
-			if (!token.tokens || token.tokens.length !== 1) {
+			if (token.tokens?.length !== 1) {
 				return false
 			}
 
@@ -56,7 +56,7 @@ function validateBody() {
 			if (firstChild.type !== "em") {
 				return false
 			}
-			if (!firstChild.tokens || firstChild.tokens.length !== 1) {
+			if (firstChild.tokens?.length !== 1) {
 				return false
 			}
 
@@ -68,8 +68,7 @@ function validateBody() {
 			return /^Changes:$/.test(innerNode.text)
 		}
 
-		const tokens = marked.lexer(prBody)
-		const children = tokens.filter((t) => t.type !== "space")
+		const children = marked.lexer(prBody)
 
 		if (children.length === 0) {
 			return true
