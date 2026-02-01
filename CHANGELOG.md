@@ -1,3 +1,10 @@
+## [1.4.4](https://github.com/Duncan3142Org/base-template/compare/v1.4.3...v1.4.4) (2026-02-01)
+
+
+### Bug Fixes
+
+* release action ([#14](https://github.com/Duncan3142Org/base-template/issues/14)) ([c8a5cac]())
+
 ## [1.4.3](https://github.com/Duncan3142Org/base-template/compare/v1.4.2...v1.4.3) (2026-02-01)
 
 
