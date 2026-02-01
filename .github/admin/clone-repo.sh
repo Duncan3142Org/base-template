@@ -75,24 +75,29 @@ git checkout -b "$bootstrap_branch" main
 # - Updates description
 echo -e "${BLUE}🛠️  Updating package.json...${NC}"
 jq --arg name "@${GITHUB_ORG,,}/${new_repo_name}" \
+   --arg url "git+https://github.com/${GITHUB_ORG}/${new_repo_name}.git" \
    --arg desc "Service initialized from base-template" \
-   '.name = $name | .version = "0.0.0" | .description = $desc' \
+   '.name = $name | .version = "0.0.0" | .description = $desc | .repository.url = $url' \
    package.json > package.json.tmp && mv package.json.tmp package.json
-# 2. Update README.md
+# Update .devcontainer/devcontainer.json
+# - Replace "base-template" with new repo name
+echo -e "${BLUE}🛠️  Updating .devcontainer/devcontainer.json...${NC}"
+sed -i "s/base-template/${new_repo_name}/g" .devcontainer/devcontainer.json
+# Update README.md
 # - Replace "base-template" with new repo name
 echo -e "${BLUE}📝 Updating README.md...${NC}"
 sed -i "s/base-template/${new_repo_name}/g" README.md
-# 3. Remove CHANGELOG.md to regenerate
+# Remove CHANGELOG.md to regenerate
 echo -e "${BLUE}🧹 Removing CHANGELOG.md for regeneration...${NC}"
 rm CHANGELOG.md
-# 4. Install dependencies to regenerate package-lock.json
+# Install dependencies to regenerate package-lock.json
 echo -e "${BLUE}📦 Regenerate package-lock.json...${NC}"
 npm install --package-lock-only --ignore-scripts
-# 5. Update Terraform workspace name
+# Update Terraform workspace name
 # - Replace "base-template" with new repo name in versions.tf
 echo -e "${BLUE}🏗️  Updating Terraform versions.tf...${NC}"
 sed -i "s/base-template/${new_repo_name}/g" .github/environments/versions.tf
-# 6. Format files
+# Format files
 echo -e "${BLUE}🎨 Formatting modified files...${NC}"
 mise run format write
 # Stage modified files
