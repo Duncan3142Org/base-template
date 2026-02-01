@@ -1,3 +1,10 @@
+## [1.4.6](https://github.com/Duncan3142Org/base-template/compare/v1.4.5...v1.4.6) (2026-02-01)
+
+
+### Bug Fixes
+
+* root mise config ([#16](https://github.com/Duncan3142Org/base-template/issues/16)) ([2637fa7]())
+
 ## [1.4.5](https://github.com/Duncan3142Org/base-template/compare/v1.4.4...v1.4.5) (2026-02-01)
 
 
