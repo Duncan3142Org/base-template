@@ -1,3 +1,13 @@
+## [1.4.5](https://github.com/Duncan3142Org/base-template/compare/v1.4.4...v1.4.5) (2026-02-01)
+
+
+### Bug Fixes
+
+* danger markdown parser ([#15](https://github.com/Duncan3142Org/base-template/issues/15)) ([12c4fc3]())
+
+*Changes:*
+- marked lexer
+
 ## [1.4.4](https://github.com/Duncan3142Org/base-template/compare/v1.4.3...v1.4.4) (2026-02-01)
 
 
