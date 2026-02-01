@@ -1,0 +1,14 @@
+name: "Danger CI"
+description: "Runs Danger JS to lint PR metadata"
+runs:
+  using: "composite"
+  steps:
+    - name: Install Dependencies
+      shell: bash
+      working-directory: ${{ github.action_path }}
+      run: npm ci
+
+    - name: Run Danger
+      shell: bash
+      working-directory: ${{ github.action_path }}
+      run: ${{ github.action_path }}/node_modules/.bin/danger ci --failOnErrors --failOnWarnings --dangerfile ${{ github.action_path }}/dangerfile.js

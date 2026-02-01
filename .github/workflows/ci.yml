@@ -31,6 +31,8 @@ jobs:
     steps:
       - uses: jdx/mise-action@v3
       - uses: actions/checkout@v6
+      - name: Danger
+        uses: ./.github/actions/danger
       - name: CI
         run: |
           mise run install

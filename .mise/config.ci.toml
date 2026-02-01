@@ -1,9 +1,3 @@
-[tools]
-"npm:danger" = "13"
-
 [tasks.ci]
-depends = ["format check", "danger ci", "test", "build"]
+depends = ["format check", "test", "build"]
 file = "./.github/cicd/ci.sh"
-
-[tasks.danger]
-file = "./.github/cicd/danger.sh"
