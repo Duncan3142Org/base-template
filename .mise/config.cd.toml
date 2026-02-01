@@ -1,5 +1,5 @@
 [settings]
-locked = true
+# locked = true
 
 [tasks.cd]
 depends = ["build"]
