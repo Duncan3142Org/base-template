@@ -1,21 +1,36 @@
+import assert from "node:assert"
 import { readFileSync } from "node:fs"
+import { env } from "node:process"
 
-const commitPartial = readFileSync(
-	new URL("./.github/cicd/commit-partial.hbs", import.meta.url),
-	"utf8"
-)
+const { RELEASE_CLI_DIR } = env
+assert(RELEASE_CLI_DIR, "RELEASE_CLI_DIR is not defined")
 
-const pkg = JSON.parse(readFileSync(new URL("./package.json", import.meta.url), "utf8"))
-const repoRegex = /^git\+https:\/\/github\.com\/([a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+)\.git$/
-const [, repoPath] = repoRegex.exec(pkg.repository.url)
-const [, pkgName] = pkg.name.split("/")
+const readFile = (path, base) => {
+	return readFileSync(new URL(path, base), "utf8")
+}
+
+const commitPartial = readFile("commit-partial.hbs", RELEASE_CLI_DIR)
+
+const pkgMeta = () => {
+	const pkg = JSON.parse(readFileSync("./package.json", import.meta.url))
+	const repoRegex = /^git\+https:\/\/github\.com\/([a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+)\.git$/
+	const [, repoPath] = repoRegex.exec(pkg.repository.url)
+	const [, pkgName] = pkg.name.split("/")
+	return { repoPath, pkgName }
+}
+
+const plugin = (name) => {
+	return `${RELEASE_CLI_DIR}/node_modules/${name}`
+}
+
+const meta = pkgMeta()
 
 export default {
 	branches: ["main"],
 	plugins: [
-		"@semantic-release/commit-analyzer",
+		plugin("@semantic-release/commit-analyzer"),
 		[
-			"@semantic-release/release-notes-generator",
+			plugin("@semantic-release/release-notes-generator"),
 			{
 				writerOpts: {
 					commitPartial,
@@ -23,29 +38,29 @@ export default {
 			},
 		],
 		[
-			"@semantic-release/changelog",
+			plugin("@semantic-release/changelog"),
 			{
 				changelogFile: "CHANGELOG.md",
 			},
 		],
-		"@semantic-release/npm",
+		plugin("@semantic-release/npm"),
 		[
-			"@semantic-release/git",
+			plugin("@semantic-release/git"),
 			{
 				assets: ["CHANGELOG.md", "package.json", "package-lock.json"],
 				message: "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}",
 			},
 		],
 		[
-			"@semantic-release/github",
+			plugin("@semantic-release/github"),
 			{
 				successComment:
 					":tada: This PR is included in version ${nextRelease.version} :tada:\n\nThe release is available on:\n\n- [GitHub release](https://github.com/" +
-					repoPath +
+					meta.repoPath +
 					"/releases/tag/${nextRelease.gitTag})\n- [GitHub package](https://github.com/" +
-					repoPath +
+					meta.repoPath +
 					"/pkgs/npm/" +
-					pkgName +
+					meta.pkgName +
 					")",
 			},
 		],
