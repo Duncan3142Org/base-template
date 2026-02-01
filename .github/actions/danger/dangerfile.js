@@ -1,7 +1,11 @@
 import { danger, fail, markdown, schedule } from "danger"
 import load from "@commitlint/load"
 import lint from "@commitlint/lint"
-import { remark } from "remark"
+import { marked } from "marked"
+
+/**
+ * @import { Token } from "marked"
+ */
 
 async function validateTitle() {
 	const prTitle = danger.github.pr.title
@@ -36,33 +40,35 @@ function validateBody() {
 			return true
 		}
 
-		const isChangesHeader = (node) => {
-			if (node.type !== "paragraph") {
+		/**
+		 * @param {Token} token
+		 */
+		const isChangesHeader = (token) => {
+			if (token.type !== "paragraph") {
 				return false
 			}
-			// Must have exactly one child (the emphasis node)
-			if (node.children.length !== 1) {
-				return false
-			}
-
-			const [firstChild] = node.children
-			if (firstChild.type !== "emphasis") {
-				return false
-			}
-			if (firstChild.children.length !== 1) {
+			// Must have exactly one child (the emphasis token)
+			if (token.tokens?.length !== 1) {
 				return false
 			}
 
-			const [innerNode] = firstChild.children
+			const [firstChild] = token.tokens
+			if (firstChild.type !== "em") {
+				return false
+			}
+			if (firstChild.tokens?.length !== 1) {
+				return false
+			}
+
+			const [innerNode] = firstChild.tokens
 			if (innerNode.type !== "text") {
 				return false
 			}
 
-			return /^Changes:$/.test(innerNode.value)
+			return /^Changes:$/.test(innerNode.text)
 		}
 
-		const result = remark().parse(prBody)
-		const children = result.children
+		const children = marked.lexer(prBody)
 
 		if (children.length === 0) {
 			return true
@@ -74,7 +80,7 @@ function validateBody() {
 		if (rest.length === 0) {
 			return false
 		}
-		return rest.every((node) => node.type === "list")
+		return rest.every((token) => token.type === "list")
 	}
 
 	if (!validate()) {

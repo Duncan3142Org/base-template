@@ -7,6 +7,6 @@
 		"@commitlint/lint": "^20.4.0",
 		"@commitlint/load": "^20.4.0",
 		"danger": "^13.0.5",
-		"remark": "^15.0.0"
+		"marked": "^17.0.1"
 	}
 }

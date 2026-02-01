@@ -11,7 +11,7 @@ env = ["dev"]
 [[tools."github:cli/cli"]]
 version = "2.86.0"
 backend = "github:cli/cli"
-env = ["dev"]
+env = ["admin"]
 "platforms.linux-arm64" = { checksum = "sha256:83cf7a7962ea9dfcc2c123666695792916a87af32cba5f1f6e585db08fa57547", url = "https://github.com/cli/cli/releases/download/v2.86.0/gh_2.86.0_linux_arm64.tar.gz", url_api = "https://api.github.com/repos/cli/cli/releases/assets/343886809"}
 "platforms.linux-x64" = { checksum = "sha256:f3b08bd6a28420cc2229b0a1a687fa25f2b838d3f04b297414c1041ca68103c7", url = "https://github.com/cli/cli/releases/download/v2.86.0/gh_2.86.0_linux_amd64.tar.gz", url_api = "https://api.github.com/repos/cli/cli/releases/assets/343886805"}
 "platforms.macos-arm64" = { checksum = "sha256:bde753978a352c5ae6c4abec47334d516e82807af20c9dbbd45507a5a0aedaaa", url = "https://github.com/cli/cli/releases/download/v2.86.0/gh_2.86.0_macOS_arm64.zip", url_api = "https://api.github.com/repos/cli/cli/releases/assets/343886820"}
@@ -83,19 +83,17 @@ env = ["cd"]
 version = "1.14.4"
 backend = "aqua:hashicorp/terraform"
 env = ["admin"]
+"platforms.linux-arm64" = { checksum = "sha256:dcbc9d4b9fcd47e76ae194d5d569bfbf9f15bf1c59ca692aff6d2a92eb8e8994", url = "https://releases.hashicorp.com/terraform/1.14.4/terraform_1.14.4_linux_arm64.zip"}
 "platforms.linux-x64" = { checksum = "sha256:4a24b18865d9419ba7882567cb7429dd1525b3e2029a9e38f612d476ba8c3dea", url = "https://releases.hashicorp.com/terraform/1.14.4/terraform_1.14.4_linux_amd64.zip"}
+"platforms.macos-arm64" = { checksum = "sha256:dc4ee56edfde4fb6d578783292b5fa126d624803aa9326d03da5466ef59d4dbd", url = "https://releases.hashicorp.com/terraform/1.14.4/terraform_1.14.4_darwin_arm64.zip"}
+"platforms.macos-x64" = { checksum = "sha256:367dfc3fd689db10817f96cede1f737c88300f34e5a783c90cb9874973031832", url = "https://releases.hashicorp.com/terraform/1.14.4/terraform_1.14.4_darwin_amd64.zip"}
+"platforms.windows-x64" = { checksum = "sha256:0d20cbf5de662677ecf671d28f4aef95c21ec966a89fd98539b24e457710759f", url = "https://releases.hashicorp.com/terraform/1.14.4/terraform_1.14.4_windows_amd64.zip"}
 
 [[tools.usage]]
-version = "2.15.1"
+version = "2.16.1"
 backend = "aqua:jdx/usage"
 env = ["admin"]
-"platforms.linux-arm64" = { checksum = "sha256:ed29b55da771ff17e80c3ab55956da4bcd878163b870810444b4fd359636fe18", url = "https://github.com/jdx/usage/releases/download/v2.15.1/usage-aarch64-unknown-linux-musl.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:8b2c0ba6dd2b8af81d464bcdf5101ed75a841d56df9d1cae3b3e01c753c794d5", url = "https://github.com/jdx/usage/releases/download/v2.15.1/usage-x86_64-unknown-linux-musl.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:5a5f5acf65c1c31fec45b12a084c96bfe1ffca66d0b5a8aefbbb83137a413da3", url = "https://github.com/jdx/usage/releases/download/v2.15.1/usage-universal-apple-darwin.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:5a5f5acf65c1c31fec45b12a084c96bfe1ffca66d0b5a8aefbbb83137a413da3", url = "https://github.com/jdx/usage/releases/download/v2.15.1/usage-universal-apple-darwin.tar.gz"}
-
-[[tools.usage]]
-version = "2.16.0"
-backend = "aqua:jdx/usage"
-env = ["dev"]
-"platforms.linux-x64" = { checksum = "sha256:caeebaf305eeb02be0b78805bb4b6e0bfac6f8faa2d36597a249bd215b41a2a5", url = "https://github.com/jdx/usage/releases/download/v2.16.0/usage-x86_64-unknown-linux-musl.tar.gz"}
+"platforms.linux-arm64" = { checksum = "sha256:29ab8f0cf07d94f4f852007413594714561de9d613fe4dbf12b287dfa1bee0ac", url = "https://github.com/jdx/usage/releases/download/v2.16.1/usage-aarch64-unknown-linux-musl.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:9ff23ebae8b3fc049b4ed4fec29c417063597c79739bab094c390ddfe56e9623", url = "https://github.com/jdx/usage/releases/download/v2.16.1/usage-x86_64-unknown-linux-musl.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:3bba8d4916da22dbd4afe4ab6c59c988765d7e0374e1121b43ce8b1a282cfc78", url = "https://github.com/jdx/usage/releases/download/v2.16.1/usage-universal-apple-darwin.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:3bba8d4916da22dbd4afe4ab6c59c988765d7e0374e1121b43ce8b1a282cfc78", url = "https://github.com/jdx/usage/releases/download/v2.16.1/usage-universal-apple-darwin.tar.gz"}
