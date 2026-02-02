@@ -13,6 +13,9 @@ file = "./dev-tasks/init.sh"
 [tasks.update]
 file = "./dev-tasks/update.sh"
 
+[tasks.sync-root-lock]
+run = "cp /root/.config/mise/mise.lock /workspace/.devcontainer/devcontainer/.config/mise/mise.lock"
+
 [tasks.release-dry]
 depends = ["build"]
 env = { RELEASE_CLI_DIR = "./.github/actions/release" }

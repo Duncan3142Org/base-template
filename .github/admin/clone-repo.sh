@@ -93,15 +93,11 @@ rm CHANGELOG.md
 # Install dependencies to regenerate package-lock.json
 echo -e "${BLUE}📦 Regenerate package-lock.json...${NC}"
 npm install --package-lock-only --ignore-scripts
-# Update Terraform workspace name
-# - Replace "base-template" with new repo name in versions.tf
-echo -e "${BLUE}🏗️  Updating Terraform versions.tf...${NC}"
-sed -i "s/base-template/${new_repo_name}/g" .github/environments/versions.tf
 # Format files
 echo -e "${BLUE}🎨 Formatting modified files...${NC}"
 mise run format write
 # Stage modified files
-git add CHANGELOG.md README.md package.json package-lock.json .github/environments/versions.tf
+git add CHANGELOG.md README.md package.json package-lock.json
 # Check for unstaged changes
 if git status --porcelain | grep -qE '^.[^ ]'; then
 	echo -e "   ${RED}Error: Unstaged changes found.${NC}"

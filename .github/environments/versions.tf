@@ -3,9 +3,7 @@ terraform {
 
   cloud {
     organization = "duncan3142"
-    workspaces {
-      name = "base-template"
-    }
+    workspaces {} # Workspace name set via TF_WORKSPACE env var
   }
 
   required_providers {
