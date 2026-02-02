@@ -19,18 +19,17 @@ fi
 echo "  🎯  Target Repository: $REPO"
 
 # Pull request settings
-echo "⚙️  Enforcing repository standards..."
-gh repo edit "$REPO" \
-    --enable-rebase-merge=false \
-    --enable-squash-merge=true \
-    --enable-merge-commit=false \
-    --enable-auto-merge=true \
-    --delete-branch-on-merge=true \
-    --allow-update-branch=true
+echo "⚙️  Merge settings..."
 gh api \
   --method PATCH \
   -H "Accept: application/vnd.github+json" \
   "/repos/$REPO" \
+  -F allow_rebase_merge=false \
+  -F allow_squash_merge=true \
+  -F allow_merge_commit=false \
+  -F allow_auto_merge=true \
+  -F delete_branch_on_merge=true \
+  -F allow_update_branch=true \
   -f squash_merge_commit_title="PR_TITLE" \
   -f squash_merge_commit_message="PR_BODY" \
   --silent

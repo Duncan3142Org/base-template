@@ -102,25 +102,11 @@ echo -e "${BLUE}🎨 Formatting modified files...${NC}"
 mise run format write
 # Stage modified files
 git add CHANGELOG.md README.md package.json package-lock.json .github/environments/versions.tf
-# Prompt user to update description in README.md and package.json, plus any other files.
-# Ask user to stage changes and confirm before proceeding.
-# Wait for confirmation before proceeding.
-echo -e "${BLUE}✍️  Modify file contents for clone repository, e.g. package description in README.md, package.json.${NC}"
-echo -e "   After making your changes, stage them with 'git add <files>'."
-echo -e "   When ready, enter '${GREEN}proceed${NC}' to continue."
-while read -r -p "> " user_input; do
-		if [[ "$user_input" == "proceed" ]]; then
-				# Check for unstaged changes or untracked files (second column non-space in porcelain output)
-				if git status --porcelain | grep -qE '^.[^ ]'; then
-						echo -e "   ${RED}Error: You have unstaged changes or untracked files.${NC}"
-						echo -e "   Stage them with 'git add <files>', then enter '${GREEN}proceed${NC}' to continue."
-						continue
-				fi
-				break
-		else
-				echo -e "   Enter '${GREEN}proceed${NC}' to continue."
-		fi
-done
+# Check for unstaged changes
+if git status --porcelain | grep -qE '^.[^ ]'; then
+	echo -e "   ${RED}Error: Unstaged changes found.${NC}"
+	exit 1
+fi
 # Commit changes
 git commit -m "chore: bootstrap repository [no ci]"
 
