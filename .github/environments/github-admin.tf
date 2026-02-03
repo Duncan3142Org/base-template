@@ -2,6 +2,12 @@ data "github_team" "repo_admin" {
   slug = "github-repo-admin"
 }
 
+resource "github_team_repository" "repo_admin" {
+  team_id    = data.github_team.repo_admin.id
+  repository = data.github_repository.repo.name
+  permission = "admin"
+}
+
 resource "github_repository_environment" "github_admin" {
   repository  = data.github_repository.repo.name
   environment = "GitHubAdmin"
