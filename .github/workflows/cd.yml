@@ -14,26 +14,26 @@ permissions:
   packages: write
 
 env:
-  BOT_NAME: "${{ vars.DEPLOYMENT_APP_NAME }}[bot]"
-  BOT_EMAIL: "${{vars.DEPLOYMENT_ACTOR_ID}}+${{vars.DEPLOYMENT_APP_SLUG}}[bot]@users.noreply.github.com"
+  BOT_NAME: "${{ vars.DELIVERY_APP_NAME }}[bot]"
+  BOT_EMAIL: "${{vars.DELIVERY_ACTOR_ID}}+${{vars.DELIVERY_APP_SLUG}}[bot]@users.noreply.github.com"
   MISE_ENV: cd
 
 jobs:
   cd:
     name: CD
-    if: (github.actor_id != vars.DEPLOYMENT_ACTOR_ID) && (github.event.before != '0000000000000000000000000000000000000000')
+    if: (github.actor_id != vars.DELIVERY_ACTOR_ID) && (github.event.before != '0000000000000000000000000000000000000000')
     environment: GitHub
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/create-github-app-token@v2
         id: token
         with:
-          app-id: ${{ vars.DEPLOYMENT_APP_ID }}
-          private-key: ${{ secrets.DEPLOYMENT_APP_SECRET }}
+          app-id: ${{ vars.DELIVERY_APP_ID }}
+          private-key: ${{ secrets.DELIVERY_APP_PEM_FILE }}
           owner: ${{ github.repository_owner }}
           repositories: ${{ github.event.repository.name }}
           permission-contents: write
-          permission-packages: write
+          permission-packages: write # ::TODO:: Remove if not needed
           permission-issues: write
           permission-pull-requests: write
       - uses: actions/checkout@v6

@@ -4,3 +4,6 @@
 [tasks.cd]
 depends = ["build"]
 file = "./.github/cicd/cd.sh"
+
+[tasks.prepare-clone]
+file = "./.github/cicd/prepare-clone.sh"

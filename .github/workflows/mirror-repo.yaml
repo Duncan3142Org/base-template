@@ -9,9 +9,6 @@ concurrency:
   group: "Mirror Repo"
   cancel-in-progress: false
 
-env:
-  MISE_ENV: ci
-
 jobs:
   repo-mirror:
     environment: GitLab
