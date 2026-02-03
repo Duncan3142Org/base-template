@@ -1,9 +1,9 @@
 data "github_repository" "repo" {
-  full_name = "${var.repository_owner}/${var.repository_name}"
+  full_name = "${var.github_repository_owner}/${var.github_repository_name}"
 }
 
 locals {
-  environments = toset(["GitHub", "GitLab"])
+  environments = toset(["GitHub", "GitHubAdmin", "GitLab"])
 }
 
 resource "github_repository_environment" "this" {
@@ -26,11 +26,25 @@ resource "github_repository_environment_deployment_policy" "main" {
   branch_pattern = data.github_repository.repo.default_branch
 }
 
-resource "github_actions_environment_secret" "deployment_app_secret" {
+resource "github_actions_environment_secret" "github_delivery_app_pem_file" {
   repository      = data.github_repository.repo.name
   environment     = github_repository_environment.this["GitHub"].environment
-  secret_name     = "DEPLOYMENT_APP_SECRET"
-  plaintext_value = var.deployment_app_secret
+  secret_name     = "DELIVERY_APP_PEM_FILE"
+  plaintext_value = var.github_delivery_app_pem_file
+}
+
+resource "github_actions_environment_secret" "github_admin_app_pem_file" {
+  repository      = data.github_repository.repo.name
+  environment     = github_repository_environment.this["GitHubAdmin"].environment
+  secret_name     = "ADMIN_APP_PEM_FILE"
+  plaintext_value = var.github_admin_app_pem_file
+}
+
+resource "github_actions_environment_secret" "github_admin_terraform_api_token" {
+  repository      = data.github_repository.repo.name
+  environment     = github_repository_environment.this["GitHubAdmin"].environment
+  secret_name     = "ADMIN_TERRAFORM_API_TOKEN"
+  plaintext_value = var.github_admin_terraform_api_token
 }
 
 resource "github_actions_environment_secret" "gitlab_mirror_pat" {
