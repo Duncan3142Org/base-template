@@ -1,0 +1,5 @@
+[settings]
+# locked = true
+
+[tasks.prepare-clone]
+file = "./.github/admin/prepare-clone.sh"

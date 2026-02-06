@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#MISE description "Merge main branch of template remote into local template branch"
+#MISE description "Merge default branch of template remote into local template branch"
 
 set -ueC
 set -o pipefail
@@ -25,6 +25,9 @@ if ! gh auth status &> /dev/null; then
     echo -e "${RED}Error: You are not logged into gh. Run 'gh auth login'.${NC}"
     exit 1
 fi
+
+# Use github cli to get local default branch
+local_default_branch=$(gh api "repos/:owner/:repo" --jq '.default_branch')
 
 # --- Add 'template' remote using 'clone-of' property ---
 echo "🔍  Checking for 'clone-of' property to set up template remote..."
@@ -67,14 +70,14 @@ elif git show-ref --verify --quiet "refs/remotes/origin/${TEMPLATE_BRANCH}"; the
     git checkout -b "${TEMPLATE_BRANCH}" "origin/${TEMPLATE_BRANCH}"
 else
     echo -e "${BLUE}Branch '${TEMPLATE_BRANCH}' not found locally or on origin.${NC}"
-    echo -e "${BLUE}Creating '${TEMPLATE_BRANCH}' from '${TEMPLATE_REMOTE_NAME}/main'...${NC}"
-    git checkout -b "${TEMPLATE_BRANCH}" "${TEMPLATE_REMOTE_NAME}/main"
+    echo -e "${BLUE}Creating '${TEMPLATE_BRANCH}' from '${TEMPLATE_REMOTE_NAME}/$local_default_branch'...${NC}"
+    git checkout -b "${TEMPLATE_BRANCH}" "${TEMPLATE_REMOTE_NAME}/$local_default_branch"
 fi
 
 # --- Merge upstream changes ---
-echo -e "${BLUE}Merging '${TEMPLATE_REMOTE_NAME}/main' into '${TEMPLATE_BRANCH}'...${NC}"
-if git merge "${TEMPLATE_REMOTE_NAME}/main" --no-edit; then
-    echo -e "${GREEN}Successfully merged '${TEMPLATE_REMOTE_NAME}/main' into '${TEMPLATE_BRANCH}'.${NC}"
+echo -e "${BLUE}Merging '${TEMPLATE_REMOTE_NAME}/$local_default_branch' into '${TEMPLATE_BRANCH}'...${NC}"
+if git merge "${TEMPLATE_REMOTE_NAME}/$local_default_branch" --no-edit; then
+    echo -e "${GREEN}Successfully merged '${TEMPLATE_REMOTE_NAME}/$local_default_branch' into '${TEMPLATE_BRANCH}'.${NC}"
     git push
     echo -e "${GREEN}Sync complete.${NC}"
 else

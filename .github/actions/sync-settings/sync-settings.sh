@@ -4,6 +4,7 @@ set -ueC
 set -o pipefail
 
 # Visual Helpers
+RED='\033[0;31m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
@@ -11,29 +12,29 @@ echo "🔍  Syncing settings for ${BLUE}'$GITHUB_REPO_OWNER/$GITHUB_REPO_NAME'${
 
 # --- Tool checks ---
 if ! command -v gh &> /dev/null; then
-  echo "❌  Error: GitHub CLI (gh) is not installed." >&2
+  echo -e "${RED}Error: GitHub CLI (gh) is not installed.${NC}"
   exit 1
 fi
 
 if ! command -v terraform &> /dev/null; then
-	echo "❌  Error: Terraform is not installed." >&2
-	exit 1
+  echo -e "${RED}Error: Terraform CLI (terraform) is not installed.${NC}"
+  exit 1
 fi
 
 echo -e "🌍  ${BLUE}Syncing environments...${NC}"
-# Set workspace name from repository
-export TF_WORKSPACE="$GITHUB_REPO_NAME-github-repo"
-cd "$WORKSPACE_DIR/$ENVIRONMENTS_WORKSPACE_DIR"
-echo -e "📦  ${BLUE}Using Terraform workspace: $TF_WORKSPACE${NC}"
-echo -e "⚙️  ${BLUE}Initializing Terraform...${NC}"
-terraform init
-echo -e "🚀  ${BLUE}Applying Terraform configuration...${NC}"
-terraform apply -auto-approve
-echo -e "✅  ${BLUE}Environments synced successfully.${NC}"
+(
+  export TF_WORKSPACE="$GITHUB_REPO_NAME-github-repo"
+  cd "$WORKSPACE_DIR/$ENVIRONMENTS_WORKSPACE_DIR"
+  echo -e "📦  ${BLUE}Using Terraform workspace: $TF_WORKSPACE${NC}"
+  echo -e "⚙️  ${BLUE}Initializing Terraform...${NC}"
+  terraform init
+  echo -e "🚀  ${BLUE}Applying Terraform configuration...${NC}"
+  terraform apply -auto-approve
+  echo -e "✅  ${BLUE}Environments synced successfully.${NC}"
+)
 
 # Pull request settings
 echo "⚙️  Syncing PR settings..."
-cd "$WORKSPACE_DIR"
 gh api \
   --method PATCH \
   -H "Accept: application/vnd.github+json" \

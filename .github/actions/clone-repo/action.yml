@@ -1,0 +1,30 @@
+name: "Clone Repo"
+description: "Clone this repository"
+inputs:
+  repo_owner:
+    description: "Repository owner"
+    required: true
+  repo_name:
+    description: "Repository name"
+    required: true
+  confirm_repo_name:
+    description: "Confirm repository name"
+    required: true
+  environments-workspace-dir:
+    description: "Directory containing environment configuration, relative to repository root"
+    required: false
+    default: "./.github/environments"
+runs:
+  using: "composite"
+  steps:
+    - name: Clone Repo
+      shell: bash
+      env:
+        GITHUB_REPO_OWNER: ${{ inputs.repo_owner }}
+        GITHUB_REPO_NAME: ${{ inputs.repo_name }}
+        CONFIRM_REPO_NAME: ${{ inputs.confirm_repo_name }}
+        SOURCE_REPO_NAME: ${{ github.event.repository.name }}
+        ENVIRONMENTS_WORKSPACE_DIR: ${{ inputs.environments-workspace-dir }}
+        WORKSPACE_DIR: ${{ github.workspace }}
+      run: |
+        mise run ${{ github.action_path }}/clone-repo.sh

@@ -1,11 +1,21 @@
-name: Sync Repo Settings
+name: Clone Repo
 
 on:
   workflow_dispatch:
+    inputs:
+      repo_name:
+        description: "Repository name"
+        required: true
+      confirm_repo_name:
+        description: "Type the repository name again to confirm"
+        required: true
 
 concurrency:
-  group: "Sync Repo Settings"
+  group: "Clone Repo"
   cancel-in-progress: false
+
+env:
+  MISE_ENV: admin
 
 jobs:
   repo-mirror:
@@ -18,8 +28,9 @@ jobs:
           app-id: ${{ vars.ADMIN_APP_ID }}
           private-key: ${{ secrets.ADMIN_APP_PEM_FILE }}
           owner: ${{ github.repository_owner }}
-          repositories: ${{ github.event.repository.name }}
           permission-administration: write
+          permission-contents: write
+          permission-repository-custom-properties: write
       - name: Checkout code
         uses: actions/checkout@v4
         with:
@@ -27,7 +38,13 @@ jobs:
       - uses: hashicorp/setup-terraform@v3
         with:
           cli_config_credentials_token: ${{ secrets.ADMIN_TERRAFORM_API_TOKEN }}
+      - uses: jdx/mise-action@v3
+      - uses: ./.github/actions/clone-repo
+        with:
+          repo_owner: ${{ github.repository_owner }}
+          repo_name: ${{ github.event.inputs.repo_name }}
+          confirm_repo_name: ${{ github.event.inputs.confirm_repo_name }}
       - uses: ./.github/actions/sync-settings
         with:
           repo_owner: ${{ github.repository_owner }}
-          repo_name: ${{ github.event.repository.name }}
+          repo_name: ${{ github.event.inputs.repo_name }}
