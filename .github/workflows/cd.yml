@@ -33,7 +33,6 @@ jobs:
           owner: ${{ github.repository_owner }}
           repositories: ${{ github.event.repository.name }}
           permission-contents: write
-          permission-packages: write # ::TODO:: Remove if not needed
           permission-issues: write
           permission-pull-requests: write
       - uses: actions/checkout@v6
