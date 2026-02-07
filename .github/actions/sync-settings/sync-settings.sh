@@ -9,7 +9,7 @@
 #USAGE }
 #USAGE flag "--repo-name <repo-name>" {
 #USAGE   required #true
-#USAGE   env "GITHUB_REPO_NAME"
+#USAGE   env "REPO_NAME"
 #USAGE   help "Repository name"
 #USAGE }
 #USAGE flag "--environments-workspace-dir <environments-workspace-dir>" {
@@ -17,12 +17,8 @@
 #USAGE   env "ENVIRONMENTS_WORKSPACE_DIR"
 #USAGE   help "Directory containing environment configuration, relative to repository root"
 #USAGE }
-#USAGE flag "--workspace-dir <workspace-dir>" {
-#USAGE   required #true
-#USAGE   env "WORKSPACE_DIR"
-#USAGE   help "Workspace directory"
-#USAGE }
 #USAGE flag "--tf-token <tf-token>" {
+#USAGE   required #true
 #USAGE   env "TF_TOKEN"
 #USAGE   help "Terraform API token"
 #USAGE }
@@ -38,12 +34,7 @@ NC='\033[0m' # No Color
 repo_owner="${usage_repo_owner:?}"
 repo_name="${usage_repo_name:?}"
 environments_workspace_dir="${usage_environments_workspace_dir:?}"
-workspace_dir="${usage_workspace_dir:?}"
-tf_token="${usage_tf_token:-}"
-
-if [[ -n "$tf_token" ]]; then
-  export TF_TOKEN_app_terraform_io="$tf_token"
-fi
+tf_token="${usage_tf_token:?}"
 
 echo "🔍  Syncing settings for ${BLUE}'$repo_owner/$repo_name'${NC}..."
 
@@ -61,7 +52,8 @@ fi
 echo -e "🌍  ${BLUE}Syncing environments...${NC}"
 (
   export TF_WORKSPACE="$repo_name-github-repo"
-  cd "$workspace_dir/$environments_workspace_dir"
+  export TF_TOKEN_app_terraform_io="$tf_token"
+  cd "$environments_workspace_dir"
   echo -e "📦  ${BLUE}Using Terraform workspace: $TF_WORKSPACE${NC}"
   echo -e "⚙️  ${BLUE}Initializing Terraform...${NC}"
   terraform init

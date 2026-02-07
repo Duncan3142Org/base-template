@@ -1,9 +1,6 @@
 name: "Sync Settings"
 description: "Sync repository settings"
 inputs:
-  repo_owner:
-    description: "Repository owner"
-    required: true
   repo_name:
     description: "Repository name"
     required: true
@@ -13,17 +10,16 @@ inputs:
     default: "./.github/environments"
   tf_token:
     description: "Terraform API token"
-    required: false
+    required: true
 runs:
   using: "composite"
   steps:
     - name: Sync Settings
       shell: bash
       env:
-        GITHUB_REPO_OWNER: ${{ inputs.repo_owner }}
-        GITHUB_REPO_NAME: ${{ inputs.repo_name }}
+        GITHUB_REPO_OWNER: ${{ github.repository_owner }}
+        REPO_NAME: ${{ inputs.repo_name }}
         ENVIRONMENTS_WORKSPACE_DIR: ${{ inputs.environments-workspace-dir }}
-        WORKSPACE_DIR: ${{ github.workspace }}
         TF_TOKEN: ${{ inputs.tf_token }}
       run: |
         mise run ${{ github.action_path }}/sync-settings.sh

@@ -31,6 +31,5 @@ jobs:
       - uses: jdx/mise-action@v3
       - uses: ./.github/actions/sync-settings
         with:
-          repo_owner: ${{ github.repository_owner }}
           repo_name: ${{ github.event.repository.name }}
           tf_token: ${{ secrets.ADMIN_TERRAFORM_API_TOKEN }}
