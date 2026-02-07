@@ -4,7 +4,7 @@
 
 #USAGE flag "--repo-owner <repo-owner>" {
 #USAGE   required #true
-#USAGE   env "GITHUB_REPO_OWNER"
+#USAGE   env "GITHUB_REPOSITORY_OWNER"
 #USAGE   help "Repository owner name"
 #USAGE }
 #USAGE flag "--repo-name <repo-name>" {

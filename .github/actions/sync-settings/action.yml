@@ -17,7 +17,6 @@ runs:
     - name: Sync Settings
       shell: bash
       env:
-        GITHUB_REPO_OWNER: ${{ github.repository_owner }}
         REPO_NAME: ${{ inputs.repo_name }}
         ENVIRONMENTS_WORKSPACE_DIR: ${{ inputs.environments-workspace-dir }}
         TF_TOKEN: ${{ inputs.tf_token }}
