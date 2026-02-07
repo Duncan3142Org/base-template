@@ -16,7 +16,7 @@ env:
 
 jobs:
   clone-repo:
-    name: Clone Repository - {{ github.event.inputs.repo_name }}
+    name: Clone Repository - ${{ github.event.inputs.repo_name }}
     environment: GitHubAdmin
     runs-on: ubuntu-22.04
     steps:
@@ -40,6 +40,5 @@ jobs:
           template_branch: ${{ vars.TEMPLATE_BRANCH }}
       - uses: ./.github/actions/sync-settings
         with:
-          repo_owner: ${{ github.repository_owner }}
           repo_name: ${{ github.event.inputs.repo_name }}
           tf_token: ${{ secrets.ADMIN_TERRAFORM_API_TOKEN }}
