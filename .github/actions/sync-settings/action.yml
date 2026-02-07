@@ -1,0 +1,28 @@
+name: "Sync Settings"
+description: "Sync repository settings"
+inputs:
+  repo_name:
+    description: "Repository name"
+    required: true
+  environments-workspace-dir:
+    description: "Directory containing environment configuration, relative to repository root"
+    required: false
+    default: "./.github/environments"
+  tf_token:
+    description: "Terraform API token"
+    required: true
+  github_token:
+    description: "GitHub token for authentication"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Sync Settings
+      shell: bash
+      env:
+        REPO_NAME: ${{ inputs.repo_name }}
+        ENVIRONMENTS_WORKSPACE_DIR: ${{ inputs.environments-workspace-dir }}
+        TF_TOKEN: ${{ inputs.tf_token }}
+        GH_TOKEN: ${{ inputs.github_token }}
+      run: |
+        mise run ${{ github.action_path }}/sync-settings.sh

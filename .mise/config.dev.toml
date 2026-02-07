@@ -1,6 +1,7 @@
 [env]
 GH_TOKEN = "{{ read_file(path='/run/secrets/gh_token') | trim }}"
 GITHUB_PKG_TOKEN = "{{ read_file(path='/run/secrets/github_pkg_token') | trim }}"
+TF_TOKEN_app_terraform_io = "{{ read_file(path='/run/secrets/tf_token') | trim }}"
 
 [tasks.sync-template]
 depends = "init"
@@ -12,6 +13,9 @@ file = "./dev-tasks/init.sh"
 
 [tasks.update]
 file = "./dev-tasks/update.sh"
+
+[tasks.sync-root-lock]
+run = "cp /root/.config/mise/mise.lock /workspace/.devcontainer/devcontainer/.config/mise/mise.lock"
 
 [tasks.release-dry]
 depends = ["build"]

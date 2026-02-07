@@ -8,7 +8,7 @@ on:
       - "**"
 
 concurrency:
-  group: "CI"
+  group: "CI ${{ github.ref }}"
   cancel-in-progress: true
 
 permissions:
@@ -28,8 +28,8 @@ jobs:
     if: ${{ github.event.pull_request.state == 'open' && github.event.pull_request.draft == false }}
     runs-on: ubuntu-22.04
     steps:
-      - uses: jdx/mise-action@v3
       - uses: actions/checkout@v6
+      - uses: jdx/mise-action@v3
       - name: Install
         run: |
           mise run install

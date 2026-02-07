@@ -1,16 +1,16 @@
-variable "repository_owner" {
+variable "github_repository_owner" {
   type        = string
   description = "The owner of the repository"
 }
 
-variable "repository_name" {
+variable "github_repository_name" {
   type        = string
   description = "The name of the repository"
 }
 
-variable "deployment_app_secret" {
+variable "github_delivery_app_pem_file" {
   type        = string
-  description = "Secret value for DEPLOYMENT_APP_SECRET in GitHub environment"
+  description = "Secret value for DELIVERY_APP_PEM_FILE in GitHub environment"
   sensitive   = true
 }
 
@@ -20,18 +20,24 @@ variable "gitlab_mirror_pat" {
   sensitive   = true
 }
 
-variable "github_app_id" {
+variable "github_admin_app_id" {
   type        = string
-  description = "The GitHub App ID"
+  description = "The GitHub Admin App ID"
 }
 
-variable "github_app_installation_id" {
+variable "github_admin_app_installation_id" {
   type        = string
-  description = "The GitHub App Installation ID"
+  description = "The GitHub Admin App Installation ID"
 }
 
-variable "github_app_pem_file" {
+variable "github_admin_app_pem_file" {
   type        = string
-  description = "The GitHub App PEM file content"
+  description = "Secret value for Terraform GitHub provider auth and ADMIN_APP_PEM_FILE in GitHubAdmin environment"
+  sensitive   = true
+}
+
+variable "github_admin_terraform_api_token" {
+  type        = string
+  description = "Secret value for ADMIN_TERRAFORM_API_TOKEN in GitHubAdmin environment"
   sensitive   = true
 }

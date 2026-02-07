@@ -1,0 +1,37 @@
+name: "Clone Repo"
+description: "Clone this repository"
+inputs:
+  repo_name:
+    description: "Repository name"
+    required: true
+  template_branch:
+    description: "Template branch to persist in the new repository"
+    required: true
+  github_token:
+    description: "GitHub token for authentication"
+    required: true
+  tf_org_token:
+    description: "Terraform Org API token"
+    required: true
+  tf_project_id:
+    description: "Terraform Cloud Project ID"
+    required: true
+  tf_org_name:
+    description: "Terraform Cloud Organization Name"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Clone Repo
+      shell: bash
+      env:
+        CLONE_REPO_NAME: ${{ inputs.repo_name }}
+        SOURCE_REPO_NAME: ${{ github.event.repository.name }}
+        TEMPLATE_BRANCH: ${{ inputs.template_branch }}
+        GH_TOKEN: ${{ inputs.github_token }}
+        TF_ORG_TOKEN: ${{ inputs.tf_org_token }}
+        TF_PROJECT_ID: ${{ inputs.tf_project_id }}
+        TF_ORG_NAME: ${{ inputs.tf_org_name }}
+      run: |
+        mise run ${{ github.action_path }}/terraform-workspace.sh
+        mise run ${{ github.action_path }}/clone-repo.sh
