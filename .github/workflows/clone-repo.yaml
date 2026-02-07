@@ -39,6 +39,9 @@ jobs:
           repo_name: ${{ github.event.inputs.repo_name }}
           template_branch: ${{ vars.TEMPLATE_BRANCH }}
           github_token: ${{ steps.token.outputs.token }}
+          tf_token: ${{ secrets.ADMIN_TERRAFORM_API_TOKEN }}
+          tf_project_id: ${{ vars.TF_PROJECT_ID }}
+          tf_org_name: ${{ vars.TF_ORG_NAME }}
       - uses: ./.github/actions/sync-settings
         with:
           repo_name: ${{ github.event.inputs.repo_name }}
