@@ -44,7 +44,7 @@ github_token="${usage_github_token:?}"
 
 export GH_TOKEN="$github_token"
 
-echo "🔍  Syncing settings for ${BLUE}'$repo_owner/$repo_name'${NC}..."
+echo -e "🔍  Syncing settings for ${BLUE}'$repo_owner/$repo_name'${NC}..."
 
 # --- Tool checks ---
 if ! command -v gh &> /dev/null; then

@@ -46,10 +46,12 @@ github_token="${usage_github_token:?}"
 export GH_TOKEN="$github_token"
 
 # --- Validate Inputs ---
-if [[ ! "${clone_repo_name}" =~ ^[a-zA-Z0-9_-]+$ ]]; then
-  echo "Invalid repository name. Only alphanumeric characters, underscores, and hyphens are allowed."
-  exit 1
-fi
+for name in "$repo_owner" "$clone_repo_name" "$source_repo_name"; do
+  if [[ ! "$name" =~ ^[a-zA-Z0-9._-]+$ ]]; then
+    echo -e "${RED}Invalid name '${name}'. Only alphanumeric characters, dots, underscores, and hyphens are allowed.${NC}"
+    exit 1
+  fi
+done
 
 # Tool checks
 if ! command -v gh &> /dev/null; then
@@ -97,21 +99,19 @@ gh repo create "$repo_owner/$clone_repo_name" --private
 # Add 'clone-of' custom property to new repo
 echo -e "${BLUE}🏷️  Adding 'clone-of' property to new repository...${NC}"
 current_origin_url="https://github.com/$repo_owner/$source_repo_name"
+clone_of_payload=$(jq -n \
+  --arg url "$current_origin_url" \
+  '{properties: [{property_name: "clone-of", value: $url}]}')
 gh api \
   --method PATCH \
   -H "Accept: application/vnd.github+json" \
   "/repos/$repo_owner/$clone_repo_name/properties/values" \
-  --input - <<< "{
-    \"properties\": [
-      {
-        \"property_name\": \"clone-of\",
-        \"value\": \"$current_origin_url\"
-      }
-    ]
-  }"
+  --input - <<< "$clone_of_payload"
 
-# Add clone remote to local repo
-git remote add "${clone_repo_name}" "https://github.com/$repo_owner/$clone_repo_name.git"
+# Add clone remote to local repo (idempotent)
+if ! git remote get-url "${clone_repo_name}" &> /dev/null; then
+  git remote add "${clone_repo_name}" "https://github.com/$repo_owner/$clone_repo_name.git"
+fi
 
 # Push bootstrap branch to new repo and set upstream
 echo -e "${BLUE}📤 Pushing to clone bootstrap branch...${NC}"
@@ -129,4 +129,4 @@ echo -e "${BLUE}⚙️  Setting default branch to '$default_branch'...${NC}"
 gh repo edit "$repo_owner/$clone_repo_name" --default-branch "$default_branch"
 
 echo -e "${GREEN}✅ Success! Repository '$repo_owner/$clone_repo_name' is live.${NC}"
-echo -e "   - Clone it with \"gh clone $repo_owner/$clone_repo_name\""
+echo -e "   - Clone it with \"gh repo clone $repo_owner/$clone_repo_name\""
