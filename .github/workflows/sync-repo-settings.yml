@@ -24,6 +24,7 @@ jobs:
           owner: ${{ github.repository_owner }}
           repositories: ${{ github.event.repository.name }}
           permission-administration: write
+          permission-contents: read
       - name: Checkout code
         uses: actions/checkout@v6
         with:
