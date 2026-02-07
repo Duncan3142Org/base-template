@@ -40,12 +40,13 @@ tf_workspace_name="${clone_repo_name}-github-repo"
 echo -e "${BLUE}☁️  Bootstrapping Terraform Cloud workspace '${tf_workspace_name}'...${NC}"
 
 # Check if workspace exists
-tf_workspace_response=$(curl -s \
+tf_workspace_response=$(curl -s -w '\n%{http_code}' \
   --header "Authorization: Bearer $tf_token" \
   --header "Content-Type: application/vnd.api+json" \
   "https://app.terraform.io/api/v2/organizations/${tf_org_name}/workspaces/${tf_workspace_name}")
+tf_workspace_http_code="${tf_workspace_response##*$'\n'}"
 
-if echo "$tf_workspace_response" | grep -q ""status":"404""; then
+if [[ "$tf_workspace_http_code" == "404" ]]; then
   echo "   Workspace not found. Creating..."
 
   # Create Workspace
@@ -54,17 +55,19 @@ if echo "$tf_workspace_response" | grep -q ""status":"404""; then
     --arg project_id "$tf_project_id" \
     '{data: {type: "workspaces", attributes: {name: $name}, relationships: {project: {data: {type: "projects", id: $project_id}}}}}')
 
-  create_ws_response=$(curl -s -X POST \
+  create_ws_response=$(curl -s -w '\n%{http_code}' -X POST \
     --header "Authorization: Bearer $tf_token" \
     --header "Content-Type: application/vnd.api+json" \
     --data "$create_ws_payload" \
     "https://app.terraform.io/api/v2/organizations/${tf_org_name}/workspaces")
+  create_ws_http_code="${create_ws_response##*$'\n'}"
+  create_ws_body="${create_ws_response%$'\n'*}"
 
   # Extract new Workspace ID
-  tf_workspace_id=$(echo "$create_ws_response" | jq -r '.data.id')
+  tf_workspace_id=$(echo "$create_ws_body" | jq -r '.data.id')
 
-  if [[ "$tf_workspace_id" == "null" ]]; then
-    echo -e "${RED}❌ Error creating workspace: $(echo "$create_ws_response" | jq -r '.errors[0].detail')${NC}"
+  if [[ -z "$tf_workspace_id" || "$tf_workspace_id" == "null" ]]; then
+    echo -e "${RED}❌ Error creating workspace (HTTP $create_ws_http_code): $(echo "$create_ws_body" | jq -r '.errors[0].detail // "unknown error"')${NC}"
     exit 1
   fi
   echo "   ✅ Workspace created (ID: $tf_workspace_id)."
@@ -75,18 +78,23 @@ if echo "$tf_workspace_response" | grep -q ""status":"404""; then
     --arg value "$clone_repo_name" \
     '{data: {type: "vars", attributes: {key: "github_repository_name", value: $value, category: "terraform", hcl: false, sensitive: false}}}')
 
-  create_var_response=$(curl -s -X POST \
+  create_var_response=$(curl -s -w '\n%{http_code}' -X POST \
     --header "Authorization: Bearer $tf_token" \
     --header "Content-Type: application/vnd.api+json" \
-    --data "$create_var_payload"
+    --data "$create_var_payload" \
     "https://app.terraform.io/api/v2/workspaces/${tf_workspace_id}/vars")
+  create_var_http_code="${create_var_response##*$'\n'}"
+  create_var_body="${create_var_response%$'\n'*}"
 
-  if echo "$create_var_response" | grep -q "errors"; then
-      echo -e "${RED}❌ Error setting variable: $(echo "$create_var_response" | jq -r '.errors[0].detail')${NC}"
-      exit 1
+  if jq -e '.errors' > /dev/null 2>&1 <<< "$create_var_body"; then
+    echo -e "${RED}❌ Error setting variable (HTTP $create_var_http_code): $(echo "$create_var_body" | jq -r '.errors[0].detail // "unknown error"')${NC}"
+    exit 1
   fi
   echo "   ✅ Variable set."
 
-else
+elif [[ "$tf_workspace_http_code" == "200" ]]; then
   echo "   Workspace already exists. Skipping creation."
+else
+  echo -e "${RED}❌ Unexpected response (HTTP $tf_workspace_http_code) when checking workspace.${NC}"
+  exit 1
 fi
