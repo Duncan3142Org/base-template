@@ -30,7 +30,7 @@ jobs:
           permission-contents: write
           permission-repository-custom-properties: write
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           token: ${{ steps.token.outputs.token }}
       - uses: jdx/mise-action@v3
