@@ -11,6 +11,9 @@ inputs:
   tf_token:
     description: "Terraform API token"
     required: true
+  github_token:
+    description: "GitHub token for authentication"
+    required: true
 runs:
   using: "composite"
   steps:
@@ -20,5 +23,6 @@ runs:
         REPO_NAME: ${{ inputs.repo_name }}
         ENVIRONMENTS_WORKSPACE_DIR: ${{ inputs.environments-workspace-dir }}
         TF_TOKEN: ${{ inputs.tf_token }}
+        GH_TOKEN: ${{ inputs.github_token }}
       run: |
         mise run ${{ github.action_path }}/sync-settings.sh

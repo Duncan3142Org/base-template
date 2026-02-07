@@ -22,6 +22,11 @@
 #USAGE   env "TF_TOKEN"
 #USAGE   help "Terraform API token"
 #USAGE }
+#USAGE flag "--github-token <github-token>" {
+#USAGE   required #true
+#USAGE   env "GH_TOKEN"
+#USAGE   help "GitHub token for authentication"
+#USAGE }
 
 set -ueC
 set -o pipefail
@@ -35,6 +40,9 @@ repo_owner="${usage_repo_owner:?}"
 repo_name="${usage_repo_name:?}"
 environments_workspace_dir="${usage_environments_workspace_dir:?}"
 tf_token="${usage_tf_token:?}"
+github_token="${usage_github_token:?}"
+
+export GH_TOKEN="$github_token"
 
 echo "🔍  Syncing settings for ${BLUE}'$repo_owner/$repo_name'${NC}..."
 

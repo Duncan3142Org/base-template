@@ -22,6 +22,11 @@
 #USAGE   env "TEMPLATE_BRANCH"
 #USAGE   help "Template branch to persist in the new repository"
 #USAGE }
+#USAGE flag "--github-token <github-token>" {
+#USAGE   required #true
+#USAGE   env "GH_TOKEN"
+#USAGE   help "GitHub token for authentication"
+#USAGE }
 
 set -ueC
 set -o pipefail
@@ -36,6 +41,9 @@ repo_owner="${usage_repo_owner:?}"
 clone_repo_name="${usage_clone_repo_name:?}"
 source_repo_name="${usage_source_repo_name:?}"
 template_branch="${usage_template_branch:?}"
+github_token="${usage_github_token:?}"
+
+export GH_TOKEN="$github_token"
 
 # --- Validate Inputs ---
 if [[ ! "${clone_repo_name}" =~ ^[a-zA-Z0-9_-]+$ ]]; then

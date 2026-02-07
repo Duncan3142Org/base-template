@@ -7,6 +7,9 @@ inputs:
   template_branch:
     description: "Template branch to persist in the new repository"
     required: true
+  github_token:
+    description: "GitHub token for authentication"
+    required: true
 runs:
   using: "composite"
   steps:
@@ -16,5 +19,6 @@ runs:
         CLONE_REPO_NAME: ${{ inputs.repo_name }}
         SOURCE_REPO_NAME: ${{ github.event.repository.name }}
         TEMPLATE_BRANCH: ${{ inputs.template_branch }}
+        GH_TOKEN: ${{ inputs.github_token }}
       run: |
         mise run ${{ github.action_path }}/clone-repo.sh

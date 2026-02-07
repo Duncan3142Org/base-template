@@ -33,3 +33,4 @@ jobs:
         with:
           repo_name: ${{ github.event.repository.name }}
           tf_token: ${{ secrets.ADMIN_TERRAFORM_API_TOKEN }}
+          github_token: ${{ steps.token.outputs.token }}
