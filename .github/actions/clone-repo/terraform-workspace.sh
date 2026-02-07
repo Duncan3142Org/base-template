@@ -2,10 +2,10 @@
 
 #MISE description="Bootstrap a Terraform Cloud workspace"
 
-#USAGE flag "--tf-token <tf-token>" {
+#USAGE flag "--tf-org-token <tf-org-token>" {
 #USAGE   required #true
-#USAGE   env "TF_TOKEN"
-#USAGE   help "Terraform API token"
+#USAGE   env "TF_ORG_TOKEN"
+#USAGE   help "Terraform Org API token"
 #USAGE }
 #USAGE flag "--tf-project-id <tf-project-id>" {
 #USAGE   required #true
@@ -31,7 +31,7 @@ RED='\033[0;31m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-tf_token="${usage_tf_token:?}"
+tf_org_token="${usage_tf_org_token:?}"
 tf_project_id="${usage_tf_project_id:?}"
 clone_repo_name="${usage_clone_repo_name:?}"
 tf_org_name="${usage_tf_org_name:?}"
@@ -41,7 +41,7 @@ echo -e "${BLUE}☁️  Bootstrapping Terraform Cloud workspace '${tf_workspace_
 
 # Check if workspace exists
 tf_workspace_response=$(curl -s -w '\n%{http_code}' \
-  --header "Authorization: Bearer $tf_token" \
+  --header "Authorization: Bearer $tf_org_token" \
   --header "Content-Type: application/vnd.api+json" \
   "https://app.terraform.io/api/v2/organizations/${tf_org_name}/workspaces/${tf_workspace_name}")
 tf_workspace_http_code="${tf_workspace_response##*$'\n'}"
@@ -56,7 +56,7 @@ if [[ "$tf_workspace_http_code" == "404" ]]; then
     '{data: {type: "workspaces", attributes: {name: $name}, relationships: {project: {data: {type: "projects", id: $project_id}}}}}')
 
   create_ws_response=$(curl -s -w '\n%{http_code}' -X POST \
-    --header "Authorization: Bearer $tf_token" \
+    --header "Authorization: Bearer $tf_org_token" \
     --header "Content-Type: application/vnd.api+json" \
     --data "$create_ws_payload" \
     "https://app.terraform.io/api/v2/organizations/${tf_org_name}/workspaces")
@@ -79,7 +79,7 @@ if [[ "$tf_workspace_http_code" == "404" ]]; then
     '{data: {type: "vars", attributes: {key: "github_repository_name", value: $value, category: "terraform", hcl: false, sensitive: false}}}')
 
   create_var_response=$(curl -s -w '\n%{http_code}' -X POST \
-    --header "Authorization: Bearer $tf_token" \
+    --header "Authorization: Bearer $tf_org_token" \
     --header "Content-Type: application/vnd.api+json" \
     --data "$create_var_payload" \
     "https://app.terraform.io/api/v2/workspaces/${tf_workspace_id}/vars")

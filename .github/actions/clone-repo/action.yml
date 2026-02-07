@@ -10,8 +10,8 @@ inputs:
   github_token:
     description: "GitHub token for authentication"
     required: true
-  tf_token:
-    description: "Terraform API token"
+  tf_org_token:
+    description: "Terraform Org API token"
     required: true
   tf_project_id:
     description: "Terraform Cloud Project ID"
@@ -29,7 +29,7 @@ runs:
         SOURCE_REPO_NAME: ${{ github.event.repository.name }}
         TEMPLATE_BRANCH: ${{ inputs.template_branch }}
         GH_TOKEN: ${{ inputs.github_token }}
-        TF_TOKEN: ${{ inputs.tf_token }}
+        TF_ORG_TOKEN: ${{ inputs.tf_org_token }}
         TF_PROJECT_ID: ${{ inputs.tf_project_id }}
         TF_ORG_NAME: ${{ inputs.tf_org_name }}
       run: |
