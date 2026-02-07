@@ -1,5 +1,8 @@
 [settings]
 # locked = true
 
+[tools]
+terraform = "1"
+
 [tasks.prepare-clone]
 file = "./.github/admin/prepare-clone.sh"

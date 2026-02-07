@@ -6,9 +6,6 @@ on:
       repo_name:
         description: "Repository name"
         required: true
-      confirm_repo_name:
-        description: "Type the repository name again to confirm"
-        required: true
 
 concurrency:
   group: "Clone Repo"
@@ -18,7 +15,8 @@ env:
   MISE_ENV: admin
 
 jobs:
-  repo-mirror:
+  clone-repo:
+    name: Clone Repository - {{ github.event.inputs.repo_name }}
     environment: GitHubAdmin
     runs-on: ubuntu-22.04
     steps:
@@ -35,16 +33,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ steps.token.outputs.token }}
-      - uses: hashicorp/setup-terraform@v3
-        with:
-          cli_config_credentials_token: ${{ secrets.ADMIN_TERRAFORM_API_TOKEN }}
       - uses: jdx/mise-action@v3
       - uses: ./.github/actions/clone-repo
         with:
-          repo_owner: ${{ github.repository_owner }}
           repo_name: ${{ github.event.inputs.repo_name }}
-          confirm_repo_name: ${{ github.event.inputs.confirm_repo_name }}
+          template_branch: ${{ vars.TEMPLATE_BRANCH }}
       - uses: ./.github/actions/sync-settings
         with:
           repo_owner: ${{ github.repository_owner }}
           repo_name: ${{ github.event.inputs.repo_name }}
+          tf_token: ${{ secrets.ADMIN_TERRAFORM_API_TOKEN }}

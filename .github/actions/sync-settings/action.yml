@@ -11,6 +11,9 @@ inputs:
     description: "Directory containing environment configuration, relative to repository root"
     required: false
     default: "./.github/environments"
+  tf_token:
+    description: "Terraform API token"
+    required: false
 runs:
   using: "composite"
   steps:
@@ -21,5 +24,6 @@ runs:
         GITHUB_REPO_NAME: ${{ inputs.repo_name }}
         ENVIRONMENTS_WORKSPACE_DIR: ${{ inputs.environments-workspace-dir }}
         WORKSPACE_DIR: ${{ github.workspace }}
+        TF_TOKEN: ${{ inputs.tf_token }}
       run: |
-        ${{ github.action_path }}/sync-settings.sh
+        mise run ${{ github.action_path }}/sync-settings.sh

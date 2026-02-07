@@ -7,8 +7,12 @@ concurrency:
   group: "Sync Repo Settings"
   cancel-in-progress: false
 
+env:
+  MISE_ENV: admin
+
 jobs:
-  repo-mirror:
+  sync-repo-settings:
+    name: Sync Repository Settings - {{ github.event.repository.name }}
     environment: GitHubAdmin
     runs-on: ubuntu-22.04
     steps:
@@ -24,10 +28,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ steps.token.outputs.token }}
-      - uses: hashicorp/setup-terraform@v3
-        with:
-          cli_config_credentials_token: ${{ secrets.ADMIN_TERRAFORM_API_TOKEN }}
+      - uses: jdx/mise-action@v3
       - uses: ./.github/actions/sync-settings
         with:
           repo_owner: ${{ github.repository_owner }}
           repo_name: ${{ github.event.repository.name }}
+          tf_token: ${{ secrets.ADMIN_TERRAFORM_API_TOKEN }}

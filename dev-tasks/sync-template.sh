@@ -2,6 +2,12 @@
 
 #MISE description "Merge default branch of template remote into local template branch"
 
+#USAGE flag "--template-branch <template-branch>" {
+#USAGE   env "TEMPLATE_BRANCH"
+#USAGE   default "TEMPLATE"
+#USAGE   help "Template branch name"
+#USAGE }
+
 set -ueC
 set -o pipefail
 
@@ -13,7 +19,7 @@ NC='\033[0m' # No Color
 
 # --- Configuration ---
 TEMPLATE_REMOTE_NAME="template"
-TEMPLATE_BRANCH="${TEMPLATE_BRANCH:-TEMPLATE}"
+TEMPLATE_BRANCH="${usage_template_branch:?}"
 
 # --- Checks ---
 if ! command -v gh &> /dev/null; then

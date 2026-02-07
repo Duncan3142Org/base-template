@@ -8,6 +8,12 @@
 set -ueC
 set -o pipefail
 
+# --- Visual Helpers ---
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
 # --- Inputs ---
 repo_owner_name=${usage_repo_owner_name:?}
 source_repo_name=${usage_source_repo_name:?}

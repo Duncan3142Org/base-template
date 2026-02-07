@@ -17,20 +17,10 @@
 #USAGE   env "SOURCE_REPO_NAME"
 #USAGE   help "Source repository name"
 #USAGE }
-#USAGE flag "--workspace-dir <workspace-dir>" {
-#USAGE   required #true
-#USAGE   env "GITHUB_WORKSPACE"
-#USAGE   help "GitHub workspace directory"
-#USAGE }
-#USAGE flag "--environments-workspace-dir <environments-workspace-dir>" {
-#USAGE   default "./.github/environments"
-#USAGE   env "ENVIRONMENTS_WORKSPACE_DIR"
-#USAGE   help "Directory containing environment configuration, relative to repository root"
-#USAGE }
 #USAGE flag "--template-branch <template-branch>" {
-#USAGE   default "TEMPLATE"
+#USAGE   required #true
 #USAGE   env "TEMPLATE_BRANCH"
-#USAGE   help "Template branch to use for the clone"
+#USAGE   help "Template branch to persist in the new repository"
 #USAGE }
 
 set -ueC
@@ -45,8 +35,6 @@ NC='\033[0m' # No Color
 repo_owner="${usage_repo_owner:?}"
 clone_repo_name="${usage_clone_repo_name:?}"
 source_repo_name="${usage_source_repo_name:?}"
-environments_workspace_dir="${usage_environments_workspace_dir:?}"
-workspace_dir="${usage_workspace_dir:?}"
 template_branch="${usage_template_branch:?}"
 
 # --- Validate Inputs ---
@@ -55,26 +43,11 @@ if [[ ! "${clone_repo_name}" =~ ^[a-zA-Z0-9_-]+$ ]]; then
   exit 1
 fi
 
-mise run install
-
 # Tool checks
 if ! command -v gh &> /dev/null; then
   echo -e "${RED}Error: GitHub CLI (gh) is not installed.${NC}"
   exit 1
 fi
-
-if ! command -v terraform &> /dev/null; then
-  echo -e "${RED}Error: Terraform CLI (terraform) is not installed.${NC}"
-  exit 1
-fi
-
-# Check that terraform cloud workspace exists before proceeding
-echo -e "${BLUE}🔧 Ensuring Terraform Cloud workspace exists...${NC}"
-(
-  cd "$workspace_dir/$environments_workspace_dir"
-  export TF_WORKSPACE="$clone_repo_name-github-repo"
-  terraform init
-)
 
 # Use github cli to get default branch
 default_branch=$(gh api "repos/:owner/:repo" --jq '.default_branch')
@@ -115,7 +88,7 @@ gh repo create "$repo_owner/$clone_repo_name" --private
 
 # Add 'clone-of' custom property to new repo
 echo -e "${BLUE}🏷️  Adding 'clone-of' property to new repository...${NC}"
-current_origin_url=$(git remote get-url origin)
+current_origin_url="https://github.com/$repo_owner/$source_repo_name"
 gh api \
   --method PATCH \
   -H "Accept: application/vnd.github+json" \
@@ -132,12 +105,9 @@ gh api \
 # Add clone remote to local repo
 git remote add "${clone_repo_name}" "https://github.com/$repo_owner/$clone_repo_name.git"
 
-# Set bootstrap branch upstream to new repo template branch
-git branch --set-upstream-to="${clone_repo_name}/$template_branch" "$bootstrap_branch"
-
-# Push bootstrap branch to new repo
+# Push bootstrap branch to new repo and set upstream
 echo -e "${BLUE}📤 Pushing to clone bootstrap branch...${NC}"
-git push "${clone_repo_name}" --no-tags
+git push -u "${clone_repo_name}" "$bootstrap_branch:$template_branch" --no-tags
 
 # Construct remote default branch via API, bypassing rulesets
 echo -e "${BLUE}🏗️  Constructing '$default_branch' branch via API...${NC}"
