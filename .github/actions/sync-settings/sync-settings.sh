@@ -50,17 +50,15 @@ if ! command -v terraform &> /dev/null; then
 fi
 
 echo -e "🌍  ${BLUE}Syncing environments...${NC}"
-(
-  export TF_WORKSPACE="$repo_name-github-repo"
-  export TF_TOKEN_app_terraform_io="$tf_token"
-  cd "$environments_workspace_dir"
-  echo -e "📦  ${BLUE}Using Terraform workspace: $TF_WORKSPACE${NC}"
-  echo -e "⚙️  ${BLUE}Initializing Terraform...${NC}"
-  terraform init
-  echo -e "🚀  ${BLUE}Applying Terraform configuration...${NC}"
-  terraform apply -auto-approve
-  echo -e "✅  ${BLUE}Environments synced successfully.${NC}"
-)
+export TF_WORKSPACE="$repo_name-github-repo"
+export TF_TOKEN_app_terraform_io="$tf_token"
+
+echo -e "📦  ${BLUE}Using Terraform workspace: $TF_WORKSPACE${NC}"
+echo -e "⚙️  ${BLUE}Initializing Terraform...${NC}"
+terraform -chdir="$environments_workspace_dir" init
+echo -e "🚀  ${BLUE}Applying Terraform configuration...${NC}"
+terraform -chdir="$environments_workspace_dir" apply -auto-approve
+echo -e "✅  ${BLUE}Environments synced successfully.${NC}"
 
 # Pull request settings
 echo "⚙️  Syncing PR settings..."
