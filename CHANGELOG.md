@@ -1,3 +1,10 @@
+## [1.4.8](https://github.com/Duncan3142Org/base-template/compare/v1.4.7...v1.4.8) (2026-02-08)
+
+
+### Bug Fixes
+
+* clone action ([#18](https://github.com/Duncan3142Org/base-template/issues/18)) ([92299bf]())
+
 ## [1.4.7](https://github.com/Duncan3142Org/base-template/compare/v1.4.6...v1.4.7) (2026-02-01)
 
 
