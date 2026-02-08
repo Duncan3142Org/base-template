@@ -5,4 +5,4 @@
 terraform = "1"
 
 [tasks.prepare-clone]
-file = "./.github/admin/prepare-clone.sh"
+file = "./tasks/admin/prepare-clone.sh"

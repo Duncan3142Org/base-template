@@ -5,19 +5,14 @@ TF_TOKEN_app_terraform_io = "{{ read_file(path='/run/secrets/tf_token') | trim }
 
 [tasks.sync-template]
 depends = "init"
-file = "./dev-tasks/sync-template.sh"
+file = "./tasks/dev/sync-template.sh"
 
 [tasks.init]
 depends = "install"
-file = "./dev-tasks/init.sh"
+file = "./tasks/dev/init.sh"
 
 [tasks.update]
-file = "./dev-tasks/update.sh"
+file = "./tasks/dev/update.sh"
 
 [tasks.sync-root-lock]
 run = "cp /root/.config/mise/mise.lock /workspace/.devcontainer/devcontainer/.config/mise/mise.lock"
-
-[tasks.release-dry]
-depends = ["build"]
-env = { RELEASE_CLI_DIR = "./.github/actions/release" }
-run = "./.github/actions/release/node_modules/.bin/semantic-release --dry"

@@ -12,7 +12,7 @@ env:
 
 jobs:
   sync-repo-settings:
-    name: Sync Repository Settings - ${{ github.event.repository.name }}
+    name: Sync Repository Settings
     environment: GitHubAdmin
     runs-on: ubuntu-22.04
     steps:

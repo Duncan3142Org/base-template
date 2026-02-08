@@ -16,7 +16,7 @@ env:
 
 jobs:
   clone-repo:
-    name: Clone Repository - ${{ github.event.inputs.repo_name }}
+    name: Clone Repository - '${{ github.event.inputs.repo_name }}'
     environment: GitHubAdmin
     runs-on: ubuntu-22.04
     steps:
