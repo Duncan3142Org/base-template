@@ -41,6 +41,7 @@ node_modules
 
 # Agent Instructions
 !.agents/
+!.agents/.ignore
 
 # Claude Code
 !.claude/
