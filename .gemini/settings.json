@@ -1,21 +1,21 @@
 {
-  "$schema": "https://raw.githubusercontent.com/google-gemini/gemini-cli/main/schemas/settings.schema.json",
-  "model": {
-    "name": "gemini-3-pro-preview"
-  },
-  "general": {
-    "enablePromptCompletion": true,
-    "previewFeatures": true
-  },
-  "tools": {},
-  "ui": {
-    "showStatusInTitle": true
-  },
-  "context": {
-    "fileFiltering": {
-      "customIgnoreFilePaths": [
-        ".agents/.ignore"
-      ]
-    }
-  }
+	"$schema": "https://raw.githubusercontent.com/google-gemini/gemini-cli/main/schemas/settings.schema.json",
+	"model": {
+		"name": "gemini-3-pro-preview"
+	},
+	"general": {
+		"enablePromptCompletion": true,
+		"previewFeatures": true
+	},
+	"tools": {
+		"approvalMode": "plan"
+	},
+	"ui": {
+		"showStatusInTitle": true
+	},
+	"context": {
+		"fileFiltering": {
+			"customIgnoreFilePaths": [".agents/.ignore"]
+		}
+	}
 }
