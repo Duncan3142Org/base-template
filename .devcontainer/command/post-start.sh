@@ -19,3 +19,4 @@ mise_update
 mise run sync-root-lock
 
 mise run init
+mise run update

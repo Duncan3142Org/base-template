@@ -41,3 +41,9 @@ variable "github_admin_terraform_api_token" {
   description = "Secret value for ADMIN_TERRAFORM_API_TOKEN in GitHubAdmin environment"
   sensitive   = true
 }
+
+variable "github_admin_terraform_org_api_token" {
+  type        = string
+  description = "Secret value for ADMIN_TERRAFORM_ORG_API_TOKEN in GitHubAdmin environment"
+  sensitive   = true
+}

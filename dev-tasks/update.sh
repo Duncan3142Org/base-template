@@ -6,4 +6,4 @@ set -ueC
 set -o pipefail
 
 npm up
-npm outdated
+npm outdated || true
