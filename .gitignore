@@ -39,5 +39,14 @@ node_modules
 !.prettierignore
 !.prettierrc.js
 
+# Agent Instructions
+!.agents/
+
+# Claude Code
+!.claude/
+
+# Gemini CLI
+!.gemini/
+
 # Terraform
 !.terraform.lock.hcl

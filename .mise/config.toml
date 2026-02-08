@@ -16,6 +16,9 @@ file = "./tasks/build.sh"
 [tasks.format]
 file = "./tasks/format.sh"
 
+[tasks.lint]
+file = "./tasks/lint.sh"
+
 [tasks.clean]
 file = "./tasks/clean.sh"
 
