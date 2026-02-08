@@ -5,4 +5,4 @@
 set -ueC
 set -o pipefail
 
-echo "No build logic configured"
+echo "No assets to generate"

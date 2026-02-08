@@ -2,5 +2,5 @@
 # locked = true
 
 [tasks.ci]
-depends = ["format check", "test", "build", "lint check"]
-file = "./.github/cicd/ci.sh"
+depends = ["format check", "test", "assets", "lint check"]
+file = "./tasks/cicd/ci.sh"
