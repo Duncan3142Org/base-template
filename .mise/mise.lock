@@ -8,9 +8,19 @@ backend = "core:node"
 "platforms.windows-x64" = { checksum = "sha256:ca2742695be8de44027d71b3f53a4bdb36009b95575fe1ae6f7f0b5ce091cb88", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-win-x64.zip"}
 
 [[tools.npm]]
-version = "11.8.0"
+version = "11.9.0"
 backend = "npm:npm"
 
 [[tools."npm:prettier"]]
 version = "3.8.1"
 backend = "npm:prettier"
+
+[[tools.terraform]]
+version = "1.14.4"
+backend = "aqua:hashicorp/terraform"
+env = ["admin"]
+"platforms.linux-arm64" = { checksum = "sha256:dcbc9d4b9fcd47e76ae194d5d569bfbf9f15bf1c59ca692aff6d2a92eb8e8994", url = "https://releases.hashicorp.com/terraform/1.14.4/terraform_1.14.4_linux_arm64.zip"}
+"platforms.linux-x64" = { checksum = "sha256:4a24b18865d9419ba7882567cb7429dd1525b3e2029a9e38f612d476ba8c3dea", url = "https://releases.hashicorp.com/terraform/1.14.4/terraform_1.14.4_linux_amd64.zip"}
+"platforms.macos-arm64" = { checksum = "sha256:dc4ee56edfde4fb6d578783292b5fa126d624803aa9326d03da5466ef59d4dbd", url = "https://releases.hashicorp.com/terraform/1.14.4/terraform_1.14.4_darwin_arm64.zip"}
+"platforms.macos-x64" = { checksum = "sha256:367dfc3fd689db10817f96cede1f737c88300f34e5a783c90cb9874973031832", url = "https://releases.hashicorp.com/terraform/1.14.4/terraform_1.14.4_darwin_amd64.zip"}
+"platforms.windows-x64" = { checksum = "sha256:0d20cbf5de662677ecf671d28f4aef95c21ec966a89fd98539b24e457710759f", url = "https://releases.hashicorp.com/terraform/1.14.4/terraform_1.14.4_windows_amd64.zip"}

@@ -18,8 +18,8 @@
 	},
 	"files": [],
 	"devDependencies": {
-		"@commitlint/config-conventional": "^20.4.0",
+		"@commitlint/config-conventional": "^20.4.1",
 		"@duncan3142/prettier-config": "^0.1.10",
-		"@types/node": "^24.10.9"
+		"@types/node": "^24.10.12"
 	}
 }

@@ -1,0 +1,37 @@
+name: Sync Repo Settings
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: "Sync Repo Settings"
+  cancel-in-progress: false
+
+env:
+  MISE_ENV: admin
+
+jobs:
+  sync-repo-settings:
+    name: Sync Repository Settings - ${{ github.event.repository.name }}
+    environment: GitHubAdmin
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/create-github-app-token@v2
+        id: token
+        with:
+          app-id: ${{ vars.ADMIN_APP_ID }}
+          private-key: ${{ secrets.ADMIN_APP_PEM_FILE }}
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ github.event.repository.name }}
+          permission-administration: write
+          permission-contents: read
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          token: ${{ steps.token.outputs.token }}
+      - uses: jdx/mise-action@v3
+      - uses: ./.github/actions/sync-settings
+        with:
+          repo_name: ${{ github.event.repository.name }}
+          tf_token: ${{ secrets.ADMIN_TF_API_TOKEN }}
+          github_token: ${{ steps.token.outputs.token }}

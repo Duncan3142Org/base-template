@@ -1,0 +1,49 @@
+name: Clone Repo
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo_name:
+        description: "Repository name"
+        required: true
+
+concurrency:
+  group: "Clone Repo"
+  cancel-in-progress: false
+
+env:
+  MISE_ENV: admin
+
+jobs:
+  clone-repo:
+    name: Clone Repository - ${{ github.event.inputs.repo_name }}
+    environment: GitHubAdmin
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/create-github-app-token@v2
+        id: token
+        with:
+          app-id: ${{ vars.ADMIN_APP_ID }}
+          private-key: ${{ secrets.ADMIN_APP_PEM_FILE }}
+          owner: ${{ github.repository_owner }}
+          permission-administration: write
+          permission-contents: write
+          permission-repository-custom-properties: write
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          token: ${{ steps.token.outputs.token }}
+      - uses: jdx/mise-action@v3
+      - uses: ./.github/actions/clone-repo
+        with:
+          repo_name: ${{ github.event.inputs.repo_name }}
+          template_branch: ${{ vars.TEMPLATE_BRANCH }}
+          github_token: ${{ steps.token.outputs.token }}
+          tf_org_token: ${{ secrets.ADMIN_TF_ORG_API_TOKEN }}
+          tf_project_id: ${{ vars.ADMIN_TF_PROJECT_ID }}
+          tf_org_name: ${{ vars.ADMIN_TF_ORG_NAME }}
+      - uses: ./.github/actions/sync-settings
+        with:
+          repo_name: ${{ github.event.inputs.repo_name }}
+          tf_token: ${{ secrets.ADMIN_TF_API_TOKEN }}
+          github_token: ${{ steps.token.outputs.token }}

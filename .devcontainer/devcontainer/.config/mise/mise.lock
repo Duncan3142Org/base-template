@@ -1,11 +1,11 @@
 [[tools.docker-cli]]
-version = "29.2.0"
+version = "29.2.1"
 backend = "aqua:docker/cli"
-"platforms.linux-arm64" = { url = "https://download.docker.com/linux/static/stable/aarch64/docker-29.2.0.tgz"}
-"platforms.linux-x64" = { url = "https://download.docker.com/linux/static/stable/x86_64/docker-29.2.0.tgz"}
-"platforms.macos-arm64" = { url = "https://download.docker.com/mac/static/stable/aarch64/docker-29.2.0.tgz"}
-"platforms.macos-x64" = { url = "https://download.docker.com/mac/static/stable/x86_64/docker-29.2.0.tgz"}
-"platforms.windows-x64" = { url = "https://download.docker.com/win/static/stable/x86_64/docker-29.2.0.zip"}
+"platforms.linux-arm64" = { url = "https://download.docker.com/linux/static/stable/aarch64/docker-29.2.1.tgz"}
+"platforms.linux-x64" = { checksum = "blake3:78cf03899fcbcc8e011a791108ead2163a59cb441591ccc90d9b50256c8e25a1", url = "https://download.docker.com/linux/static/stable/x86_64/docker-29.2.1.tgz"}
+"platforms.macos-arm64" = { url = "https://download.docker.com/mac/static/stable/aarch64/docker-29.2.1.tgz"}
+"platforms.macos-x64" = { url = "https://download.docker.com/mac/static/stable/x86_64/docker-29.2.1.tgz"}
+"platforms.windows-x64" = { url = "https://download.docker.com/win/static/stable/x86_64/docker-29.2.1.zip"}
 
 [[tools."github:cli/cli"]]
 version = "2.86.0"
@@ -25,16 +25,25 @@ backend = "github:hadolint/hadolint"
 "platforms.macos-x64" = { checksum = "sha256:2b69a853433f1eca522ffb921cd490bd1321424d03331fd8390f93b7fb4a02e9", url = "https://github.com/hadolint/hadolint/releases/download/v2.14.0/hadolint-macos-x86_64", url_api = "https://api.github.com/repos/hadolint/hadolint/releases/assets/295944082"}
 "platforms.windows-x64" = { checksum = "sha256:8e0ee174f88edb14f207a68430c7a53c2883ed509cdbde9a3a26fffa140fa5e4", url = "https://github.com/hadolint/hadolint/releases/download/v2.14.0/hadolint-windows-x86_64.exe", url_api = "https://api.github.com/repos/hadolint/hadolint/releases/assets/295944079"}
 
+[[tools.node]]
+version = "24.13.0"
+backend = "core:node"
+"platforms.linux-arm64" = { checksum = "sha256:0f6d40b94c6a2eb6b4c240ffc8b9fd3ada7ab044c177dd413c06e1ef9a63f081", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-linux-arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:6223aad1a81f9d1e7b682c59d12e2de233f7b4c37475cd40d1c89c42b737ffa8", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-linux-x64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:d595961e563fcae057d4a0fb992f175a54d97fcc4a14dc2d474d92ddeea3b9f8", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-darwin-arm64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:6f03c1b48ddbe1b129a6f8038be08e0899f05f17185b4d3e4350180ab669a7f3", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-darwin-x64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:ca2742695be8de44027d71b3f53a4bdb36009b95575fe1ae6f7f0b5ce091cb88", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-win-x64.zip"}
+
 [[tools."npm:@anthropic-ai/claude-code"]]
-version = "2.1.29"
+version = "2.1.37"
 backend = "npm:@anthropic-ai/claude-code"
 
 [[tools."npm:@commitlint/cli"]]
-version = "20.4.0"
+version = "20.4.1"
 backend = "npm:@commitlint/cli"
 
 [[tools."npm:@google/gemini-cli"]]
-version = "0.26.0"
+version = "0.27.3"
 backend = "npm:@google/gemini-cli"
 
 [[tools."npm:husky"]]

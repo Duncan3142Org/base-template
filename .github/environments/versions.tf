@@ -3,9 +3,7 @@ terraform {
 
   cloud {
     organization = "duncan3142"
-    workspaces {
-      name = "base-template"
-    }
+    workspaces {} # Workspace name set via TF_WORKSPACE env var
   }
 
   required_providers {
@@ -17,10 +15,10 @@ terraform {
 }
 
 provider "github" {
-  owner = var.repository_owner
+  owner = var.github_repository_owner
   app_auth {
-    id              = var.github_app_id
-    installation_id = var.github_app_installation_id
-    pem_file        = var.github_app_pem_file
+    id              = var.github_admin_app_id
+    installation_id = var.github_admin_app_installation_id
+    pem_file        = var.github_admin_app_pem_file
   }
 }
