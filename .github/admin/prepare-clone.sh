@@ -56,3 +56,4 @@ if git status --porcelain | grep -qE '^.[^ ]'; then
 fi
 # Commit changes
 git commit -m "chore: bootstrap repository [no ci]"
+echo -e "${GREEN}✅ Repo contents prepared for clone.${NC}"

@@ -40,13 +40,13 @@ resource "github_actions_environment_secret" "github_admin_app_pem_file" {
 resource "github_actions_environment_secret" "github_admin_terraform_api_token" {
   repository      = data.github_repository.repo.name
   environment     = github_repository_environment.github_admin.environment
-  secret_name     = "ADMIN_TERRAFORM_API_TOKEN"
+  secret_name     = "ADMIN_TF_API_TOKEN"
   plaintext_value = var.github_admin_terraform_api_token
 }
 
 resource "github_actions_environment_secret" "github_admin_terraform_org_api_token" {
   repository      = data.github_repository.repo.name
   environment     = github_repository_environment.github_admin.environment
-  secret_name     = "ADMIN_TERRAFORM_ORG_API_TOKEN"
+  secret_name     = "ADMIN_TF_ORG_API_TOKEN"
   plaintext_value = var.github_admin_terraform_org_api_token
 }
