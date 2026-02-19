@@ -8,13 +8,13 @@ backend = "aqua:docker/cli"
 "platforms.windows-x64" = { url = "https://download.docker.com/win/static/stable/x86_64/docker-29.2.1.zip"}
 
 [[tools."github:cli/cli"]]
-version = "2.86.0"
+version = "2.87.0"
 backend = "github:cli/cli"
-"platforms.linux-arm64" = { checksum = "sha256:83cf7a7962ea9dfcc2c123666695792916a87af32cba5f1f6e585db08fa57547", url = "https://github.com/cli/cli/releases/download/v2.86.0/gh_2.86.0_linux_arm64.tar.gz", url_api = "https://api.github.com/repos/cli/cli/releases/assets/343886809"}
-"platforms.linux-x64" = { checksum = "sha256:f3b08bd6a28420cc2229b0a1a687fa25f2b838d3f04b297414c1041ca68103c7", url = "https://github.com/cli/cli/releases/download/v2.86.0/gh_2.86.0_linux_amd64.tar.gz", url_api = "https://api.github.com/repos/cli/cli/releases/assets/343886805"}
-"platforms.macos-arm64" = { checksum = "sha256:bde753978a352c5ae6c4abec47334d516e82807af20c9dbbd45507a5a0aedaaa", url = "https://github.com/cli/cli/releases/download/v2.86.0/gh_2.86.0_macOS_arm64.zip", url_api = "https://api.github.com/repos/cli/cli/releases/assets/343886820"}
-"platforms.macos-x64" = { checksum = "sha256:ced7094d05702eb54a63542abd8a1dc570b7e5ae94951844eb1626ba74bc2c60", url = "https://github.com/cli/cli/releases/download/v2.86.0/gh_2.86.0_macOS_amd64.zip", url_api = "https://api.github.com/repos/cli/cli/releases/assets/343886819"}
-"platforms.windows-x64" = { checksum = "sha256:983c74a8c594366b198485187cd6d4d07638f0bf9a9948d51a2a81a5164d8bfd", url = "https://github.com/cli/cli/releases/download/v2.86.0/gh_2.86.0_windows_amd64.zip", url_api = "https://api.github.com/repos/cli/cli/releases/assets/343886832"}
+"platforms.linux-arm64" = { checksum = "sha256:7f7fbaf65baa1e438ae5b7134bff014c0122944dd2e83bb5db8088fe3888fe39", url = "https://github.com/cli/cli/releases/download/v2.87.0/gh_2.87.0_linux_arm64.tar.gz", url_api = "https://api.github.com/repos/cli/cli/releases/assets/358046964"}
+"platforms.linux-x64" = { checksum = "sha256:5f461c1dc2b80483ea5617f9253d591fb427b3ecfdd69c69089e1ee6156dc234", url = "https://github.com/cli/cli/releases/download/v2.87.0/gh_2.87.0_linux_amd64.tar.gz", url_api = "https://api.github.com/repos/cli/cli/releases/assets/358046961"}
+"platforms.macos-arm64" = { checksum = "sha256:b1e6e3ab764892a33a1fe464c239be393e6bbd4220804692f919c4c805b1dbbf", url = "https://github.com/cli/cli/releases/download/v2.87.0/gh_2.87.0_macOS_arm64.zip", url_api = "https://api.github.com/repos/cli/cli/releases/assets/358046978"}
+"platforms.macos-x64" = { checksum = "sha256:9cb05a2bc5438762707a25bf1586e438ed3dbadf0fc782f47ca0b057bb4093a4", url = "https://github.com/cli/cli/releases/download/v2.87.0/gh_2.87.0_macOS_amd64.zip", url_api = "https://api.github.com/repos/cli/cli/releases/assets/358046977"}
+"platforms.windows-x64" = { checksum = "sha256:0765688b92edca7f08a314317512deba00baa3405001ce25b69d2580f8137c36", url = "https://github.com/cli/cli/releases/download/v2.87.0/gh_2.87.0_windows_amd64.zip", url_api = "https://api.github.com/repos/cli/cli/releases/assets/358046992"}
 
 [[tools."github:hadolint/hadolint"]]
 version = "2.14.0"
@@ -26,16 +26,16 @@ backend = "github:hadolint/hadolint"
 "platforms.windows-x64" = { checksum = "sha256:8e0ee174f88edb14f207a68430c7a53c2883ed509cdbde9a3a26fffa140fa5e4", url = "https://github.com/hadolint/hadolint/releases/download/v2.14.0/hadolint-windows-x86_64.exe", url_api = "https://api.github.com/repos/hadolint/hadolint/releases/assets/295944079"}
 
 [[tools.node]]
-version = "24.13.0"
+version = "24.13.1"
 backend = "core:node"
-"platforms.linux-arm64" = { checksum = "sha256:0f6d40b94c6a2eb6b4c240ffc8b9fd3ada7ab044c177dd413c06e1ef9a63f081", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-linux-arm64.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:6223aad1a81f9d1e7b682c59d12e2de233f7b4c37475cd40d1c89c42b737ffa8", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-linux-x64.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:d595961e563fcae057d4a0fb992f175a54d97fcc4a14dc2d474d92ddeea3b9f8", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-darwin-arm64.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:6f03c1b48ddbe1b129a6f8038be08e0899f05f17185b4d3e4350180ab669a7f3", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-darwin-x64.tar.gz"}
-"platforms.windows-x64" = { checksum = "sha256:ca2742695be8de44027d71b3f53a4bdb36009b95575fe1ae6f7f0b5ce091cb88", url = "https://nodejs.org/dist/v24.13.0/node-v24.13.0-win-x64.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:4873459d7c9b28feaa1f0fade9bb9c81cb702670991ff80a51d805325c5e3456", url = "https://nodejs.org/dist/v24.13.1/node-v24.13.1-linux-arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:7ad28fb172a9ab0593f86c1a39e5c268d0d8fc3d6cb0167f455b5655a7a6e2fd", url = "https://nodejs.org/dist/v24.13.1/node-v24.13.1-linux-x64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:8c039d59f2fec6195e4281ad5b0d02b9a940897b4df7b849c6fb48be6787bba6", url = "https://nodejs.org/dist/v24.13.1/node-v24.13.1-darwin-arm64.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:527f0578d9812e7dfa225121bda0b1546a6a0e4b5f556295fc8299c272de5fbf", url = "https://nodejs.org/dist/v24.13.1/node-v24.13.1-darwin-x64.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:fba577c4bb87df04d54dd87bbdaa5a2272f1f99a2acbf9152e1a91b8b5f0b279", url = "https://nodejs.org/dist/v24.13.1/node-v24.13.1-win-x64.zip"}
 
 [[tools."npm:@anthropic-ai/claude-code"]]
-version = "2.1.37"
+version = "2.1.47"
 backend = "npm:@anthropic-ai/claude-code"
 
 [[tools."npm:@commitlint/cli"]]
@@ -43,7 +43,7 @@ version = "20.4.1"
 backend = "npm:@commitlint/cli"
 
 [[tools."npm:@google/gemini-cli"]]
-version = "0.27.3"
+version = "0.29.2"
 backend = "npm:@google/gemini-cli"
 
 [[tools."npm:husky"]]
@@ -51,18 +51,19 @@ version = "9.1.7"
 backend = "npm:husky"
 
 [[tools.terraform]]
-version = "1.14.4"
+version = "1.14.5"
 backend = "aqua:hashicorp/terraform"
-"platforms.linux-arm64" = { checksum = "sha256:dcbc9d4b9fcd47e76ae194d5d569bfbf9f15bf1c59ca692aff6d2a92eb8e8994", url = "https://releases.hashicorp.com/terraform/1.14.4/terraform_1.14.4_linux_arm64.zip"}
-"platforms.linux-x64" = { checksum = "sha256:4a24b18865d9419ba7882567cb7429dd1525b3e2029a9e38f612d476ba8c3dea", url = "https://releases.hashicorp.com/terraform/1.14.4/terraform_1.14.4_linux_amd64.zip"}
-"platforms.macos-arm64" = { checksum = "sha256:dc4ee56edfde4fb6d578783292b5fa126d624803aa9326d03da5466ef59d4dbd", url = "https://releases.hashicorp.com/terraform/1.14.4/terraform_1.14.4_darwin_arm64.zip"}
-"platforms.macos-x64" = { checksum = "sha256:367dfc3fd689db10817f96cede1f737c88300f34e5a783c90cb9874973031832", url = "https://releases.hashicorp.com/terraform/1.14.4/terraform_1.14.4_darwin_amd64.zip"}
-"platforms.windows-x64" = { checksum = "sha256:0d20cbf5de662677ecf671d28f4aef95c21ec966a89fd98539b24e457710759f", url = "https://releases.hashicorp.com/terraform/1.14.4/terraform_1.14.4_windows_amd64.zip"}
+"platforms.linux-arm64" = { checksum = "sha256:7dbd03721e8f933ba0426fc292d7a6549a61c0cb1c7c821729f6982c7bce4b05", url = "https://releases.hashicorp.com/terraform/1.14.5/terraform_1.14.5_linux_arm64.zip"}
+"platforms.linux-x64" = { checksum = "sha256:ac21c2b9dcd115711f540cbd27ead0596bb4288a917cb56dfa9b25edb3eb6280", url = "https://releases.hashicorp.com/terraform/1.14.5/terraform_1.14.5_linux_amd64.zip"}
+"platforms.macos-arm64" = { checksum = "sha256:132e740024635494900e561014cf4d111a66c6454fcd548dee5cc4cf873ee52f", url = "https://releases.hashicorp.com/terraform/1.14.5/terraform_1.14.5_darwin_arm64.zip"}
+"platforms.macos-x64" = { checksum = "sha256:16efdfb151b49a65fd9b47e30577a6a7012e6edabd2a034445fe7ddf74733ffb", url = "https://releases.hashicorp.com/terraform/1.14.5/terraform_1.14.5_darwin_amd64.zip"}
+"platforms.windows-x64" = { checksum = "sha256:3a89de0c0f14f5754d697a792f1c078886fcfdf31a6d4f053e2eade2db5e721d", url = "https://releases.hashicorp.com/terraform/1.14.5/terraform_1.14.5_windows_amd64.zip"}
 
 [[tools.usage]]
-version = "2.16.1"
+version = "2.18.0"
 backend = "aqua:jdx/usage"
-"platforms.linux-arm64" = { checksum = "sha256:29ab8f0cf07d94f4f852007413594714561de9d613fe4dbf12b287dfa1bee0ac", url = "https://github.com/jdx/usage/releases/download/v2.16.1/usage-aarch64-unknown-linux-musl.tar.gz"}
-"platforms.linux-x64" = { checksum = "sha256:9ff23ebae8b3fc049b4ed4fec29c417063597c79739bab094c390ddfe56e9623", url = "https://github.com/jdx/usage/releases/download/v2.16.1/usage-x86_64-unknown-linux-musl.tar.gz"}
-"platforms.macos-arm64" = { checksum = "sha256:3bba8d4916da22dbd4afe4ab6c59c988765d7e0374e1121b43ce8b1a282cfc78", url = "https://github.com/jdx/usage/releases/download/v2.16.1/usage-universal-apple-darwin.tar.gz"}
-"platforms.macos-x64" = { checksum = "sha256:3bba8d4916da22dbd4afe4ab6c59c988765d7e0374e1121b43ce8b1a282cfc78", url = "https://github.com/jdx/usage/releases/download/v2.16.1/usage-universal-apple-darwin.tar.gz"}
+"platforms.linux-arm64" = { checksum = "sha256:3bfd30a1ab9c02268ccbae77e02b9e68aebff78da2d2d7644c77f6499c90ebcf", url = "https://github.com/jdx/usage/releases/download/v2.18.0/usage-aarch64-unknown-linux-musl.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:84d12440f0982a01a607e99d73518334d9124f4b8ece58ca0351dd4c1306841d", url = "https://github.com/jdx/usage/releases/download/v2.18.0/usage-x86_64-unknown-linux-musl.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:d573fb1fc7622afd7b2e44d27c580f4c9b5655a9cf57098f6712804cfab2b7a5", url = "https://github.com/jdx/usage/releases/download/v2.18.0/usage-universal-apple-darwin.tar.gz"}
+"platforms.macos-x64" = { checksum = "sha256:d573fb1fc7622afd7b2e44d27c580f4c9b5655a9cf57098f6712804cfab2b7a5", url = "https://github.com/jdx/usage/releases/download/v2.18.0/usage-universal-apple-darwin.tar.gz"}
+"platforms.windows-x64" = { checksum = "sha256:52c206bb1d33a8fbd80961b803bd16c7f23b60c38743d5ec3620366c5232a83d", url = "https://github.com/jdx/usage/releases/download/v2.18.0/usage-x86_64-pc-windows-msvc.zip"}
