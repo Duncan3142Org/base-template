@@ -5,10 +5,7 @@
 	},
 	"general": {
 		"enablePromptCompletion": true,
-		"previewFeatures": true
-	},
-	"tools": {
-		"approvalMode": "plan"
+		"defaultApprovalMode": "plan"
 	},
 	"ui": {
 		"showStatusInTitle": true
