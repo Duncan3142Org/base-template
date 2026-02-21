@@ -15,5 +15,5 @@
 			"customIgnoreFilePaths": [".agents/.ignore"]
 		}
 	},
-	"tools": {"exclude": []}
+	"tools": {"exclude": ["openDiff"]}
 }
