@@ -9,7 +9,7 @@ backend = "core:node"
 
 [[tools.npm]]
 version = "11.10.1"
-backend = "npm:npm"
+backend = "npm"
 
 [[tools."npm:prettier"]]
 version = "3.8.1"

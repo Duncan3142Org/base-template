@@ -2,7 +2,7 @@
 version = "29.2.1"
 backend = "aqua:docker/cli"
 "platforms.linux-arm64" = { url = "https://download.docker.com/linux/static/stable/aarch64/docker-29.2.1.tgz"}
-"platforms.linux-x64" = { url = "https://download.docker.com/linux/static/stable/x86_64/docker-29.2.1.tgz"}
+"platforms.linux-x64" = { checksum = "blake3:78cf03899fcbcc8e011a791108ead2163a59cb441591ccc90d9b50256c8e25a1", url = "https://download.docker.com/linux/static/stable/x86_64/docker-29.2.1.tgz"}
 "platforms.macos-arm64" = { url = "https://download.docker.com/mac/static/stable/aarch64/docker-29.2.1.tgz"}
 "platforms.macos-x64" = { url = "https://download.docker.com/mac/static/stable/x86_64/docker-29.2.1.tgz"}
 "platforms.windows-x64" = { url = "https://download.docker.com/win/static/stable/x86_64/docker-29.2.1.zip"}

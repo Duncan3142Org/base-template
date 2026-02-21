@@ -7,7 +7,8 @@ echo "Prepping secrets..."
 
 # GitHub
 gh auth token > gh_token
-echo "$GITHUB_PKG_TOKEN" > github_pkg_token
+github_pkg_token=$(secret-tool lookup service github_packages user "${GITHUB_USERNAME}" purpose "Personal Access Token")
+echo "$github_pkg_token" > github_pkg_token
 
 # Terraform
 if [ -f "$HOME/.terraform.d/credentials.tfrc.json" ]; then
