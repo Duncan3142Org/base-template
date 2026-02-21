@@ -1,3 +1,10 @@
+## [1.4.10](https://github.com/Duncan3142Org/base-template/compare/v1.4.9...v1.4.10) (2026-02-21)
+
+
+### Bug Fixes
+
+* devcontainer prep ([#26](https://github.com/Duncan3142Org/base-template/issues/26)) ([2e436e2]())
+
 ## [1.4.9](https://github.com/Duncan3142Org/base-template/compare/v1.4.8...v1.4.9) (2026-02-21)
 
 
