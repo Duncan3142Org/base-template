@@ -1,6 +1,5 @@
 [settings]
 lockfile = true
-experimental = true
 
 [tools]
 node = "24"
@@ -10,11 +9,14 @@ npm = "11"
 [tasks.test]
 file = "./tasks/test.sh"
 
-[tasks.build]
-file = "./tasks/build.sh"
+[tasks.assets]
+file = "./tasks/assets.sh"
 
 [tasks.format]
 file = "./tasks/format.sh"
+
+[tasks.lint]
+file = "./tasks/lint.sh"
 
 [tasks.clean]
 file = "./tasks/clean.sh"
