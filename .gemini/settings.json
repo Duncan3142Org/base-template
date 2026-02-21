@@ -1,11 +1,16 @@
 {
 	"$schema": "https://raw.githubusercontent.com/google-gemini/gemini-cli/main/schemas/settings.schema.json",
+	"experimental": { "plan": true },
 	"model": {
 		"name": "gemini-3-pro-preview"
 	},
 	"general": {
 		"enablePromptCompletion": true,
 		"defaultApprovalMode": "plan"
+	},
+	"ide": {
+		"hasSeenNudge": true,
+		"enabled": true
 	},
 	"ui": {
 		"showStatusInTitle": true
@@ -14,5 +19,11 @@
 		"fileFiltering": {
 			"customIgnoreFilePaths": [".agents/.ignore"]
 		}
-	}
+	},
+	"security": {
+		"auth": {
+			"selectedType": "oauth-personal"
+		}
+	},
+	"tools": { "exclude": ["openDiff"] }
 }

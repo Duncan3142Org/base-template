@@ -9,6 +9,7 @@
 
 	"features": {},
 
+	"initializeCommand": "./.devcontainer/command/initialize.sh",
 	"postCreateCommand": "./.devcontainer/command/post-create.sh",
 	"postStartCommand": "./.devcontainer/command/post-start.sh",
 

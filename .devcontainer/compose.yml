@@ -19,6 +19,9 @@ services:
     volumes:
       - ..:/workspace
       - ${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock
+      - ${HOME}/.terraform.d/credentials.tfrc.json:/root/.terraform.d/credentials.tfrc.json
+      - ${HOME}/.gemini/oauth_creds.json:/root/.gemini/oauth_creds.json
+      - ${HOME}/.claude/.credentials.json:/root/.claude/.credentials.json
 
     env_file:
       - ./devcontainer/.env
@@ -27,8 +30,6 @@ services:
         target: github_pkg_token
       - source: gh_token
         target: gh_token
-      - source: tf_token
-        target: tf_token
     networks:
       - monitoring
 
@@ -50,5 +51,3 @@ secrets:
     file: ./devcontainer/secrets/github_pkg_token
   gh_token:
     file: ./devcontainer/secrets/gh_token
-  tf_token:
-    file: ./devcontainer/secrets/tf_token
