@@ -5,4 +5,4 @@
 set -ueC
 set -o pipefail
 
-echo "Building..."
+echo "No assets to generate"

@@ -1,3 +1,10 @@
+## [1.4.9](https://github.com/Duncan3142Org/base-template/compare/v1.4.8...v1.4.9) (2026-02-21)
+
+
+### Bug Fixes
+
+* agent instructions ([#20](https://github.com/Duncan3142Org/base-template/issues/20)) ([c2352e1]())
+
 ## [1.4.8](https://github.com/Duncan3142Org/base-template/compare/v1.4.7...v1.4.8) (2026-02-08)
 
 

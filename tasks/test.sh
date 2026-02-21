@@ -5,4 +5,4 @@
 set -ueC
 set -o pipefail
 
-echo "Testing..."
+echo "No tests configured"
