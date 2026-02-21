@@ -3,7 +3,7 @@
 	"model": "claude-opus-4-6",
 	"permissions": {
 		"defaultMode": "plan",
-		"allow": ["Read", "Glob", "Grep"],
+		"allow": ["Read", "Glob", "Grep", "LS"],
 		"deny": ["Read(./.env)", "Read(./.env.*)"]
 	}
 }

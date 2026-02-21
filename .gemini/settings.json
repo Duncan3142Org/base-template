@@ -15,5 +15,11 @@
 			"customIgnoreFilePaths": [".agents/.ignore"]
 		}
 	},
-	"tools": { "exclude": ["openDiff"] }
+	"security": {
+		"auth": {
+			"selectedType": "oauth-personal"
+		}
+	},
+	"tools": { "exclude": ["openDiff"] },
+	"experimental": { "plan": true }
 }
