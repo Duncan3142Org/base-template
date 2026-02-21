@@ -5,11 +5,16 @@ set -o pipefail
 
 echo "Prepping secrets..."
 
+# GitHub
 gh auth token > gh_token
-
 echo "$GITHUB_PKG_TOKEN" > github_pkg_token
 
-cat /home/dg/.terraform.d/credentials.tfrc.json | jq -r '.credentials."app.terraform.io".token' > tf_token
+# Terraform
+if [ -f "$HOME/.terraform.d/credentials.tfrc.json" ]; then
+		cat "$HOME/.terraform.d/credentials.tfrc.json" | jq -r '.credentials."app.terraform.io".token' > tf_token
+else
+		echo "Warning: No Terraform credentials found."
+fi
 
 # Gemini
 if [ -f "$HOME/.gemini/oauth_creds.json" ]; then
