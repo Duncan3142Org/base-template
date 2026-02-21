@@ -5,3 +5,4 @@
 !.dockerignore
 devcontainer/secrets/*
 !devcontainer/secrets/.gitkeep
+!devcontainer/secrets/prep.sh

@@ -29,6 +29,10 @@ services:
         target: gh_token
       - source: tf_token
         target: tf_token
+      - source: gemini_auth
+        target: gemini_auth
+      - source: claude_auth
+        target: claude_auth
     networks:
       - monitoring
 
@@ -52,3 +56,7 @@ secrets:
     file: ./devcontainer/secrets/gh_token
   tf_token:
     file: ./devcontainer/secrets/tf_token
+  gemini_auth:
+    file: ./devcontainer/secrets/gemini_auth
+  claude_auth:
+    file: ./devcontainer/secrets/claude_auth

@@ -6,20 +6,22 @@
 		{
 			"label": "prep-container-secrets",
 			"detail": "Prep container secret files",
+			"hide": true,
 			"type": "shell",
-			"command": "cd .devcontainer/devcontainer/secrets && touch gh_token github_pkg_token tf_token",
+			"command": "cd .devcontainer/devcontainer/secrets && ./prep.sh",
 			"problemMatcher": []
 		},
 		{
 			"label": "prep-container-env",
 			"detail": "Prep container env files",
+			"hide": true,
 			"type": "shell",
 			"command": "cd .devcontainer/devcontainer && cp .env.example .env",
 			"problemMatcher": []
 		},
 		{
-			"label": "prep-container-files",
-			"detail": "Prep container files",
+			"label": "prep-container",
+			"detail": "Prep container",
 			"type": "shell",
 			"dependsOn": ["prep-container-secrets", "prep-container-env"],
 			"problemMatcher": []
