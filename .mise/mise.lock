@@ -11,6 +11,18 @@ backend = "core:node"
 version = "11.10.1"
 backend = "npm"
 
+[[tools."npm:eslint"]]
+version = "9.39.3"
+backend = "npm:eslint"
+
 [[tools."npm:prettier"]]
 version = "3.8.1"
 backend = "npm:prettier"
+
+[[tools."npm:typescript"]]
+version = "5.9.3"
+backend = "npm:typescript"
+
+[[tools."npm:vitest"]]
+version = "3.2.4"
+backend = "npm:vitest"
