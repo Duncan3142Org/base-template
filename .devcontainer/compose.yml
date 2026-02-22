@@ -2,6 +2,9 @@ networks:
   monitoring:
     driver: bridge
 
+x-config:
+  claude_path: &claude_path /root/.claude
+
 volumes:
   otel_lgtm_data:
   claude_config:
@@ -17,7 +20,7 @@ services:
     command: sleep infinity
 
     environment:
-      - CLAUDE_CONFIG_DIR=/root/.claude
+      CLAUDE_CONFIG_DIR: *claude_path
 
     # Mount project folder and Docker socket
     volumes:
@@ -25,7 +28,9 @@ services:
       - ${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock
       - ${HOME}/.terraform.d/credentials.tfrc.json:/root/.terraform.d/credentials.tfrc.json
       - ${HOME}/.gemini/oauth_creds.json:/root/.gemini/oauth_creds.json
-      - claude_config:/root/.claude
+      - type: volume
+        source: claude_config
+        target: *claude_path
       - ./devcontainer/.config/mise:/root/.config/mise
       - ./devcontainer/.config/powershell:/root/.config/powershell
 
