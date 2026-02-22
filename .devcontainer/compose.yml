@@ -4,10 +4,12 @@ networks:
 
 x-config:
   claude_path: &claude_path /root/.claude
+  gemini_path: &gemini_path /root/.gemini
 
 volumes:
   otel_lgtm_data:
   claude_config:
+  gemini_config:
 
 services:
   devcon:
@@ -21,13 +23,16 @@ services:
 
     environment:
       CLAUDE_CONFIG_DIR: *claude_path
+      GEMINI_CLI_HOME: *gemini_path
 
     # Mount project folder and Docker socket
     volumes:
       - ..:/workspace
       - ${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock
       - ${HOME}/.terraform.d/credentials.tfrc.json:/root/.terraform.d/credentials.tfrc.json
-      - ${HOME}/.gemini/oauth_creds.json:/root/.gemini/oauth_creds.json
+      - type: volume
+        source: gemini_config
+        target: *gemini_path
       - type: volume
         source: claude_config
         target: *claude_path
