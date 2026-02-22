@@ -5,11 +5,17 @@ networks:
 x-config:
   claude_path: &claude_path /root/.claude
   gemini_path: &gemini_path /root/.gemini
+  terraform_plugin_cache_path: &terraform_plugin_cache_path /root/.terraform.d/plugin-cache
 
 volumes:
   otel_lgtm_data:
   claude_config:
   gemini_config:
+  mise_data:
+  npm_cache:
+  node_modules:
+  terraform_env:
+  terraform_plugin_cache:
 
 services:
   devcon:
@@ -24,6 +30,7 @@ services:
     environment:
       CLAUDE_CONFIG_DIR: *claude_path
       GEMINI_CLI_HOME: *gemini_path
+      TF_PLUGIN_CACHE_DIR: *terraform_plugin_cache_path
 
     # Mount project folder and Docker socket
     volumes:
@@ -36,6 +43,13 @@ services:
       - type: volume
         source: claude_config
         target: *claude_path
+      - mise_data:/root/.local/share/mise
+      - npm_cache:/root/.npm
+      - node_modules:/workspace/node_modules
+      - terraform_env:/workspace/.github/environments/.terraform
+      - type: volume
+        source: terraform_plugin_cache
+        target: *terraform_plugin_cache_path
       - ./devcontainer/.config/mise:/root/.config/mise
       - ./devcontainer/.config/powershell:/root/.config/powershell
 
