@@ -1,8 +1,8 @@
 /** @import { Configs } from "./core.js" */
 
 import vitest from "@vitest/eslint-plugin"
-import { FILE_EXTENSIONS } from "./core.js"
 import { defineConfig } from "eslint/config"
+import { FILE_EXTENSIONS } from "./core.js"
 
 /** @type {Configs} */
 const config = defineConfig({

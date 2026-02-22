@@ -2,8 +2,8 @@
 
 // @ts-expect-error -- Package lacks types
 import promise from "eslint-plugin-promise"
-import { filePattern, FILE_EXTENSIONS } from "./core.js"
 import { defineConfig } from "eslint/config"
+import { filePattern, FILE_EXTENSIONS } from "./core.js"
 
 /** @type {Config} */
 const custom = {

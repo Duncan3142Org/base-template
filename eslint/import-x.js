@@ -1,8 +1,8 @@
 /** @import { Config } from "./core.js" */
 
 import { importX } from "eslint-plugin-import-x"
-import { filePattern, FILE_EXTENSIONS, lintAll } from "./core.js"
 import { defineConfig } from "eslint/config"
+import { filePattern, FILE_EXTENSIONS, lintAll } from "./core.js"
 
 /* -------------------------------------------------------------------------- */
 /*                                   Configs                                  */
@@ -23,7 +23,7 @@ const custom = {
 		"import-x/no-unresolved": "off", // tsc config
 		"import-x/extensions": "off", // tsc config
 		"import-x/no-relative-parent-imports": "error",
-		"import-x/no-internal-modules": "error",
+		"import-x/no-internal-modules": "off",
 		"import-x/no-extraneous-dependencies": "off",
 		"import-x/no-empty-named-blocks": "error",
 		"import-x/no-unassigned-import": "error",

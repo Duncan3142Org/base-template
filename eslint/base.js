@@ -1,8 +1,8 @@
 /** @import { Config, Configs } from "./core.js" */
 
 import eslintjs from "@eslint/js"
-import { filePattern, FILE_EXTENSIONS } from "./core.js"
 import { defineConfig } from "eslint/config"
+import { filePattern, FILE_EXTENSIONS } from "./core.js"
 
 /** @type {Config} */
 const custom = {

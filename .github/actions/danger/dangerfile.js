@@ -41,7 +41,9 @@ function validateBody() {
 		}
 
 		/**
-		 * @param {Token} token
+		 * Checks if the given token is a paragraph containing an emphasized "Changes:" text.
+		 * @param {Token} token - The token to check.
+		 * @returns {boolean} - True if the token is a "Changes:" header, false otherwise.
 		 */
 		const isChangesHeader = (token) => {
 			if (token.type !== "paragraph") {

@@ -6,4 +6,4 @@
 set -ueC
 set -o pipefail
 
-TIMING=1 LINT_ALL=true npm exec -- eslint --fix="${usage_fix?}" .
+TIMING=1 LINT_ALL=true npm exec -- eslint --fix="${usage_fix:-false}" .

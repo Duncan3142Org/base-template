@@ -1,7 +1,7 @@
 /** @import { ESLint, Linter } from "eslint" */
 
-import { defineConfig } from "eslint/config"
 import { env } from "node:process"
+import { defineConfig } from "eslint/config"
 
 /** @typedef {string} Path */
 
@@ -51,6 +51,7 @@ const FILE_EXTENSIONS = {
 const filePattern = (...extensions) => `**/*.{${extensions.join(",")}}`
 
 /**
+ * Factory function for creating subdirectory file patterns
  * @param {Pattern} dir - Directory pattern
  * @param {Patterns} extensions - Array of file extension patterns
  * @returns {Pattern} File pattern
@@ -58,6 +59,7 @@ const filePattern = (...extensions) => `**/*.{${extensions.join(",")}}`
 const subFilePattern = (dir, ...extensions) => `${dir}/${filePattern(...extensions)}`
 
 /**
+ * Determines the linting severity based on environment variables.
  * @param {"warn" | "error"} [severity] - Severity level
  * @returns {"warn" | "error" | "off"} Lint severity
  */
