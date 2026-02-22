@@ -47,6 +47,7 @@ const custom = {
 const config = defineConfig({
 	name: "@duncan3142/eslint-config/import",
 	files: [filePattern(...FILE_EXTENSIONS.JSTS)],
+	// @ts-expect-error - Legacy ESLint types
 	extends: [importX.flatConfigs.recommended, importX.flatConfigs.typescript, custom],
 })
 

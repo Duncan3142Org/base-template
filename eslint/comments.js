@@ -18,12 +18,7 @@ const custom = {
 /** @type {Configs} */
 const config = defineConfig({
 	name: "@duncan3142/eslint-config/comments",
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Package lacks types
-	extends: [
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- Package lacks types
-		comments.recommended,
-		custom,
-	],
+	extends: [comments.recommended, custom],
 })
 
 export { config }

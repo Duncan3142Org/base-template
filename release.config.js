@@ -11,7 +11,7 @@ const cliDirUrl = pathToFileURL(join(RELEASE_CLI_DIR, "/"))
 
 /**
  * @param {string} path
- * @param {URL} base
+ * @param {URL | string} base
  */
 const readFile = (path, base) => {
 	return readFileSync(new URL(path, base), "utf8")
@@ -25,6 +25,7 @@ const commitPartial = readFile("./commit-partial.hbs", cliDirUrl)
 const pkgMeta = () => {
 	const pkg = JSON.parse(readFile("./package.json", import.meta.url))
 	const repoRegex = /^git\+https:\/\/github\.com\/([a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+)\.git$/
+	// @ts-expect-error - Guaranteed regex match
 	const [, repoPath] = repoRegex.exec(pkg.repository.url)
 	const [, pkgName] = pkg.name.split("/")
 	return { repoPath, pkgName }

@@ -4,6 +4,7 @@
 	"compilerOptions": {
 		"allowJs": true,
 		"checkJs": true,
+		"skipLibCheck": true,
 		"isolatedDeclarations": false,
 		"outDir": "${configDir}/.tsc",
 		"tsBuildInfoFile": "${configDir}/.tsc/tsconfig.config.tsbuildinfo"
