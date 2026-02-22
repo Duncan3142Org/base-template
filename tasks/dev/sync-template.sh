@@ -81,6 +81,18 @@ else
     git checkout -b "${TEMPLATE_BRANCH}" "${template_remote_name}/$template_default_branch"
 fi
 
+# Merge local main branch into template branch to ensure it's up to date with latest changes
+echo -e "${BLUE}Merging 'origin/main' into '${TEMPLATE_BRANCH}' to ensure it's up to date...${NC}"
+if git merge origin/main --no-edit; then
+		echo -e "${GREEN}Successfully merged 'origin/main' into '${TEMPLATE_BRANCH}'.${NC}"
+else
+		echo -e "${RED}Merge conflicts detected when merging 'origin/main'!${NC}"
+		echo -e "Please resolve the conflicts manually, then run:"
+		echo -e "  git add <resolved-files>"
+		echo -e "  git commit"
+		exit 1
+fi
+
 # --- Merge upstream changes ---
 echo -e "${BLUE}Merging '${template_remote_name}/$template_default_branch' into '${TEMPLATE_BRANCH}'...${NC}"
 if git merge "${template_remote_name}/$template_default_branch" --no-edit; then
