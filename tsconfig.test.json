@@ -5,5 +5,6 @@
 		"outDir": "${configDir}/.tsc",
 		"tsBuildInfoFile": "${configDir}/.tsc/tsconfig.test.tsbuildinfo"
 	},
-	"include": ["${configDir}/test/**/*", "${configDir}/src/**/*.test.*"]
+	"include": ["${configDir}/test/**/*", "${configDir}/src/**/*.test.*"],
+	"references": [{ "path": "./tsconfig.assets.json" }]
 }
