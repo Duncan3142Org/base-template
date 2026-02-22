@@ -4,8 +4,8 @@
 	"compilerOptions": {
 		"emitDeclarationOnly": false,
 		"rootDir": "${configDir}/src",
-		"outDir": "${configDir}/.dist",
-		"tsBuildInfoFile": "${configDir}/.dist/tsconfig.assets.tsbuildinfo"
+		"outDir": "${configDir}/.tsc/dist",
+		"tsBuildInfoFile": "${configDir}/.tsc/tsconfig.assets.tsbuildinfo"
 	},
 	"include": ["${configDir}/src/**/*"],
 	"exclude": ["${configDir}/src/**/*.test.*"]

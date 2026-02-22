@@ -19,7 +19,7 @@
 		"erasableSyntaxOnly": true,
 		"libReplacement": false,
 		// Types
-		"skipLibCheck": true,
+		"skipLibCheck": false,
 		"allowJs": false,
 		"checkJs": false,
 		"isolatedModules": true,

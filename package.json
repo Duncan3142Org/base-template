@@ -17,17 +17,16 @@
 		"npm": ">=11"
 	},
 	"files": [
-		".dist/**/*.js",
-		".dist/**/*.ts",
-		".dist/**/*.map"
+		".tsc/dist/**/*",
+		"!.tsc/dist/**/*.test.*"
 	],
 	"imports": {
-		"#duncan3142org/base-template": "./.dist/index.js"
+		"#duncan3142org/base-template": "./.tsc/dist/index.js"
 	},
 	"exports": {
 		".": {
-			"types": "./.dist/index.d.ts",
-			"import": "./.dist/index.js"
+			"types": "./.tsc/dist/index.d.ts",
+			"import": "./.tsc/dist/index.js"
 		}
 	},
 	"devDependencies": {

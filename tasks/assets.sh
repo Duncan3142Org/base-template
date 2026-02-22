@@ -2,7 +2,11 @@
 
 #MISE description "Build"
 
+#USAGE #USAGE arg "[no-emit]" help="Check mode" default="false" {
+#USAGE   choices "true" "false"
+#USAGE }
+
 set -ueC
 set -o pipefail
 
-echo "No assets to generate"
+tsc --build --noEmit="${usage_no_emit?}"
