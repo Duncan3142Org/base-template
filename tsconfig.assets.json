@@ -1,0 +1,12 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"extends": ["./tsconfig.base.json"],
+	"compilerOptions": {
+		"emitDeclarationOnly": false,
+		"rootDir": "${configDir}/src",
+		"outDir": "${configDir}/.dist",
+		"tsBuildInfoFile": "${configDir}/.dist/tsconfig.assets.tsbuildinfo"
+	},
+	"include": ["${configDir}/src/**/*"],
+	"exclude": ["${configDir}/src/**/*.test.*"]
+}
