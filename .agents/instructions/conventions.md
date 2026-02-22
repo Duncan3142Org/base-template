@@ -15,6 +15,8 @@
 
 - `.github/` - GitHub Actions workflows, environments, and admin config
 - `.mise/` - Mise task runner configuration
-- `tasks/` - Mise task scripts
+- `tasks/` - Core Mise task scripts
 - `src/` - Repo source code
 - `.devcontainer/` - Dev Container configuration
+- `CHANGELOG.md` - Auto generated changelog from commits
+- `package.json` - Project metadata and dependencies
