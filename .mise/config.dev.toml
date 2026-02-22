@@ -12,5 +12,3 @@ file = "./tasks/dev/init.sh"
 [tasks.update]
 file = "./tasks/dev/update.sh"
 
-[tasks.sync-root-lock]
-run = "cp /root/.config/mise/mise.lock /workspace/.devcontainer/devcontainer/.config/mise/mise.lock"

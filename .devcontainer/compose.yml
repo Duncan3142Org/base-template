@@ -22,6 +22,8 @@ services:
       - ${HOME}/.terraform.d/credentials.tfrc.json:/root/.terraform.d/credentials.tfrc.json
       - ${HOME}/.gemini/oauth_creds.json:/root/.gemini/oauth_creds.json
       - ${HOME}/.claude/.credentials.json:/root/.claude/.credentials.json
+      - ./devcontainer/.config/mise:/root/.config/mise
+      - ./devcontainer/.config/powershell:/root/.config/powershell
 
     env_file:
       - ./devcontainer/.env
