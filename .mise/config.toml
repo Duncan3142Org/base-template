@@ -4,10 +4,6 @@ lockfile = true
 [tools]
 node = "24"
 npm = "11"
-"npm:prettier" = "3"
-"npm:typescript" = "5.9"
-"npm:eslint" = "9"
-"npm:vitest" = "3"
 
 [tasks.test]
 file = "./tasks/test.sh"

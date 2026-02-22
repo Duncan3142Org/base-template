@@ -1,6 +1,3 @@
-/** @import {Options} from "prettier" */
-
-/** @type {Options} */
 export default {
 	semi: false,
 	trailingComma: "es5",

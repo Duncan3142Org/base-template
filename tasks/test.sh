@@ -5,4 +5,4 @@
 set -ueC
 set -o pipefail
 
-vitest run
+npm exec -- vitest run
