@@ -8,15 +8,6 @@
 
 ## Code Style
 
-- Prettier is used for formatting
-- Configuration is in `.prettierrc.js`
-
-## Repository Structure
-
-- `.github/` - GitHub Actions workflows, environments, and admin config
-- `.mise/` - Mise task runner configuration
-- `tasks/` - Core Mise task scripts
-- `src/` - Repo source code
-- `.devcontainer/` - Dev Container configuration
-- `CHANGELOG.md` - Auto generated changelog from commits
-- `package.json` - Project metadata and dependencies
+- Prettier is used for formatting, configuration is in `.prettierrc.js`
+- ESLint 9+ is used for linting, configuration is in `eslint.config.js`
+- Typescript is used for type safety, configuration is in `tsconfig.json`
