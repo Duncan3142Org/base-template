@@ -1,7 +1,7 @@
 import {
 	Base,
 	JSDoc,
-	Promise,
+	PromiseLint,
 	TypeScript,
 	Ignored,
 	ImportX,
@@ -18,7 +18,7 @@ const configs = Core.defineConfig(
 	Comments.config,
 	TypeScript.config,
 	ImportX.config,
-	Promise.config,
+	PromiseLint.config,
 	JSDoc.config,
 	Vitest.config,
 	Prettier.config

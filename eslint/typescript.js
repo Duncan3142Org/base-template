@@ -60,7 +60,17 @@ const custom = {
 		"@typescript-eslint/no-use-before-define": ["error"],
 		"@typescript-eslint/no-import-type-side-effects": "error",
 		"@typescript-eslint/no-loop-func": "error",
-		"@typescript-eslint/no-shadow": "error",
+		"@typescript-eslint/no-shadow": [
+			"error",
+			{
+				builtinGlobals: true,
+				hoist: "all",
+				allow: [],
+				ignoreOnInitialization: false,
+				ignoreTypeValueShadow: true,
+				ignoreFunctionTypeParameterNameValueShadow: true,
+			},
+		],
 		"@typescript-eslint/prefer-readonly": "warn",
 		"@typescript-eslint/prefer-readonly-parameter-types": [
 			"warn",
