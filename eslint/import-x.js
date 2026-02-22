@@ -1,12 +1,15 @@
+/** @import { Config } from "./core.js" */
+
 import { importX } from "eslint-plugin-import-x"
-import { filePattern, FILE_EXTENSIONS, lintAll, type Config } from "./core.ts"
+import { filePattern, FILE_EXTENSIONS, lintAll } from "./core.js"
 import { defineConfig } from "eslint/config"
 
 /* -------------------------------------------------------------------------- */
 /*                                   Configs                                  */
 /* -------------------------------------------------------------------------- */
 
-const custom: Config = {
+/** @type {Config} */
+const custom = {
 	name: "@duncan3142/eslint-config/import/custom",
 	rules: {
 		"import-x/named": "off", // tsc config

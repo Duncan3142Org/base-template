@@ -1,8 +1,11 @@
+/** @import { Configs } from "./core.js" */
+
 import jsDoc from "eslint-plugin-jsdoc"
-import { filePattern, FILE_EXTENSIONS, type Configs } from "./core.ts"
+import { filePattern, FILE_EXTENSIONS } from "./core.js"
 import { defineConfig } from "eslint/config"
 
-const custom: Configs = defineConfig({
+/** @type {Configs} */
+const custom = defineConfig({
 	name: "@duncan3142/eslint-config/jsdoc/custom",
 	rules: {
 		"jsdoc/require-jsdoc": [
@@ -33,18 +36,21 @@ const custom: Configs = defineConfig({
 	files: [filePattern(...FILE_EXTENSIONS.JSTS)],
 })
 
-const ts: Configs = defineConfig({
+/** @type {Configs} */
+const ts = defineConfig({
 	name: "@duncan3142/eslint-config/jsdoc",
 	files: [filePattern(...FILE_EXTENSIONS.TS)],
 	extends: [jsDoc.configs["flat/recommended-typescript-error"], custom],
 })
 
-const js: Configs = defineConfig({
+/** @type {Configs} */
+const js = defineConfig({
 	name: "@duncan3142/eslint-config/jsdoc",
 	files: [filePattern(...FILE_EXTENSIONS.JS)],
 	extends: [jsDoc.configs["flat/recommended-error"], custom],
 })
 
-const config: Configs = defineConfig(ts, js, custom)
+/** @type {Configs} */
+const config = defineConfig(ts, js, custom)
 
 export { config }

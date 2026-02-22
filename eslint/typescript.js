@@ -1,24 +1,21 @@
+/** @import { Config, Configs, Parser, Path, Patterns } from "./core.js" */
+
 import tseslint from "typescript-eslint"
 import { createTypeScriptImportResolver } from "eslint-import-resolver-typescript"
 import { defineConfig } from "eslint/config"
-import {
-	filePattern,
-	FILE_EXTENSIONS,
-	type Config,
-	type Configs,
-	type Parser,
-	type Path,
-	type Patterns,
-	lintAll,
-} from "./core.ts"
+import { filePattern, FILE_EXTENSIONS, lintAll } from "./core.js"
 
-const TS_CONFIG_DEFAULT: Path = "tsconfig.json"
+/** @type {Path} */
+const TS_CONFIG_DEFAULT = "tsconfig.json"
 
-const parser: Parser = tseslint.parser
+/** @type {Parser} */
+const parser = tseslint.parser
 
-const extraExtensions: Patterns = [...FILE_EXTENSIONS.JSON, ...FILE_EXTENSIONS.NODE]
+/** @type {Patterns} */
+const extraExtensions = [...FILE_EXTENSIONS.JSON, ...FILE_EXTENSIONS.NODE]
 
-const custom: Config = {
+/** @type {Config} */
+const custom = {
 	name: "@duncan3142/eslint-config/typescipt/custom",
 	languageOptions: {
 		sourceType: "module",
@@ -64,9 +61,9 @@ const custom: Config = {
 		"@typescript-eslint/no-import-type-side-effects": "error",
 		"@typescript-eslint/no-loop-func": "error",
 		"@typescript-eslint/no-shadow": "error",
-		"@typescript-eslint/prefer-readonly": "error",
+		"@typescript-eslint/prefer-readonly": "warn",
 		"@typescript-eslint/prefer-readonly-parameter-types": [
-			"error",
+			"warn",
 			{ ignoreInferredTypes: true, treatMethodsAsReadonly: true },
 		],
 		"@typescript-eslint/no-unsafe-type-assertion": "error",
@@ -107,13 +104,15 @@ const custom: Config = {
 	},
 }
 
-const typed: Configs = defineConfig({
+/** @type {Configs} */
+const typed = defineConfig({
 	name: "@duncan3142/eslint-config/typescipt",
 	files: [filePattern(...FILE_EXTENSIONS.JSTS)],
 	extends: [tseslint.configs.strictTypeChecked, tseslint.configs.stylisticTypeChecked, custom],
 })
 
-const untyped: Configs = defineConfig({
+/** @type {Configs} */
+const untyped = defineConfig({
 	name: "@duncan3142/eslint-config/untyped",
 	files: [filePattern(...FILE_EXTENSIONS.JS)],
 	extends: [tseslint.configs.disableTypeChecked],
@@ -126,9 +125,8 @@ const untyped: Configs = defineConfig({
 
 /**
  * TypeScript ESLint config
- * @param guard - Guard to determine if the config should be typed or untyped
- * @returns ESLint config
+ * @type {Configs}
  */
-const config: Configs = defineConfig(typed, untyped)
+const config = defineConfig(typed, untyped)
 
 export { config }

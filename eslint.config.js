@@ -9,7 +9,7 @@ import {
 	Comments,
 	Core,
 	Vitest,
-} from "./eslint/index.ts"
+} from "./eslint/index.js"
 
 const configs = Core.defineConfig(
 	Core.config,

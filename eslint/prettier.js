@@ -1,8 +1,10 @@
+/** @import { Configs } from "./core.js" */
+
 import prettier from "eslint-config-prettier"
-import { type Configs } from "./core.ts"
 import { defineConfig } from "eslint/config"
 
-const config: Configs = defineConfig(prettier, {
+/** @type {Configs} */
+const config = defineConfig(prettier, {
 	rules: {
 		curly: "error",
 	},

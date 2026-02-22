@@ -1,8 +1,11 @@
+/** @import { Config, Configs } from "./core.js" */
+
 import eslintjs from "@eslint/js"
-import { filePattern, FILE_EXTENSIONS, type Config, type Configs } from "./core.ts"
+import { filePattern, FILE_EXTENSIONS } from "./core.js"
 import { defineConfig } from "eslint/config"
 
-const custom: Config = {
+/** @type {Config} */
+const custom = {
 	name: "@duncan3142/eslint-config/base/custom",
 	languageOptions: {
 		sourceType: "module",
@@ -44,7 +47,8 @@ const custom: Config = {
 	},
 }
 
-const config: Configs = defineConfig({
+/** @type {Configs} */
+const config = defineConfig({
 	name: "@duncan3142/eslint-config/base",
 	files: [filePattern(...FILE_EXTENSIONS.JSTS)],
 	extends: [eslintjs.configs.recommended, custom],
