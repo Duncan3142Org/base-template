@@ -4,6 +4,7 @@ networks:
 
 volumes:
   otel_lgtm_data:
+  claude_config:
 
 services:
   devcon:
@@ -15,13 +16,16 @@ services:
     # Keep container running indefinitely
     command: sleep infinity
 
+    environment:
+      - CLAUDE_CONFIG_DIR=/root/.claude
+
     # Mount project folder and Docker socket
     volumes:
       - ..:/workspace
       - ${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock
       - ${HOME}/.terraform.d/credentials.tfrc.json:/root/.terraform.d/credentials.tfrc.json
       - ${HOME}/.gemini/oauth_creds.json:/root/.gemini/oauth_creds.json
-      - ${HOME}/.claude/.credentials.json:/root/.claude/.credentials.json
+      - claude_config:/root/.claude
       - ./devcontainer/.config/mise:/root/.config/mise
       - ./devcontainer/.config/powershell:/root/.config/powershell
 
