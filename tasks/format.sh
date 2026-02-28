@@ -10,7 +10,7 @@ set -o pipefail
 
 npm exec -- prettier "--${usage_mode?}" --cache --cache-location='.prettier/cache' --cache-strategy content .
 if [ "$usage_mode" = "check" ]; then
-  terraform fmt -check -recursive /workspace/.github/environments/
+  terraform fmt -check -recursive .github/environments/
 else
-  terraform fmt -recursive /workspace/.github/environments/
+  terraform fmt -recursive .github/environments/
 fi
