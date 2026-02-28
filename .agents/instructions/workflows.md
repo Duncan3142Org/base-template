@@ -17,8 +17,8 @@
 
 ## Linting
 
-- Run `mise run lint check` to check linting
-- Run `mise run lint fix` to fix linting
+- Run `mise run lint` to check linting
+- Run `mise run lint --fix` to fix linting
 
 ## Testing
 
