@@ -1,0 +1,16 @@
+{
+	"$schema": "https://opencode.ai/config.json",
+	"autoupdate": "notify",
+	"default_agent": "plan",
+	"compaction": {
+		"auto": true,
+		"prune": true,
+		"reserved": 10000,
+	},
+	"instructions": [
+		".agents/instructions/project.md",
+		".agents/instructions/environment.md",
+		".agents/instructions/conventions.md",
+		".agents/instructions/workflows.md",
+	],
+}
