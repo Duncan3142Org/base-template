@@ -20,6 +20,12 @@ variable "gitlab_mirror_pat" {
   sensitive   = true
 }
 
+variable "github_admin_team_slug" {
+  type        = string
+  description = "The slug of the team for GitHubAdmin environment reviewers"
+  default     = "github-repo-admin"
+}
+
 variable "github_admin_app_id" {
   type        = string
   description = "The GitHub Admin App ID"
@@ -38,12 +44,12 @@ variable "github_admin_app_pem_file" {
 
 variable "github_admin_terraform_api_token" {
   type        = string
-  description = "Secret value for ADMIN_TERRAFORM_API_TOKEN in GitHubAdmin environment"
+  description = "Secret value for ADMIN_TF_API_TOKEN in GitHubAdmin environment"
   sensitive   = true
 }
 
 variable "github_admin_terraform_org_api_token" {
   type        = string
-  description = "Secret value for ADMIN_TERRAFORM_ORG_API_TOKEN in GitHubAdmin environment"
+  description = "Secret value for ADMIN_TF_ORG_API_TOKEN in GitHubAdmin environment"
   sensitive   = true
 }

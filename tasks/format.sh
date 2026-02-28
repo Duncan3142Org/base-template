@@ -9,3 +9,4 @@ set -ueC
 set -o pipefail
 
 npm exec -- prettier "--${usage_mode?}" --cache --cache-location='.prettier/cache' --cache-strategy content .
+terraform fmt -check -recursive /workspace/.github/environments/

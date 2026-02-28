@@ -2,10 +2,11 @@
 	"$schema": "https://opencode.ai/config.json",
 	"autoupdate": "notify",
 	"default_agent": "plan",
+	"model": "opencode/minimax-m2.1-free",
 	"compaction": {
 		"auto": true,
 		"prune": true,
-		"reserved": 10000,
+		"reserved": 16000,
 	},
 	"instructions": [
 		".agents/instructions/project.md",
