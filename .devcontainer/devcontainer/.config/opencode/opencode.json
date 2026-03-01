@@ -1,0 +1,27 @@
+{
+	"$schema": "https://opencode.ai/config.json",
+	"autoupdate": "notify",
+	"plugin": ["oh-my-opencode@3"],
+	"compaction": {
+		"auto": true,
+		"prune": true,
+		"reserved": 16000
+	},
+	"provider": {
+		"opencode": {
+			"whitelist": [
+				"claude-opus-4-6",
+				"claude-sonnet-4-6",
+				"gemini-3-flash",
+				"gemini-3.1-pro",
+				"glm-5",
+				"gpt-5.1-codex-mini",
+				"gpt-5.1-codex",
+				"gpt-5.2",
+				"gpt-5.3-codex",
+				"kimi-k2.5",
+				"minimax-m2.5"
+			]
+		}
+	}
+}

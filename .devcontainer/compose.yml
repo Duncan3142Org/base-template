@@ -40,7 +40,7 @@ services:
         source: terraform_plugin_cache
         target: *terraform_plugin_cache_path
       - ./devcontainer/.config/mise:/root/.config/mise
-      - ./devcontainer/.config/powershell:/root/.config/powershell
+      - ./devcontainer/.config/opencode:/root/.config/opencode
 
     env_file:
       - ./devcontainer/.env
