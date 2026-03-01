@@ -1,0 +1,11 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"extends": ["./tsconfig.base.json"],
+	"compilerOptions": {
+		"rootDir": "${configDir}/src",
+		"outDir": "${configDir}/.tsc/dist",
+		"tsBuildInfoFile": "${configDir}/.tsc/tsconfig.test.tsbuildinfo"
+	},
+	"include": ["${configDir}/src/**/*.test.*"],
+	"references": [{ "path": "./tsconfig.assets.json" }]
+}

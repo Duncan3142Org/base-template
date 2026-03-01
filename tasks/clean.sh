@@ -5,4 +5,4 @@
 set -ueC
 set -o pipefail
 
-rm -rf .prettier
+rm -rf .prettier .tsc

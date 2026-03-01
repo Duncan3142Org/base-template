@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-#MISE description "Build"
+#MISE description "Assets"
 
 set -ueC
 set -o pipefail
 
-echo "No assets to generate"
+npm exec -- tsc --build

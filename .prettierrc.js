@@ -1,4 +1,7 @@
-import config from "@duncan3142/prettier-config"
-
-// eslint-disable-next-line import-x/no-default-export -- Prettier config
-export default config
+export default {
+	semi: false,
+	trailingComma: "es5",
+	singleQuote: false,
+	printWidth: 96,
+	useTabs: true,
+}

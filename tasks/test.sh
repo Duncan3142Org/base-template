@@ -5,4 +5,4 @@
 set -ueC
 set -o pipefail
 
-echo "No tests configured"
+npm exec -- vitest run

@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 
 #MISE description "Lint source code"
-#USAGE arg "[mode]" help="Lint mode" default="check" {
-#USAGE   choices "check" "fix"
-#USAGE }
+#USAGE flag "--fix" help="Fix mode"
 
 set -ueC
 set -o pipefail
 
-echo "No linter configured."
+TIMING=1 LINT_ALL=true npm exec -- eslint --fix="${usage_fix:-false}" .

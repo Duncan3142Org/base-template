@@ -2,8 +2,16 @@ networks:
   monitoring:
     driver: bridge
 
+x-config:
+  terraform_plugin_cache_path: &terraform_plugin_cache_path /root/.terraform.d/plugin-cache
+
 volumes:
   otel_lgtm_data:
+  mise_data:
+  npm_cache:
+  node_modules:
+  terraform_env:
+  terraform_plugin_cache:
 
 services:
   devcon:
@@ -15,13 +23,24 @@ services:
     # Keep container running indefinitely
     command: sleep infinity
 
+    environment:
+      TF_PLUGIN_CACHE_DIR: *terraform_plugin_cache_path
+
     # Mount project folder and Docker socket
     volumes:
       - ..:/workspace
       - ${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock
       - ${HOME}/.terraform.d/credentials.tfrc.json:/root/.terraform.d/credentials.tfrc.json
-      - ${HOME}/.gemini/oauth_creds.json:/root/.gemini/oauth_creds.json
-      - ${HOME}/.claude/.credentials.json:/root/.claude/.credentials.json
+      - ${HOME}/.local/share/opencode/auth.json:/root/.local/share/opencode/auth.json
+      - mise_data:/root/.local/share/mise
+      - npm_cache:/root/.npm
+      - node_modules:/workspace/node_modules
+      - terraform_env:/workspace/.github/environments/.terraform
+      - type: volume
+        source: terraform_plugin_cache
+        target: *terraform_plugin_cache_path
+      - ./devcontainer/.config/mise:/root/.config/mise
+      - ./devcontainer/.config/powershell:/root/.config/powershell
 
     env_file:
       - ./devcontainer/.env
@@ -37,7 +56,7 @@ services:
   #      OTel-LGTM      #
   # ------------------- #
   otel-lgtm:
-    image: grafana/otel-lgtm:0.11.14
+    image: grafana/otel-lgtm:0.19.1
     restart: unless-stopped
     ports:
       - "3000" # Grafana UI

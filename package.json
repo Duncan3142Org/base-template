@@ -16,10 +16,37 @@
 		"node": ">=24",
 		"npm": ">=11"
 	},
-	"files": [],
+	"files": [
+		".tsc/dist/**/*",
+		"!.tsc/dist/**/*.test.*"
+	],
+	"imports": {
+		"#duncan3142org/base-template": "./.tsc/dist/index.js"
+	},
+	"exports": {
+		".": {
+			"types": "./.tsc/dist/index.d.ts",
+			"import": "./.tsc/dist/index.js"
+		}
+	},
 	"devDependencies": {
 		"@commitlint/config-conventional": "^20.4.2",
-		"@duncan3142/prettier-config": "^0.1.10",
-		"@types/node": "^24.10.13"
+		"@eslint-community/eslint-plugin-eslint-comments": "^4.6.0",
+		"@eslint/compat": "^1.4.1",
+		"@eslint/config-inspector": "^1.4.2",
+		"@eslint/js": "^9.37.0",
+		"@types/eslint": "^9.6.1",
+		"@types/node": "^24.11.0",
+		"@vitest/eslint-plugin": "^1.6.9",
+		"eslint": "^9.39.3",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-import-resolver-typescript": "^4.4.4",
+		"eslint-plugin-import-x": "^4.16.1",
+		"eslint-plugin-jsdoc": "^62.7.1",
+		"prettier": "^3.8.1",
+		"typescript": "^5.9.3",
+		"typescript-eslint": "^8.56.1",
+		"vite-tsconfig-paths": "^6.1.1",
+		"vitest": "^4.0.18"
 	}
 }

@@ -6,10 +6,6 @@ It provides a starting point for new repositories in the Duncan3142Org organizat
 ## Tech Stack
 
 - Node.js (>= 24) / npm (>= 11)
-- [Mise](https://mise.jdx.dev/) for task running
-- [Dev Containers](https://containers.dev/) for development environments
+- [Mise](https://mise.jdx.dev/) for task definition / execution and cli tooling
+- [Dev Containers](https://containers.dev/) for the development environment
 - GitHub Actions for CI/CD
-
-## License
-
-AGPL-3.0-only

@@ -58,10 +58,10 @@ if ! command -v terraform &> /dev/null; then
 fi
 
 echo -e "🌍  ${BLUE}Syncing environments...${NC}"
-export TF_WORKSPACE="$repo_name-github-repo"
-export TF_TOKEN_app_terraform_io="$tf_token"
+export TF_WORKSPACE="${repo_name}-github-repo"
+export TF_TOKEN_app_terraform_io="${tf_token}"
 
-echo -e "📦  ${BLUE}Using Terraform workspace: $TF_WORKSPACE${NC}"
+echo -e "📦  ${BLUE}Using Terraform workspace: ${TF_WORKSPACE}${NC}"
 echo -e "⚙️  ${BLUE}Initializing Terraform...${NC}"
 terraform -chdir="$environments_workspace_dir" init
 echo -e "🚀  ${BLUE}Applying Terraform configuration...${NC}"
