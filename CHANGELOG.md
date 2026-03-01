@@ -1,3 +1,10 @@
+## [1.4.11](https://github.com/Duncan3142Org/base-template/compare/v1.4.10...v1.4.11) (2026-03-01)
+
+
+### Bug Fixes
+
+* config ([#32](https://github.com/Duncan3142Org/base-template/issues/32)) ([55ed427]())
+
 ## [1.4.10](https://github.com/Duncan3142Org/base-template/compare/v1.4.9...v1.4.10) (2026-02-21)
 
 
