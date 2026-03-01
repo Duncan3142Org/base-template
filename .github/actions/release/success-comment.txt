@@ -1,0 +1,6 @@
+:tada: This PR is included in version ${nextRelease.version} :tada:
+
+The release is available on:
+
+- [GitHub release](https://github.com/${env.GITHUB_REPOSITORY}/releases/tag/${nextRelease.gitTag})
+- [GitHub package](https://github.com/${env.GITHUB_REPOSITORY}/pkgs/npm/${env.PKG_NAME})

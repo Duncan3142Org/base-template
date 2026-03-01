@@ -1,5 +1,5 @@
-name: "Release"
-description: "Runs Semantic Release to publish a new package version"
+name: "Release NPM Package"
+description: "Runs Semantic Release to publish a new npm package version"
 runs:
   using: "composite"
   steps:
@@ -7,6 +7,12 @@ runs:
       shell: bash
       working-directory: ${{ github.action_path }}
       run: npm ci
+
+    - name: Extract Package Metadata
+      shell: bash
+      run: |
+        PKG_NAME=$(jq -r '.name | split("/") | .[1]' ./package.json)
+        echo "PKG_NAME=$PKG_NAME" >> $GITHUB_ENV
 
     - name: Run Semantic Release
       shell: bash
