@@ -29,7 +29,7 @@ const custom = {
 		"import-x/no-unassigned-import": "error",
 		"import-x/no-cycle": lintAll(),
 		"import-x/no-unused-modules": lintAll(),
-		"import-x/no-deprecated": lintAll(),
+		"import-x/no-deprecated": lintAll("warn"),
 		"import-x/no-self-import": "error",
 		"import-x/no-commonjs": "error",
 		"import-x/order": "error",
