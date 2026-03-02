@@ -6,6 +6,10 @@
 - Use `mise run <task>` to execute dev tasks
 - Use `mise run <task> --help` to print task help
 
+## Clean
+
+- Run `mise run clean` to clean cache and build files
+
 ## Formatting
 
 - Run `mise run format check` to check formatting
@@ -23,3 +27,11 @@
 ## Testing
 
 - Run `mise run test` for tests
+
+## Install
+
+- Run `mise run install` to install dependencies
+
+## Update
+
+- Run `mise run update` to update dependencies

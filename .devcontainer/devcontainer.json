@@ -41,7 +41,8 @@
 				"Gruntfuggly.todo-tree",
 				"pflannery.vscode-versionlens",
 				"vitest.explorer",
-				"redhat.vscode-yaml"
+				"redhat.vscode-yaml",
+				"Anthropic.claude-code"
 			]
 		}
 	}

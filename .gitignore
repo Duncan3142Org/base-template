@@ -22,9 +22,6 @@ node_modules
 !.gitkeep
 !.gitmessage
 
-# Semantic Release
-!.releaserc.json
-
 # GitHub
 !.github/
 
@@ -42,9 +39,6 @@ node_modules
 # Claude Code
 !.claude/
 !.claude/.ignore
-
-# Gemini CLI
-!.gemini/
 
 # Terraform
 !.terraform.lock.hcl
