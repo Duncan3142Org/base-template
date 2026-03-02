@@ -9,3 +9,5 @@ cat >> "/root/.bashrc" << 'EOF'
 # Mise
 eval "$(mise activate bash)"
 EOF
+
+curl -fsSL https://claude.ai/install.sh | bash

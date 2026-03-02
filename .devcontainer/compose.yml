@@ -4,6 +4,7 @@ networks:
 
 x-config:
   terraform_plugin_cache_path: &terraform_plugin_cache_path /root/.terraform.d/plugin-cache
+  claude_config_dir: &claude_config_dir /root/.claude
 
 volumes:
   otel_lgtm_data:
@@ -12,6 +13,7 @@ volumes:
   node_modules:
   terraform_env:
   terraform_plugin_cache:
+  claude_config:
 
 services:
   devcon:
@@ -25,22 +27,24 @@ services:
 
     environment:
       TF_PLUGIN_CACHE_DIR: *terraform_plugin_cache_path
+      CLAUDE_CONFIG_DIR: *claude_config_dir
 
     # Mount project folder and Docker socket
     volumes:
       - ..:/workspace
       - ${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock
       - ${HOME}/.terraform.d/credentials.tfrc.json:/root/.terraform.d/credentials.tfrc.json
-      - ${HOME}/.local/share/opencode/auth.json:/root/.local/share/opencode/auth.json
       - mise_data:/root/.local/share/mise
       - npm_cache:/root/.npm
       - node_modules:/workspace/node_modules
+      - type: volume
+        source: claude_config
+        target: *claude_config_dir
       - terraform_env:/workspace/.github/environments/.terraform
       - type: volume
         source: terraform_plugin_cache
         target: *terraform_plugin_cache_path
       - ./devcontainer/.config/mise:/root/.config/mise
-      - ./devcontainer/.config/opencode:/root/.config/opencode
 
     env_file:
       - ./devcontainer/.env
