@@ -14,6 +14,7 @@ volumes:
   terraform_env:
   terraform_plugin_cache:
   claude_config:
+  local:
 
 services:
   devcon:
@@ -45,6 +46,7 @@ services:
         source: terraform_plugin_cache
         target: *terraform_plugin_cache_path
       - ./devcontainer/.config/mise:/root/.config/mise
+      - local:/root/.local
 
     env_file:
       - ./devcontainer/.env
