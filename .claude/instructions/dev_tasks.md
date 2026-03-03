@@ -1,14 +1,11 @@
 # Workflows
 
-## Development
-
-- `MISE_ENV=dev` is set within the dev container, DO NOT MODIFY IT
 - Use `mise run <task>` to execute dev tasks
 - Use `mise run <task> --help` to print task help
 
 ## Clean
 
-- Run `mise run clean` to clean cache and build files
+- Run `mise run clean` to clean cache files & built assets
 
 ## Formatting
 
@@ -27,11 +24,3 @@
 ## Testing
 
 - Run `mise run test` for tests
-
-## Install
-
-- Run `mise run install` to install dependencies
-
-## Update
-
-- Run `mise run update` to update dependencies
