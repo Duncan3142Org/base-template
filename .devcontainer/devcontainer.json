@@ -15,7 +15,7 @@
 
 	"containerUser": "root",
 	"remoteUser": "root",
-	"updateRemoteUserUID": true,
+	"updateRemoteUserUID": false,
 
 	"customizations": {
 		"vscode": {
