@@ -1,4 +1,5 @@
 @instructions/project.md
 @instructions/environment.md
-@instructions/conventions.md
-@instructions/workflows.md
+@instructions/structure.md
+@instructions/dev_tools.md
+@instructions/dev_tasks.md
