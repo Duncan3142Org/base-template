@@ -13,3 +13,5 @@ set -o pipefail
 		cp .env.example .env
 	fi
 )
+
+gpgconf --kill all
