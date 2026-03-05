@@ -1,7 +1,7 @@
 # Repository Structure
 
 - `.github/` - GitHub Actions workflows, repo environments
-- `.mise/` - Mise task runner configuration
+- `.mise/` - Mise task runner and tools configuration
 - `tasks/` - Mise task scripts
 - `src/` - Repo source code, unit & contract tests
 - `test/` - Integration tests

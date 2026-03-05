@@ -1,10 +1,6 @@
 ---
 name: solid-principles
-description: >
-  SOLID design principles for writing maintainable, extensible, testable code. Load this
-  skill whenever designing new modules or classes, reviewing code structure, or refactoring
-  — SOLID violations are a common root cause of hard-to-test and hard-to-change code.
-  Covers SRP, OCP, LSP, ISP, and DIP with TypeScript examples and anti-patterns to flag.
+description: "SOLID design principles for writing maintainable, extensible, testable code. Load this skill whenever designing new modules or classes, reviewing code structure, or refactoring — SOLID violations are a common root cause of hard-to-test and hard-to-change code. Covers SRP, OCP, LSP, ISP, and DIP with TypeScript examples and anti-patterns to flag."
 ---
 
 # SOLID Design Principles

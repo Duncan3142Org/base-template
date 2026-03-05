@@ -1,11 +1,6 @@
 ---
 name: contract-tests
-description: >
-  How to write consumer-driven contract tests with Pact.js. Use this skill whenever testing
-  API boundaries between services — ensuring a consumer's expectations of a provider are
-  codified and verified. Covers Pact.js setup, consumer interaction definitions, provider
-  verification, pact broker CI flow, and where contracts live. If you need to verify adapter
-  wiring with a real service, see `integration-tests` instead.
+description: "How to write consumer-driven contract tests with Pact.js. Use this skill whenever testing API boundaries between services — ensuring a consumer's expectations of a provider are codified and verified. Covers Pact.js setup, consumer interaction definitions, provider verification, pact broker CI flow, and where contracts live. If you need to verify adapter wiring with a real service, see `integration-tests` instead."
 ---
 
 # Contract Tests

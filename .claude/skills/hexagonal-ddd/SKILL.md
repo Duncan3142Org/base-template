@@ -1,12 +1,6 @@
 ---
 name: hexagonal-ddd
-description: >
-  Hexagonal Architecture (Ports and Adapters) combined with Domain-Driven Design for
-  structuring services with a clean, framework-independent domain core. Load this skill
-  when designing a new service or module, defining domain models, placing new code in the
-  right layer, or reviewing whether dependencies point in the correct direction. Covers
-  ports, adapters, dependency direction, DDD entities/value objects/aggregates/repositories,
-  and how the two patterns combine. Pairs with `solid-principles` for class-level design.
+description: "Hexagonal Architecture (Ports and Adapters) combined with Domain-Driven Design for structuring services with a clean, framework-independent domain core. Load this skill when designing a new service or module, defining domain models, placing new code in the right layer, or reviewing whether dependencies point in the correct direction. Covers ports, adapters, dependency direction, DDD entities/value objects/aggregates/repositories, and how the two patterns combine. Pairs with `solid-principles` for class-level design."
 ---
 
 # Hexagonal Architecture + Domain-Driven Design

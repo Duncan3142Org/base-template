@@ -1,12 +1,6 @@
 ---
 name: unit-tests
-description: >
-  How to write unit tests in the Detroit (classicist) style. Use this skill whenever writing
-  or reviewing tests that run in a single process — business logic, domain rules, API handlers
-  with in-process substitutes (PGLite, light-my-request). Covers what constitutes a "unit",
-  social vs solitary tests, mocking at I/O boundaries only, subcutaneous unit tests, test
-  naming, and assertions. If a test crosses a process boundary (real TCP, real database
-  container), see `integration-tests` instead.
+description: "How to write unit tests in the Detroit (classicist) style. Use this skill whenever writing or reviewing tests that run in a single process — business logic, domain rules, API handlers with in-process substitutes (PGLite, light-my-request). Covers what constitutes a 'unit', social vs solitary tests, mocking at I/O boundaries only, subcutaneous unit tests, test naming, and assertions. If a test crosses a process boundary (real TCP, real database container), see `integration-tests` instead."
 ---
 
 # Unit Tests
@@ -107,22 +101,22 @@ steps.
 ```typescript
 // Good: behaviour-driven name, arrange/act/assert structure
 it("rejects registration when email is already taken", async () => {
-  // Arrange
-  const repo = new InMemoryUserRepository()
-  await repo.save(buildUser({ email: "alice@example.com" }))
-  const service = new RegistrationService(repo)
+	// Arrange
+	const repo = new InMemoryUserRepository()
+	await repo.save(buildUser({ email: "alice@example.com" }))
+	const service = new RegistrationService(repo)
 
-  // Act & Assert
-  await expect(
-    service.register({ email: "alice@example.com", password: "secret" })
-  ).rejects.toThrow(EmailAlreadyTakenError)
+	// Act & Assert
+	await expect(
+		service.register({ email: "alice@example.com", password: "secret" })
+	).rejects.toThrow(EmailAlreadyTakenError)
 })
 
 // Bad: implementation-mirroring name, asserts on internal call
 it("register calls findByEmail", async () => {
-  const repo = { findByEmail: jest.fn().mockResolvedValue(existingUser) }
-  await registrationService.register(payload)
-  expect(repo.findByEmail).toHaveBeenCalledWith("alice@example.com")
+	const repo = { findByEmail: jest.fn().mockResolvedValue(existingUser) }
+	await registrationService.register(payload)
+	expect(repo.findByEmail).toHaveBeenCalledWith("alice@example.com")
 })
 ```
 

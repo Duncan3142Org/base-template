@@ -1,13 +1,6 @@
 ---
 name: pg-data-access
-description: >
-  Postgres data access patterns for consistency, concurrency control, and structural integrity.
-  Use this skill whenever writing or reviewing code that interacts with a Postgres database -
-  including schema definitions, migrations, queries with transactions, row locking, SELECT ... FOR UPDATE,
-  isolation levels, foreign key constraints, index design for locking, deadlock prevention, or any
-  concurrency-sensitive data access logic. Also trigger when discussing database design decisions,
-  reviewing pull requests that touch data access layers, or debugging concurrency issues like
-  deadlocks, phantom reads, or write skew. If the task involves Postgres and data consistency, use this skill.
+description: "Postgres data access patterns for consistency, concurrency control, and structural integrity. Use this skill whenever writing or reviewing code that interacts with a Postgres database - including schema definitions, migrations, queries with transactions, row locking, SELECT ... FOR UPDATE, isolation levels, foreign key constraints, index design for locking, deadlock prevention, or any concurrency-sensitive data access logic. Also trigger when discussing database design decisions, reviewing pull requests that touch data access layers, or debugging concurrency issues like deadlocks, phantom reads, or write skew. If the task involves Postgres and data consistency, use this skill."
 ---
 
 # Postgres Data Access & Consistency

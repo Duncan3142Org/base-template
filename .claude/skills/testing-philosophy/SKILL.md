@@ -1,11 +1,6 @@
 ---
 name: testing-philosophy
-description: >
-  Foundational testing philosophy and principles for the Detroit (classicist) school. Load
-  this skill whenever writing, reviewing, or discussing tests — it informs every testing
-  decision. Covers what to test vs what to skip, test classification (unit/contract/integration),
-  subcutaneous testing strategy, mocking philosophy, and coverage goals. Always consult this
-  before the more specific `unit-tests`, `contract-tests`, or `integration-tests` skills.
+description: "Foundational testing philosophy and principles for the Detroit (classicist) school. Load this skill whenever writing, reviewing, or discussing tests — it informs every testing decision. Covers what to test vs what to skip, test classification (unit/contract/integration), subcutaneous testing strategy, mocking philosophy, and coverage goals. Always consult this before the more specific `unit-tests`, `contract-tests`, or `integration-tests` skills."
 ---
 
 # Testing Philosophy
