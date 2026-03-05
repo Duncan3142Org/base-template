@@ -1,13 +1,12 @@
 ---
 name: unit-tests
 description: >
-  Guidance on writing unit tests in the Detroit (classicist) style.
-  Consult when writing tests for business logic, domain rules, or any
-  code that runs within a single process. Covers what constitutes a
-  "unit", social vs solitary tests, mocking at boundaries, testing
-  internal complexity, and subcutaneous unit tests using in-process
-  infrastructure. The defining characteristic of a unit test is that
-  everything runs in a single process.
+  How to write unit tests in the Detroit (classicist) style. Use this skill whenever writing
+  or reviewing tests that run in a single process — business logic, domain rules, API handlers
+  with in-process substitutes (PGLite, light-my-request). Covers what constitutes a "unit",
+  social vs solitary tests, mocking at I/O boundaries only, subcutaneous unit tests, test
+  naming, and assertions. If a test crosses a process boundary (real TCP, real database
+  container), see `integration-tests` instead.
 ---
 
 # Unit Tests
@@ -105,6 +104,28 @@ on successful registration."
 Avoid names that mirror method signatures or describe implementation
 steps.
 
+```typescript
+// Good: behaviour-driven name, arrange/act/assert structure
+it("rejects registration when email is already taken", async () => {
+  // Arrange
+  const repo = new InMemoryUserRepository()
+  await repo.save(buildUser({ email: "alice@example.com" }))
+  const service = new RegistrationService(repo)
+
+  // Act & Assert
+  await expect(
+    service.register({ email: "alice@example.com", password: "secret" })
+  ).rejects.toThrow(EmailAlreadyTakenError)
+})
+
+// Bad: implementation-mirroring name, asserts on internal call
+it("register calls findByEmail", async () => {
+  const repo = { findByEmail: jest.fn().mockResolvedValue(existingUser) }
+  await registrationService.register(payload)
+  expect(repo.findByEmail).toHaveBeenCalledWith("alice@example.com")
+})
+```
+
 ## Assertions
 
 Assertions target the observable result of the behaviour under test:
@@ -123,3 +144,17 @@ A well-written unit test suite supports refactoring. If changing the
 internal structure of the code (without altering its behaviour) causes
 tests to fail, those tests are testing implementation rather than
 behaviour and are candidates for revision.
+
+## Test File Colocation
+
+Unit test files live alongside the source files they test, in the same directory:
+
+```
+src/users/registration.service.ts
+src/users/registration.service.test.ts
+```
+
+This makes the relationship between test and source explicit and avoids maintaining
+parallel directory trees. Test files use the `.test.ts` suffix (not `.spec.ts`).
+Files containing only test helpers or fixtures use a `.helper.ts` or `.fixture.ts`
+suffix and are colocated with the tests that use them.

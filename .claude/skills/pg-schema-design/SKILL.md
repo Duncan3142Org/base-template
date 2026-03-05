@@ -12,15 +12,6 @@ description: >
 
 # PostgreSQL Schema Design
 
-## When to Apply
-
-Activate this skill when:
-
-- Creating or altering database tables, columns, or types
-- Writing or reviewing SQL migrations
-- Designing new domain models that will be persisted to PostgreSQL
-- Scaffolding schema for a new service or library
-
 ## Core Principle
 
 Leverage the PostgreSQL type system to enforce type safety at the storage layer. The database must complement the application layer in preventing invalid states. Neither layer relies on the other - both independently validate and enforce system invariants.

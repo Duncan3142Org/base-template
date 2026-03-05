@@ -1,15 +1,11 @@
 ---
 name: integration-tests
 description: >
-  Guidance on writing integration tests that verify adapters and
-  boundaries work correctly with real, out-of-process external
-  dependencies. Covers dev containers for owned infrastructure and
-  over-the-wire mocks for sibling services. Consult when testing
-  database access over a network, HTTP clients calling real or
-  simulated services, message consumers, or any code that crosses
-  a process boundary. The defining characteristic of an integration
-  test is that it crosses a process boundary - if everything runs
-  in a single process, see the unit-tests skill instead.
+  How to write integration tests that cross a process boundary. Use this skill whenever a
+  test connects to a real TCP socket — Postgres in a container, WireMock for sibling services,
+  a real message broker. Covers dev container infrastructure setup, over-the-wire mocking,
+  subcutaneous integration tests, and scope discipline. If everything runs in-process
+  (PGLite, in-memory), see `unit-tests` instead.
 ---
 
 # Integration Tests
@@ -61,6 +57,29 @@ Stubs are configured to return realistic responses for the scenarios
 under test. Both success and key failure modes (e.g., 404, 500, timeout)
 are worth covering.
 
+Example WireMock stub setup (using `wiremock-rest-client` or equivalent):
+
+```typescript
+import WireMock from "wiremock-rest-client"
+
+const wireMock = new WireMock("http://localhost:8080")
+
+beforeAll(async () => {
+  await wireMock.createMapping({
+    request: { method: "GET", url: "/users/42" },
+    response: {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+      jsonBody: { id: 42, email: "alice@example.com" },
+    },
+  })
+})
+
+afterAll(async () => {
+  await wireMock.clearAllMappings()
+})
+```
+
 ## Subcutaneous Integration Tests
 
 A subcutaneous test becomes an integration test when the application
@@ -71,6 +90,65 @@ These tests exercise a broad slice of the application (routing,
 validation, business logic, persistence) through its API or service
 entry point, with real network calls to real dependencies. They catch
 wiring, configuration, and middleware issues that unit tests miss.
+
+## Infrastructure Startup
+
+Owned infrastructure (Postgres, message brokers, caches) starts before the test suite and
+is shared across tests in the same run. Docker Compose is the preferred approach in dev
+containers:
+
+```typescript
+import { execSync } from "node:child_process"
+
+beforeAll(() => {
+  execSync("docker compose up -d postgres", { stdio: "inherit" })
+  // Wait for readiness — use a health-check loop or `wait-for-it`
+})
+
+afterAll(() => {
+  execSync("docker compose down", { stdio: "inherit" })
+})
+```
+
+When using Testcontainers directly (for CI portability without Docker Compose):
+
+```typescript
+import { PostgreSqlContainer } from "@testcontainers/postgresql"
+
+let container: StartedPostgreSqlContainer
+
+beforeAll(async () => {
+  container = await new PostgreSqlContainer().start()
+  process.env.DATABASE_URL = container.getConnectionUri()
+})
+
+afterAll(async () => {
+  await container.stop()
+})
+```
+
+## Test Cleanup
+
+Database state must be isolated between tests. Two patterns are common:
+
+**Truncate between tests** — simpler, works across all scenarios:
+
+```typescript
+afterEach(async () => {
+  await db.query("TRUNCATE TABLE orders, order_items RESTART IDENTITY CASCADE")
+})
+```
+
+**Transaction rollback** — faster but only works when the test and the code under test
+share the same connection:
+
+```typescript
+beforeEach(async () => { await db.query("BEGIN") })
+afterEach(async () => { await db.query("ROLLBACK") })
+```
+
+Prefer truncation when the code under test manages its own connections or transactions;
+rollback is appropriate for repository-layer tests where the connection is injected.
 
 ## Scope and Speed
 

@@ -13,7 +13,9 @@ description: >
 # Postgres Data Access & Consistency
 
 These are mandatory conventions for all Postgres data access code. They apply regardless of
-ORM or query builder - the principles operate at the SQL and transaction level.
+ORM or query builder - the principles operate at the SQL and transaction level. Use the
+**Decision Flowchart** at the end of this document as the canonical entry point when choosing
+a concurrency strategy.
 
 ## 1. Structural Integrity & Performance
 
@@ -41,8 +43,16 @@ or within a `SERIALIZABLE` transaction must be indexed. Without an index, the da
 resort to a full table scan, escalating row-level locks to table-level locks. This kills
 concurrency and causes widespread deadlocks.
 
-Pre-flight check: Before applying any pessimistic lock, verify the query plan uses an index
-(`EXPLAIN` the query). If it does a sequential scan, add the missing index first.
+### Pre-flight Check
+
+Before applying any lock, verify the query plan uses an index:
+
+```sql
+EXPLAIN SELECT * FROM orders WHERE id = $1 FOR UPDATE;
+```
+
+If the plan shows a sequential scan, add the missing index before writing the locking query.
+A sequential scan under a lock escalates to a table-level lock, killing concurrency.
 
 ## 2. Concurrency Control Strategies
 
@@ -145,6 +155,19 @@ batch processing). These are likely to encounter serialization failures or lock 
 **Optional** for short-lived, low-contention transactions that use the Hybrid Optimization above.
 In these cases, failing with a system error on the rare edge case is an acceptable trade-off
 for code simplicity. Document this decision with a comment when choosing not to retry.
+
+### Statement Timeout
+
+For long-running or high-contention transactions, set a `statement_timeout` to avoid
+indefinite waits on a blocked lock:
+
+```sql
+SET LOCAL statement_timeout = '5s';
+```
+
+Setting the timeout locally scopes it to the current transaction only. Choose a value longer
+than your expected worst-case lock wait time but short enough to surface pathological cases
+rather than silently hanging the application.
 
 ### Transaction Scope
 

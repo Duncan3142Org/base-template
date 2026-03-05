@@ -1,12 +1,11 @@
 ---
 name: testing-philosophy
 description: >
-  Foundational testing philosophy and principles. Consult this skill when
-  making decisions about what to test, how to structure tests, or which
-  testing approach to use. Covers the Detroit school, test classification,
-  behaviour-driven assertions, and guidance on test scope. This is the
-  overarching guide - the contract-tests, integration-tests, and unit-tests
-  skills contain specifics for each test type.
+  Foundational testing philosophy and principles for the Detroit (classicist) school. Load
+  this skill whenever writing, reviewing, or discussing tests — it informs every testing
+  decision. Covers what to test vs what to skip, test classification (unit/contract/integration),
+  subcutaneous testing strategy, mocking philosophy, and coverage goals. Always consult this
+  before the more specific `unit-tests`, `contract-tests`, or `integration-tests` skills.
 ---
 
 # Testing Philosophy
@@ -28,6 +27,13 @@ burden and breaks on refactors that don't change behaviour.
 Good test names read as specifications of behaviour. They answer "given
 this context, when this happens, then this outcome is expected" - not
 "method X calls method Y with argument Z."
+
+**Good names:** `"calculates shipping cost for oversized items"`,
+`"rejects registration when email is already taken"`,
+`"publishes OrderPlaced event on successful checkout"`
+
+**Bad names:** `"testCalculate"`, `"shippingService.calculate works"`,
+`"calls findByEmail with the provided address"`
 
 Assertions verify observable outcomes: return values, state changes,
 published events, side effects at system boundaries. They avoid asserting
