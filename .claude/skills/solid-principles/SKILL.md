@@ -1,6 +1,6 @@
 ---
 name: solid-principles
-description: "SOLID design principles for writing maintainable, extensible, testable code. Load this skill whenever designing new modules or classes, reviewing code structure, or refactoring — SOLID violations are a common root cause of hard-to-test and hard-to-change code. Covers SRP, OCP, LSP, ISP, and DIP with TypeScript examples and anti-patterns to flag."
+description: "SOLID design principles (SRP, OCP, LSP, ISP, DIP) for writing maintainable, extensible, testable TypeScript code. Use this skill when a task explicitly involves SOLID principles, when diagnosing why code is hard to test or extend, when a code review reveals structural issues such as god classes, fat interfaces, or hard dependencies on concretions, or when designing extension points and type hierarchies. Pairs with `hexagonal-ddd` for system-level architecture."
 ---
 
 # SOLID Design Principles
@@ -20,30 +20,30 @@ change. Split it.
 ```typescript
 // Bad: one class owns validation, persistence, and notifications
 class UserService {
-  async register(email: string, password: string) {
-    if (!/^[^@]+@[^@]+$/.test(email)) throw new Error("invalid email")
-    const hash = await bcrypt.hash(password, 10)
-    await this.db.query("INSERT INTO users ...", [email, hash])
-    await this.mailer.send({ to: email, subject: "Welcome" })
-  }
+	async register(email: string, password: string) {
+		if (!/^[^@]+@[^@]+$/.test(email)) throw new Error("invalid email")
+		const hash = await bcrypt.hash(password, 10)
+		await this.db.query("INSERT INTO users ...", [email, hash])
+		await this.mailer.send({ to: email, subject: "Welcome" })
+	}
 }
 
 // Good: each collaborator owns one concern
 class UserRegistrar {
-  constructor(
-    private readonly validator: EmailValidator,
-    private readonly hasher: PasswordHasher,
-    private readonly repo: UserRepository,
-    private readonly mailer: WelcomeMailer,
-  ) {}
+	constructor(
+		private readonly validator: EmailValidator,
+		private readonly hasher: PasswordHasher,
+		private readonly repo: UserRepository,
+		private readonly mailer: WelcomeMailer
+	) {}
 
-  async register(email: string, password: string): Promise<User> {
-    this.validator.validate(email)
-    const hash = await this.hasher.hash(password)
-    const user = await this.repo.save(new User(email, hash))
-    await this.mailer.sendWelcome(user)
-    return user
-  }
+	async register(email: string, password: string): Promise<User> {
+		this.validator.validate(email)
+		const hash = await this.hasher.hash(password)
+		const user = await this.repo.save(new User(email, hash))
+		await this.mailer.sendWelcome(user)
+		return user
+	}
 }
 ```
 
@@ -61,29 +61,33 @@ or the strategy pattern.
 ```typescript
 // Bad: adding a new discount type requires editing this function
 function calculateDiscount(order: Order, type: string): number {
-  if (type === "student") return order.total * 0.1
-  if (type === "senior") return order.total * 0.15
-  return 0
+	if (type === "student") return order.total * 0.1
+	if (type === "senior") return order.total * 0.15
+	return 0
 }
 
 // Good: extend by adding a new strategy, no existing code changes
 interface DiscountStrategy {
-  apply(order: Order): number
+	apply(order: Order): number
 }
 
 class StudentDiscount implements DiscountStrategy {
-  apply(order: Order) { return order.total * 0.1 }
+	apply(order: Order) {
+		return order.total * 0.1
+	}
 }
 
 class SeniorDiscount implements DiscountStrategy {
-  apply(order: Order) { return order.total * 0.15 }
+	apply(order: Order) {
+		return order.total * 0.15
+	}
 }
 
 class PricingEngine {
-  constructor(private readonly discounts: DiscountStrategy[]) {}
-  total(order: Order): number {
-    return order.total - this.discounts.reduce((sum, d) => sum + d.apply(order), 0)
-  }
+	constructor(private readonly discounts: DiscountStrategy[]) {}
+	total(order: Order): number {
+		return order.total - this.discounts.reduce((sum, d) => sum + d.apply(order), 0)
+	}
 }
 ```
 
@@ -169,29 +173,29 @@ provides them. The high-level module controls the contract.
 ```typescript
 // Bad: high-level service directly instantiates a low-level module
 class OrderService {
-  private readonly repo = new PostgresOrderRepository()  // hard dependency
+	private readonly repo = new PostgresOrderRepository() // hard dependency
 
-  async submit(orderId: string) {
-    const order = await this.repo.findById(orderId)
-    order.submit()
-    await this.repo.save(order)
-  }
+	async submit(orderId: string) {
+		const order = await this.repo.findById(orderId)
+		order.submit()
+		await this.repo.save(order)
+	}
 }
 
 // Good: depend on the abstraction; inject the concrete at the composition root
 interface OrderRepository {
-  findById(id: string): Promise<Order>
-  save(order: Order): Promise<void>
+	findById(id: string): Promise<Order>
+	save(order: Order): Promise<void>
 }
 
 class OrderService {
-  constructor(private readonly repo: OrderRepository) {}  // abstraction injected
+	constructor(private readonly repo: OrderRepository) {} // abstraction injected
 
-  async submit(orderId: string) {
-    const order = await this.repo.findById(orderId)
-    order.submit()
-    await this.repo.save(order)
-  }
+	async submit(orderId: string) {
+		const order = await this.repo.findById(orderId)
+		order.submit()
+		await this.repo.save(order)
+	}
 }
 ```
 

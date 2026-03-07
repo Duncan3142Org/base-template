@@ -45,14 +45,14 @@ provides the implementation.
 ```typescript
 // Driven port — defined in the domain/application layer
 export interface UserRepository {
-  findById(id: UserId): Promise<User | null>
-  findByEmail(email: Email): Promise<User | null>
-  save(user: User): Promise<void>
+	findById(id: UserId): Promise<User | null>
+	findByEmail(email: Email): Promise<User | null>
+	save(user: User): Promise<void>
 }
 
 // Driving port — the application use case
 export interface RegisterUser {
-  execute(command: RegisterUserCommand): Promise<UserId>
+	execute(command: RegisterUserCommand): Promise<UserId>
 }
 ```
 
@@ -63,33 +63,30 @@ Adapters live in the infrastructure layer and implement ports:
 ```typescript
 // Secondary adapter: database implementation of the driven port
 export class PostgresUserRepository implements UserRepository {
-  constructor(private readonly db: DatabaseClient) {}
+	constructor(private readonly db: DatabaseClient) {}
 
-  async findById(id: UserId): Promise<User | null> {
-    const row = await this.db.queryOne(
-      "SELECT * FROM users WHERE id = $1",
-      [id.value]
-    )
-    return row ? UserMapper.toDomain(row) : null
-  }
+	async findById(id: UserId): Promise<User | null> {
+		const row = await this.db.queryOne("SELECT * FROM users WHERE id = $1", [id.value])
+		return row ? UserMapper.toDomain(row) : null
+	}
 
-  async save(user: User): Promise<void> {
-    const row = UserMapper.toRow(user)
-    await this.db.query(
-      "INSERT INTO users (id, email, password_hash) VALUES ($1, $2, $3) ON CONFLICT (id) DO UPDATE ...",
-      [row.id, row.email, row.password_hash]
-    )
-  }
+	async save(user: User): Promise<void> {
+		const row = UserMapper.toRow(user)
+		await this.db.query(
+			"INSERT INTO users (id, email, password_hash) VALUES ($1, $2, $3) ON CONFLICT (id) DO UPDATE ...",
+			[row.id, row.email, row.password_hash]
+		)
+	}
 }
 
 // Primary adapter: HTTP controller that drives the application
 export class UserHttpController {
-  constructor(private readonly registerUser: RegisterUser) {}
+	constructor(private readonly registerUser: RegisterUser) {}
 
-  async handlePost(req: Request): Promise<Response> {
-    const userId = await this.registerUser.execute({ email: req.body.email })
-    return { status: 201, body: { id: userId.value } }
-  }
+	async handlePost(req: Request): Promise<Response> {
+		const userId = await this.registerUser.execute({ email: req.body.email })
+		return { status: 201, body: { id: userId.value } }
+	}
 }
 ```
 
@@ -101,10 +98,14 @@ database, no HTTP server. Inject an in-memory implementation of the driven port:
 ```typescript
 // In-memory adapter for tests (lives in src/, not test/)
 export class InMemoryUserRepository implements UserRepository {
-  private readonly store = new Map<string, User>()
+	private readonly store = new Map<string, User>()
 
-  async findById(id: UserId) { return this.store.get(id.value) ?? null }
-  async save(user: User)     { this.store.set(user.id.value, user) }
+	async findById(id: UserId) {
+		return this.store.get(id.value) ?? null
+	}
+	async save(user: User) {
+		this.store.set(user.id.value, user)
+	}
 }
 ```
 
@@ -119,17 +120,21 @@ value. Two value objects with the same value are equal. Value objects are immuta
 
 ```typescript
 export class Email {
-  private constructor(private readonly value: string) {}
+	private constructor(private readonly value: string) {}
 
-  static parse(raw: string): Email {
-    if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(raw)) {
-      throw new InvalidEmailError(raw)
-    }
-    return new Email(raw)
-  }
+	static parse(raw: string): Email {
+		if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(raw)) {
+			throw new InvalidEmailError(raw)
+		}
+		return new Email(raw)
+	}
 
-  equals(other: Email): boolean { return this.value === other.value }
-  toString(): string            { return this.value }
+	equals(other: Email): boolean {
+		return this.value === other.value
+	}
+	toString(): string {
+		return this.value
+	}
 }
 ```
 
@@ -143,21 +148,25 @@ equal if and only if their identities are equal, regardless of their current sta
 
 ```typescript
 export class User {
-  constructor(
-    public readonly id: UserId,
-    private email: Email,
-    private readonly createdAt: Date,
-    private readonly events: DomainEvent[] = [],
-  ) {}
+	constructor(
+		public readonly id: UserId,
+		private email: Email,
+		private readonly createdAt: Date,
+		private readonly events: DomainEvent[] = []
+	) {}
 
-  changeEmail(newEmail: Email): void {
-    if (this.email.equals(newEmail)) return
-    this.email = newEmail
-    this.events.push(new EmailChangedEvent(this.id, newEmail))
-  }
+	changeEmail(newEmail: Email): void {
+		if (this.email.equals(newEmail)) return
+		this.email = newEmail
+		this.events.push(new EmailChangedEvent(this.id, newEmail))
+	}
 
-  getEmail(): Email { return this.email }
-  pullEvents(): DomainEvent[] { return this.events.splice(0) }
+	getEmail(): Email {
+		return this.email
+	}
+	pullEvents(): DomainEvent[] {
+		return this.events.splice(0)
+	}
 }
 ```
 
@@ -172,28 +181,34 @@ the cluster.
 
 ```typescript
 export class Order {
-  private status: OrderStatus = OrderStatus.Draft
-  private readonly items: OrderItem[] = []
-  private readonly events: DomainEvent[] = []
+	private status: OrderStatus = OrderStatus.Draft
+	private readonly items: OrderItem[] = []
+	private readonly events: DomainEvent[] = []
 
-  constructor(public readonly id: OrderId, private readonly customerId: CustomerId) {}
+	constructor(
+		public readonly id: OrderId,
+		private readonly customerId: CustomerId
+	) {}
 
-  addItem(productId: ProductId, quantity: Quantity): void {
-    if (this.status !== OrderStatus.Draft) throw new OrderAlreadySubmittedError()
-    this.items.push(new OrderItem(productId, quantity))
-  }
+	addItem(productId: ProductId, quantity: Quantity): void {
+		if (this.status !== OrderStatus.Draft) throw new OrderAlreadySubmittedError()
+		this.items.push(new OrderItem(productId, quantity))
+	}
 
-  submit(): void {
-    if (this.items.length === 0) throw new EmptyOrderError()
-    this.status = OrderStatus.Submitted
-    this.events.push(new OrderSubmittedEvent(this.id, this.customerId))
-  }
+	submit(): void {
+		if (this.items.length === 0) throw new EmptyOrderError()
+		this.status = OrderStatus.Submitted
+		this.events.push(new OrderSubmittedEvent(this.id, this.customerId))
+	}
 
-  pullEvents(): DomainEvent[] { return this.events.splice(0) }
+	pullEvents(): DomainEvent[] {
+		return this.events.splice(0)
+	}
 }
 ```
 
 **Aggregate design rules:**
+
 - Keep aggregates small. One aggregate root + a handful of child entities.
 - Reference other aggregates by identity only (store `customerId`, not `Customer`).
 - One transaction = one aggregate. If a use case needs to modify two aggregates, use
@@ -228,10 +243,10 @@ example, transferring funds between two accounts — it belongs in a domain serv
 
 ```typescript
 export class TransferService {
-  transfer(from: Account, to: Account, amount: Money): void {
-    from.debit(amount)
-    to.credit(amount)
-  }
+	transfer(from: Account, to: Account, amount: Money): void {
+		from.debit(amount)
+		to.credit(amount)
+	}
 }
 ```
 
@@ -249,17 +264,17 @@ This consistency makes code readable to domain experts and reduces translation e
 
 ## How Hexagonal and DDD Fit Together
 
-| DDD concept | Hexagonal layer | Example |
-|---|---|---|
-| Value Object | Domain | `Email`, `Money`, `OrderId` |
-| Entity | Domain | `User`, `Order` |
-| Aggregate root | Domain | `Order` (owns `OrderItem[]`) |
-| Domain Service | Domain / Application | `TransferService` |
-| Repository (interface) | Application / Domain | `OrderRepository` |
-| Use case | Application | `SubmitOrder.execute(command)` |
-| Repository (implementation) | Infrastructure | `PostgresOrderRepository` |
-| HTTP controller | Infrastructure | `OrderHttpController` |
-| Message consumer | Infrastructure | `OrderEventConsumer` |
+| DDD concept                 | Hexagonal layer      | Example                        |
+| --------------------------- | -------------------- | ------------------------------ |
+| Value Object                | Domain               | `Email`, `Money`, `OrderId`    |
+| Entity                      | Domain               | `User`, `Order`                |
+| Aggregate root              | Domain               | `Order` (owns `OrderItem[]`)   |
+| Domain Service              | Domain / Application | `TransferService`              |
+| Repository (interface)      | Application / Domain | `OrderRepository`              |
+| Use case                    | Application          | `SubmitOrder.execute(command)` |
+| Repository (implementation) | Infrastructure       | `PostgresOrderRepository`      |
+| HTTP controller             | Infrastructure       | `OrderHttpController`          |
+| Message consumer            | Infrastructure       | `OrderEventConsumer`           |
 
 The domain core is a pure TypeScript module with no framework imports — no Express, no
 database drivers, no HTTP clients. Infrastructure wires everything together at startup.

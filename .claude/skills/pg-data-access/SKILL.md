@@ -1,6 +1,6 @@
 ---
 name: pg-data-access
-description: "Postgres data access patterns for consistency, concurrency control, and structural integrity. Use this skill whenever writing or reviewing code that interacts with a Postgres database - including schema definitions, migrations, queries with transactions, row locking, SELECT ... FOR UPDATE, isolation levels, foreign key constraints, index design for locking, deadlock prevention, or any concurrency-sensitive data access logic. Also trigger when discussing database design decisions, reviewing pull requests that touch data access layers, or debugging concurrency issues like deadlocks, phantom reads, or write skew. If the task involves Postgres and data consistency, use this skill."
+description: "Postgres concurrency control and data consistency patterns. Use this skill when writing or reviewing transactional data access code — row locking (SELECT ... FOR UPDATE), isolation level selection (READ COMMITTED vs SERIALIZABLE), deadlock prevention, retry logic, or diagnosing concurrency anomalies (phantom reads, write skew, serialization failures). For schema design (FK constraints, cascade strategies, index design), see `pg-schema-design`."
 ---
 
 # Postgres Data Access & Consistency
@@ -10,42 +10,13 @@ ORM or query builder - the principles operate at the SQL and transaction level. 
 **Decision Flowchart** at the end of this document as the canonical entry point when choosing
 a concurrency strategy.
 
-## 1. Structural Integrity & Performance
+## 1. Schema Foundations
 
-Enforce correctness through the database engine before layering on application-level concurrency controls.
-
-### Foreign Keys
-
-Use hard Foreign Key constraints for all relational associations. Do not rely on application code
-to enforce referential integrity.
-
-- Default to `ON DELETE RESTRICT` to prevent accidental data loss.
-- Use `ON DELETE NO ACTION DEFERRABLE` only when circular dependencies or business logic
-  requires a row to be temporarily orphaned within a transaction.
-
-### Indexing Strategy
-
-Indexes serve two purposes here: enforcing business rules and enabling efficient locking.
-
-**Constraint-led indexes:** Use UNIQUE indexes to enforce business rules at the database level.
-For example, "one active subscription per user" should be a partial unique index, not an
-application-level check.
-
-**Locking-efficiency indexes:** Every column used in a `WHERE` clause for `SELECT ... FOR UPDATE`
-or within a `SERIALIZABLE` transaction must be indexed. Without an index, the database may
-resort to a full table scan, escalating row-level locks to table-level locks. This kills
-concurrency and causes widespread deadlocks.
-
-### Pre-flight Check
-
-Before applying any lock, verify the query plan uses an index:
-
-```sql
-EXPLAIN SELECT * FROM orders WHERE id = $1 FOR UPDATE;
-```
-
-If the plan shows a sequential scan, add the missing index before writing the locking query.
-A sequential scan under a lock escalates to a table-level lock, killing concurrency.
+The concurrency strategies in this skill depend on correct schema design — foreign key
+constraints with appropriate cascade behavior, indexes on FK columns, and locking-efficiency
+indexes on every column used in `FOR UPDATE` or `SERIALIZABLE` queries. These are schema-level
+concerns defined in `pg-schema-design` (see its **Referential Integrity** and **Index Design**
+sections). Ensure those foundations are in place before applying the concurrency patterns below.
 
 ## 2. Concurrency Control Strategies
 

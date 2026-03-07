@@ -5,6 +5,12 @@ description: "How to write consumer-driven contract tests with Pact.js. Use this
 
 # Contract Tests
 
+## Philosophy
+
+Detroit (classicist) school. Contract tests verify interface agreement, not
+business logic. They complement integration tests (adapter wiring) and unit
+tests (domain logic).
+
 ## Purpose
 
 Contract tests verify that two services (a consumer and a provider) agree
@@ -65,43 +71,43 @@ import { fetchUser } from "../src/users/user-client.js"
 const { like, string } = MatchersV3
 
 const provider = new PactV3({
-  consumer: "OrderService",
-  provider: "UserService",
-  dir: path.resolve(process.cwd(), "pacts"),
+	consumer: "OrderService",
+	provider: "UserService",
+	dir: path.resolve(process.cwd(), "pacts"),
 })
 
 describe("UserService consumer contract", () => {
-  it("returns a user by id", async () => {
-    await provider
-      .given("user 42 exists")
-      .uponReceiving("a GET request for user 42")
-      .withRequest({ method: "GET", url: "/users/42" })
-      .willRespondWith({
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-        body: {
-          id: like(42),
-          email: string("alice@example.com"),
-          name: like("Alice"),
-        },
-      })
-      .executeTest(async (mockServer) => {
-        const user = await fetchUser(mockServer.url, 42)
-        expect(user.id).toBe(42)
-        expect(user.email).toBeDefined()
-      })
-  })
+	it("returns a user by id", async () => {
+		await provider
+			.given("user 42 exists")
+			.uponReceiving("a GET request for user 42")
+			.withRequest({ method: "GET", url: "/users/42" })
+			.willRespondWith({
+				status: 200,
+				headers: { "Content-Type": "application/json" },
+				body: {
+					id: like(42),
+					email: string("alice@example.com"),
+					name: like("Alice"),
+				},
+			})
+			.executeTest(async (mockServer) => {
+				const user = await fetchUser(mockServer.url, 42)
+				expect(user.id).toBe(42)
+				expect(user.email).toBeDefined()
+			})
+	})
 
-  it("returns 404 when user does not exist", async () => {
-    await provider
-      .given("user 99 does not exist")
-      .uponReceiving("a GET request for a missing user")
-      .withRequest({ method: "GET", url: "/users/99" })
-      .willRespondWith({ status: 404 })
-      .executeTest(async (mockServer) => {
-        await expect(fetchUser(mockServer.url, 99)).rejects.toThrow(UserNotFoundError)
-      })
-  })
+	it("returns 404 when user does not exist", async () => {
+		await provider
+			.given("user 99 does not exist")
+			.uponReceiving("a GET request for a missing user")
+			.withRequest({ method: "GET", url: "/users/99" })
+			.willRespondWith({ status: 404 })
+			.executeTest(async (mockServer) => {
+				await expect(fetchUser(mockServer.url, 99)).rejects.toThrow(UserNotFoundError)
+			})
+	})
 })
 ```
 
@@ -116,25 +122,23 @@ import { Verifier } from "@pact-foundation/pact"
 import path from "node:path"
 
 describe("UserService provider verification", () => {
-  it("satisfies all consumer contracts", async () => {
-    const verifier = new Verifier({
-      provider: "UserService",
-      providerBaseUrl: "http://localhost:3001",
-      pactUrls: [
-        path.resolve(process.cwd(), "pacts", "OrderService-UserService.json"),
-      ],
-      stateHandlers: {
-        "user 42 exists": async () => {
-          await seedDatabase({ id: 42, email: "alice@example.com", name: "Alice" })
-        },
-        "user 99 does not exist": async () => {
-          await clearUser(99)
-        },
-      },
-    })
+	it("satisfies all consumer contracts", async () => {
+		const verifier = new Verifier({
+			provider: "UserService",
+			providerBaseUrl: "http://localhost:3001",
+			pactUrls: [path.resolve(process.cwd(), "pacts", "OrderService-UserService.json")],
+			stateHandlers: {
+				"user 42 exists": async () => {
+					await seedDatabase({ id: 42, email: "alice@example.com", name: "Alice" })
+				},
+				"user 99 does not exist": async () => {
+					await clearUser(99)
+				},
+			},
+		})
 
-    await verifier.verifyProvider()
-  })
+		await verifier.verifyProvider()
+	})
 })
 ```
 

@@ -5,6 +5,12 @@ description: "How to write integration tests that cross a process boundary. Use 
 
 # Integration Tests
 
+## Philosophy
+
+Detroit (classicist) school. Test behaviour, not implementation. Don't test
+what you don't own. Integration tests verify adapter wiring — they don't
+duplicate domain logic coverage.
+
 ## Purpose
 
 Integration tests verify that adapters - the code at the boundaries of
@@ -60,18 +66,18 @@ import WireMock from "wiremock-rest-client"
 const wireMock = new WireMock("http://localhost:8080")
 
 beforeAll(async () => {
-  await wireMock.createMapping({
-    request: { method: "GET", url: "/users/42" },
-    response: {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-      jsonBody: { id: 42, email: "alice@example.com" },
-    },
-  })
+	await wireMock.createMapping({
+		request: { method: "GET", url: "/users/42" },
+		response: {
+			status: 200,
+			headers: { "Content-Type": "application/json" },
+			jsonBody: { id: 42, email: "alice@example.com" },
+		},
+	})
 })
 
 afterAll(async () => {
-  await wireMock.clearAllMappings()
+	await wireMock.clearAllMappings()
 })
 ```
 
@@ -96,12 +102,12 @@ containers:
 import { execSync } from "node:child_process"
 
 beforeAll(() => {
-  execSync("docker compose up -d postgres", { stdio: "inherit" })
-  // Wait for readiness — use a health-check loop or `wait-for-it`
+	execSync("docker compose up -d postgres", { stdio: "inherit" })
+	// Wait for readiness — use a health-check loop or `wait-for-it`
 })
 
 afterAll(() => {
-  execSync("docker compose down", { stdio: "inherit" })
+	execSync("docker compose down", { stdio: "inherit" })
 })
 ```
 
@@ -113,12 +119,12 @@ import { PostgreSqlContainer } from "@testcontainers/postgresql"
 let container: StartedPostgreSqlContainer
 
 beforeAll(async () => {
-  container = await new PostgreSqlContainer().start()
-  process.env.DATABASE_URL = container.getConnectionUri()
+	container = await new PostgreSqlContainer().start()
+	process.env.DATABASE_URL = container.getConnectionUri()
 })
 
 afterAll(async () => {
-  await container.stop()
+	await container.stop()
 })
 ```
 
@@ -130,7 +136,7 @@ Database state must be isolated between tests. Two patterns are common:
 
 ```typescript
 afterEach(async () => {
-  await db.query("TRUNCATE TABLE orders, order_items RESTART IDENTITY CASCADE")
+	await db.query("TRUNCATE TABLE orders, order_items RESTART IDENTITY CASCADE")
 })
 ```
 
@@ -138,8 +144,12 @@ afterEach(async () => {
 share the same connection:
 
 ```typescript
-beforeEach(async () => { await db.query("BEGIN") })
-afterEach(async () => { await db.query("ROLLBACK") })
+beforeEach(async () => {
+	await db.query("BEGIN")
+})
+afterEach(async () => {
+	await db.query("ROLLBACK")
+})
 ```
 
 Prefer truncation when the code under test manages its own connections or transactions;

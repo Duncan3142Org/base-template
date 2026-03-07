@@ -1,6 +1,6 @@
 ---
 name: pg-schema-design
-description: "Use this skill when creating, altering, or reviewing PostgreSQL database schema. Triggers include: writing SQL migrations, defining new tables or columns, designing domain models for PostgreSQL persistence, creating or modifying custom types (composites, domains, enums, ranges), and scaffolding schema for a new service or library. Also activate when reviewing existing schema for anti-patterns or when any task involves co-generating TypeScript validation schemas alongside SQL DDL. Do NOT use for application-layer query building, ORM configuration, or non-PostgreSQL databases."
+description: "Use this skill when creating, altering, or reviewing PostgreSQL database schema. Triggers include: writing SQL migrations, defining new tables or columns, designing domain models for PostgreSQL persistence, creating or modifying custom types (composites, domains, enums, ranges), defining foreign key constraints and cascade strategies, designing indexes (B-tree, GiST, GIN, partial, covering), and scaffolding schema for a new service or library. Also activate when reviewing existing schema for anti-patterns. Do NOT use for application-layer query building, ORM configuration, or non-PostgreSQL databases. For transactional concurrency patterns (locking, isolation levels), see `pg-data-access`. For driver-layer type adapters (parsers, serializers), see `pg-driver-adapters`."
 ---
 
 # PostgreSQL Schema Design
@@ -8,19 +8,6 @@ description: "Use this skill when creating, altering, or reviewing PostgreSQL da
 ## Core Principle
 
 Leverage the PostgreSQL type system to enforce type safety at the storage layer. The database must complement the application layer in preventing invalid states. Neither layer relies on the other - both independently validate and enforce system invariants.
-
-## Co-Generation Rule
-
-**Every migration must produce two artifacts:**
-
-1. **SQL Migration** - the DDL defining types, tables, constraints, and indexes.
-2. **Validation Schema** - a TypeScript runtime schema that mirrors the SQL types for marshalling query results into validated application types.
-
-The validation library is project-dependent (likely Effect Schema, but may vary). If uncertain, ask which library is in use. Write validation schemas that:
-
-- Map each composite type / domain to a dedicated schema.
-- Enforce the same constraints expressed in SQL (e.g., if a domain has a CHECK regex, the schema has a matching pattern refinement).
-- Are co-located with or clearly reference their corresponding migration.
 
 ## Type Selection Rules
 
@@ -59,7 +46,7 @@ CREATE TYPE common.address AS (
 
 - Reduces table width and enforces internal field presence.
 - More storage-efficient than JSONB (no repeated key names).
-- Register custom parsers/serializers in the driver layer to map directly to TypeScript interfaces.
+- For driver-layer parsing and serialization of composite types, see `pg-driver-adapters`.
 
 ### Domains over Scalars
 
@@ -145,47 +132,148 @@ attributes jsonb NOT NULL DEFAULT '{}'::jsonb,
 - Storing foreign keys inside JSON (breaks referential integrity).
 - Using JSONB for data with a known, stable structure (use composite types instead).
 
-## Validation Schema Co-Generation
+## Referential Integrity
 
-When generating the SQL migration, also produce a validation schema file that mirrors the database types. The schema must:
+### Foreign Key Constraints
 
-1. **Map each custom type** (composite, domain, enum) to a named schema definition.
-2. **Replicate constraints** - if the SQL has a CHECK, the schema has an equivalent refinement.
-3. **Compose schemas** - domain-over-composite schemas should compose the base composite schema with additional refinements.
-4. **Export parse functions** - each schema should export a function that accepts raw query output and returns a validated, typed result.
+Use hard Foreign Key constraints for all relational associations. Never rely on application code alone to enforce referential integrity — the database must independently guarantee that every reference points to a valid parent row.
 
-Example pattern (library-agnostic pseudocode, adapt to project's validation library):
-
-```typescript
-// Mirrors: CREATE DOMAIN common.email AS text CHECK (...)
-const Email = pipe(
-	StringSchema,
-	pattern(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/),
-	brand("Email")
-)
-
-// Mirrors: CREATE TYPE common.date_window AS (start_at timestamptz, end_at timestamptz)
-const DateWindow = struct({
-	start_at: DateTimeSchema,
-	end_at: DateTimeSchema,
-})
-
-// Mirrors: CREATE DOMAIN common.valid_window AS common.date_window CHECK (...)
-const ValidWindow = pipe(
-	DateWindow,
-	refine((v) => v.start_at < v.end_at, "start_at must precede end_at")
-)
-
-// Mirrors: CREATE TYPE common.order_status AS ENUM (...)
-const OrderStatus = literal(
-	"draft",
-	"submitted",
-	"processing",
-	"shipped",
-	"delivered",
-	"cancelled"
-)
+```sql
+ALTER TABLE order_items
+  ADD CONSTRAINT fk_order_items_order
+  FOREIGN KEY (order_id) REFERENCES orders (id)
+  ON DELETE RESTRICT;
 ```
+
+### Cascade Strategy Selection
+
+Choose the `ON DELETE` behavior based on the relationship semantics. Apply the first matching rule:
+
+1. **`RESTRICT` (default)** — Parent deletion is a programming error. The application must explicitly reassign or delete children before removing the parent. Use for the vast majority of associations.
+
+2. **`CASCADE`** — Child rows have no independent meaning without the parent (true part-of relationship). Examples: `order_items` when an `order` is deleted, `comment_reactions` when a `comment` is deleted. Use sparingly — silent mass deletion is dangerous.
+
+3. **`SET NULL`** — The association is optional and should become unset when the parent disappears. The FK column **must** be nullable. Example: `created_by` user reference on a resource that should survive user deletion.
+
+4. **`SET DEFAULT`** — Rarely appropriate. Only use when a meaningful sentinel/default value exists for the FK column. Example: reassigning orphaned rows to a system account.
+
+5. **`NO ACTION DEFERRABLE INITIALLY DEFERRED`** — The constraint check is postponed to transaction commit time. Use for circular dependencies or multi-step operations where rows are temporarily orphaned within a single transaction.
+
+```sql
+-- Circular dependency between tables
+ALTER TABLE departments
+  ADD CONSTRAINT fk_departments_manager
+  FOREIGN KEY (manager_id) REFERENCES employees (id)
+  DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE employees
+  ADD CONSTRAINT fk_employees_department
+  FOREIGN KEY (department_id) REFERENCES departments (id)
+  DEFERRABLE INITIALLY DEFERRED;
+```
+
+### FK Indexing Rules
+
+**Always index the referencing (child) column of every foreign key.** PostgreSQL does NOT auto-create these indexes. Missing FK indexes cause two problems:
+
+1. **Join performance** — queries joining parent to children degrade to sequential scans on the child table.
+2. **Lock escalation on parent deletes** — when a parent row is deleted (or its PK is updated), PostgreSQL must check for referencing child rows. Without an index on the FK column, this check acquires a `ShareLock` on the entire child table, blocking all concurrent inserts and updates.
+
+```sql
+-- FK definition
+ALTER TABLE order_items
+  ADD CONSTRAINT fk_order_items_order
+  FOREIGN KEY (order_id) REFERENCES orders (id);
+
+-- REQUIRED: index on the referencing column
+CREATE INDEX idx_order_items_order_id ON order_items (order_id);
+```
+
+## Index Design
+
+### Index Type Selection
+
+Choose the index type based on the data and query pattern. Apply the first matching rule:
+
+1. **B-tree (default)** — Equality, range, sorting, and prefix queries on scalar types. Supports all comparison operators (`=`, `<`, `>`, `BETWEEN`, `IS NULL`). Use when no other type is specifically needed.
+
+2. **GiST** — Range types, spatial/geometric data, and exclusion constraints. Required for `&&` (overlap), `@>` (contains), and `EXCLUDE USING GIST` constraints. Pair with range columns and PostGIS geometry.
+
+3. **GIN** — JSONB containment (`@>`), array overlap (`&&`/`@>`), and full-text search (`@@`). Handles multi-valued data where a single row matches multiple keys. Slower to update than B-tree; best for read-heavy workloads.
+
+4. **Hash** — Pure equality lookups only (`=`). Smaller than B-tree for large values but does not support range queries, sorting, or multi-column indexes. Rarely the right choice — prefer B-tree unless benchmarks prove a measurable advantage.
+
+```sql
+-- B-tree (default, most common)
+CREATE INDEX idx_orders_created_at ON orders (created_at);
+
+-- GiST for range overlap
+CREATE INDEX idx_bookings_during ON bookings USING GIST (booked_during);
+
+-- GIN for JSONB containment
+CREATE INDEX idx_products_attrs ON products USING GIN (attributes);
+
+-- GIN for full-text search
+CREATE INDEX idx_articles_search ON articles USING GIN (search_vector);
+```
+
+### Composite Index Column Ordering
+
+Column order in a composite index determines which queries it can serve. Follow this ordering:
+
+1. **Equality columns first** — columns compared with `=`.
+2. **Most selective equality column leftmost** — the column with the highest cardinality (most distinct values) goes first among the equality columns.
+3. **Range columns last** — columns compared with `<`, `>`, `BETWEEN`, or used in `ORDER BY`.
+
+The index is usable for any left-prefix of its columns. A query that filters only on the first column still benefits; a query that filters only on the second column does not.
+
+```sql
+-- Query: WHERE tenant_id = $1 AND status = $2 AND created_at > $3
+-- tenant_id = equality (high cardinality), status = equality (low cardinality), created_at = range
+CREATE INDEX idx_orders_tenant_status_created
+  ON orders (tenant_id, status, created_at);
+```
+
+### Covering Indexes (INCLUDE)
+
+Add non-key columns with `INCLUDE` to enable index-only scans — the query reads everything it needs from the index without touching the heap.
+
+- Only include narrow, frequently selected columns (integers, timestamps, short enums).
+- Do **not** include wide columns (`TEXT`, `JSONB`, large `BYTEA`) — they bloat the index and negate the performance benefit.
+
+```sql
+-- Query: SELECT id, total FROM orders WHERE tenant_id = $1 AND status = 'active'
+CREATE INDEX idx_orders_tenant_status_covering
+  ON orders (tenant_id, status) INCLUDE (total);
+```
+
+### Partial Indexes for Business Rules
+
+Use a `WHERE` clause to index only a subset of rows. Partial indexes are smaller, faster, and can enforce subset uniqueness that a full-table index cannot.
+
+```sql
+-- Enforce: one active subscription per user
+CREATE UNIQUE INDEX idx_one_active_sub_per_user
+  ON subscriptions (user_id)
+  WHERE status = 'active';
+
+-- Index only open orders (skip the 95% that are closed)
+CREATE INDEX idx_orders_open
+  ON orders (created_at)
+  WHERE status != 'closed';
+```
+
+### Locking-Efficiency Indexes
+
+Every column used in a `WHERE` clause for `SELECT ... FOR UPDATE` or within a `SERIALIZABLE` transaction **must** be indexed. Without an index, the database may resort to a sequential scan, escalating row-level locks to table-level locks — this kills concurrency and causes widespread deadlocks.
+
+**Pre-flight check:** Before deploying any locking query, verify the query plan uses an index:
+
+```sql
+EXPLAIN SELECT * FROM orders WHERE id = $1 FOR UPDATE;
+```
+
+If the plan shows a sequential scan, add the missing index before writing the locking query. For concurrency control patterns that depend on these indexes, see `pg-data-access`.
 
 ## Anti-Patterns to Reject
 
@@ -198,3 +286,8 @@ When reviewing or generating schema, flag and refuse the following:
 - **Foreign keys inside JSONB** - always use proper FK columns with referential constraints.
 - **ENUMs for frequently changing value sets** - use a lookup table with a FK instead.
 - **Missing exclusion constraints on range columns** - if overlaps are invalid, enforce it.
+- **Missing index on FK columns** - PostgreSQL does not auto-create indexes on referencing columns. Every FK must have a corresponding index.
+- **CASCADE on all foreign keys** - silent mass deletion risk. Default to RESTRICT; only use CASCADE for true part-of relationships.
+- **Wrong index type** - B-tree on JSONB containment queries (use GIN), GIN on scalar range queries (use B-tree), Hash for anything beyond pure equality.
+- **Range column in middle of composite index** - range columns must be last; placing them before equality columns prevents the index from serving the trailing equality filters.
+- **Covering index with wide columns** - including TEXT, JSONB, or large BYTEA in INCLUDE bloats the index and negates index-only scan benefits.

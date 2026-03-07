@@ -5,6 +5,12 @@ description: "How to write unit tests in the Detroit (classicist) style. Use thi
 
 # Unit Tests
 
+## Philosophy
+
+Detroit (classicist) school. Test behaviour, not implementation. Don't test
+what you don't own. Coverage targets meaningful behaviour, not a percentage.
+Testability is a consequence of good design.
+
 ## What Constitutes a Unit
 
 In the Detroit school, a "unit" is not necessarily a single class or
