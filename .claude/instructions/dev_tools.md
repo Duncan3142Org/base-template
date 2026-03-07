@@ -6,4 +6,4 @@
 - ESLint 9+ for linting, config in `eslint.config.js`
 - Typescript for type safety
   - Main config in `tsconfig.json`
-  - Sub project `tsconfig.*.json` files per file family, i.e. `tsconfig.assets.json` for published assets.
+  - Sub project `tsconfig.*.json` files per file family, i.e. `tsconfig.assets.json` for built assets.
