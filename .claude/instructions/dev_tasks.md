@@ -9,8 +9,8 @@
 
 ## Formatting
 
-- Run `mise run format check` to check formatting
-- Run `mise run format write` to fix formatting
+- Run `mise run format` to check formatting
+- Run `mise run format --mode write` to fix formatting
 
 ## Assests
 

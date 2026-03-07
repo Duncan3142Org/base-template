@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
 #MISE description "Format source code"
-#USAGE arg "[mode]" help="Format mode" default="check" {
+#USAGE flag "--mode <mode>" {
 #USAGE   choices "check" "write"
+#USAGE   default "check"
+#USAGE   help "Format mode"
 #USAGE }
 
 set -ueC

@@ -46,7 +46,7 @@ echo -e "${BLUE}📦 Regenerate package-lock.json...${NC}"
 npm install --package-lock-only --ignore-scripts
 # Format files
 echo -e "${BLUE}🎨 Formatting modified files...${NC}"
-mise run format write
+mise run format --mode write
 # Stage modified files
 git add CHANGELOG.md README.md package.json package-lock.json
 # Check for unstaged changes
