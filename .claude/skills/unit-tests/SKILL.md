@@ -32,7 +32,7 @@ database - and still be a unit test, provided the dependency runs
 in-process. For example, PGLite provides a real SQL database that runs
 in-memory within the test process. Tests using PGLite are unit tests:
 they're fast, deterministic, and compatible with test spies and
-assertions from Jest or Vitest.
+assertions from Vitest.
 
 ## Social by Default
 
@@ -120,11 +120,63 @@ it("rejects registration when email is already taken", async () => {
 
 // Bad: implementation-mirroring name, asserts on internal call
 it("register calls findByEmail", async () => {
-	const repo = { findByEmail: jest.fn().mockResolvedValue(existingUser) }
+	const repo = { findByEmail: vi.fn().mockResolvedValue(existingUser) }
 	await registrationService.register(payload)
 	expect(repo.findByEmail).toHaveBeenCalledWith("alice@example.com")
 })
 ```
+
+## Describe Grouping Strategy
+
+Group tests by feature or scenario, not by method name. A `describe` block
+names the behaviour being exercised, not the function being called.
+
+```typescript
+// Good: grouped by scenario
+describe("registration", () => {
+	describe("when the email is already taken", () => {
+		it("rejects with EmailAlreadyTakenError", async () => { ... })
+		it("does not create a new account", async () => { ... })
+	})
+
+	describe("when the input is valid", () => {
+		it("persists the new user", async () => { ... })
+		it("publishes a UserRegistered event", async () => { ... })
+	})
+})
+
+// Bad: grouped by method
+describe("RegistrationService.register", () => {
+	it("calls findByEmail", async () => { ... })
+	it("calls save", async () => { ... })
+})
+```
+
+## Fixtures and Builders
+
+Test data is created using **builder functions** rather than object literals
+scattered across tests. Builders supply sensible defaults and allow individual
+fields to be overridden:
+
+```typescript
+// src/users/user.fixture.ts
+export function buildUser(overrides: Partial<User> = {}): User {
+	return {
+		id: 1,
+		email: "alice@example.com",
+		name: "Alice",
+		createdAt: new Date("2024-01-01"),
+		...overrides,
+	}
+}
+```
+
+Fixture files use the `.fixture.ts` suffix and are colocated with the code they
+support. The convention `build<Entity>()` is used throughout.
+
+Builders keep test setup readable and resilient to schema changes — when a new
+required field is added, only the builder needs updating, not every test that
+constructs the entity directly.
 
 ## Assertions
 

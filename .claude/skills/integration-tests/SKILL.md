@@ -7,9 +7,10 @@ description: "How to write integration tests that cross a process boundary. Use 
 
 ## Philosophy
 
-Detroit (classicist) school. Test behaviour, not implementation. Don't test
-what you don't own. Integration tests verify adapter wiring — they don't
-duplicate domain logic coverage.
+Integration tests verify real wiring. They confirm that adapters — the code at
+the system boundary — correctly connect to the external dependencies they talk
+to. They don't duplicate domain logic coverage (that belongs to unit tests) and
+they don't substitute for contract tests at API boundaries.
 
 ## Purpose
 
@@ -29,6 +30,19 @@ If the dependency runs in-process (e.g., PGLite as an in-memory database,
 an in-process HTTP handler via light-my-request), that is a unit test -
 even if it exercises a broad slice of application behaviour. See the
 unit-tests skill.
+
+## Test File Location
+
+Integration test files live in the `test/` directory at the repository root —
+not colocated with source files. This reflects the process-boundary distinction:
+unit tests (in-process) live alongside source in `src/`, integration tests
+(out-of-process) live in `test/`.
+
+```
+src/users/user-repository.ts          # source
+src/users/user-repository.test.ts     # unit test (colocated)
+test/users/user-repository.test.ts    # integration test (test/ directory)
+```
 
 ## Owned Infrastructure: Dev Containers
 
@@ -79,6 +93,15 @@ beforeAll(async () => {
 afterAll(async () => {
 	await wireMock.clearAllMappings()
 })
+
+it("fetches a user from the upstream service", async () => {
+	const user = await userAdapter.getUser(42)
+
+	expect(user.email).toBe("alice@example.com")
+
+	// Assert the adapter actually called the expected endpoint
+	await wireMock.verify(1, { method: "GET", url: "/users/42" })
+})
 ```
 
 ## Subcutaneous Integration Tests
@@ -94,24 +117,12 @@ wiring, configuration, and middleware issues that unit tests miss.
 
 ## Infrastructure Startup
 
-Owned infrastructure (Postgres, message brokers, caches) starts before the test suite and
-is shared across tests in the same run. Docker Compose is the preferred approach in dev
-containers:
+Infrastructure lifecycle — starting containers, running migrations — is managed via Mise
+tasks, not test code. Tests connect to already-running infrastructure; they do not start
+or stop it inline.
 
-```typescript
-import { execSync } from "node:child_process"
-
-beforeAll(() => {
-	execSync("docker compose up -d postgres", { stdio: "inherit" })
-	// Wait for readiness — use a health-check loop or `wait-for-it`
-})
-
-afterAll(() => {
-	execSync("docker compose down", { stdio: "inherit" })
-})
-```
-
-When using Testcontainers directly (for CI portability without Docker Compose):
+When a self-contained container is needed inside the test process (for example, an
+ephemeral Postgres instance scoped to a single test file), use Testcontainers:
 
 ```typescript
 import { PostgreSqlContainer } from "@testcontainers/postgresql"
@@ -154,6 +165,19 @@ afterEach(async () => {
 
 Prefer truncation when the code under test manages its own connections or transactions;
 rollback is appropriate for repository-layer tests where the connection is injected.
+
+## Parallel Execution
+
+Integration tests default to **serial execution** within a test run. Shared
+infrastructure (a single Postgres instance, a single WireMock server) creates
+shared state that parallel workers can corrupt.
+
+If parallelism is needed, isolate state per worker:
+
+- **Database:** use a separate schema per worker (e.g., `schema_worker_1`, `schema_worker_2`), or spin up isolated containers per worker with Testcontainers.
+- **WireMock:** use separate ports or separate WireMock instances per worker.
+
+Do not rely on test ordering or cleanup-before-run to make parallel tests safe — that only works until it doesn't.
 
 ## Scope and Speed
 
