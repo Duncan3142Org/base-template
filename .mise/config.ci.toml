@@ -3,4 +3,3 @@
 
 [tasks.ci]
 depends = ["format", "test", "assets", "lint"]
-file = "./tasks/cicd/ci.sh"

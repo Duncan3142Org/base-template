@@ -3,4 +3,3 @@
 
 [tasks.cd]
 depends = ["assets"]
-file = "./tasks/cicd/cd.sh"
