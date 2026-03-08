@@ -9,7 +9,8 @@
 			"mcp__ide__getDiagnostics",
 			"Bash(find:*)",
 			"Bash(grep:*)",
-			"Bash(wc:*)"
+			"Bash(wc:*)",
+			"Bash(mise run format:*)"
 		],
 		"defaultMode": "plan"
 	},

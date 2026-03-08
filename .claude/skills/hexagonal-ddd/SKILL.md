@@ -288,7 +288,7 @@ database drivers, no HTTP clients. Infrastructure wires everything together at s
 - **Infrastructure types in the domain** — `import pg from "pg"` in a domain entity.
   The domain must not know how it is persisted.
 - **Anemic domain model** — entities with only getters/setters and all logic in service
-  classes. Behaviour belongs on the entity.
+  classes. Behaviour belongs on the entity or functions in the domain layer which operate on them.
 - **Large aggregates** — an aggregate spanning many tables or containing collections that
   grow unboundedly. Split into smaller aggregates communicating via events.
 - **Cross-aggregate transactions** — modifying two aggregates in one database transaction.

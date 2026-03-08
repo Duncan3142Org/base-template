@@ -1,5 +1,5 @@
-@instructions/project.md
-@instructions/environment.md
-@instructions/structure.md
-@instructions/dev_tools.md
-@instructions/dev_tasks.md
+@context/project.md
+@context/environment.md
+@context/structure.md
+@context/dev_tools.md
+@context/dev_tasks.md
