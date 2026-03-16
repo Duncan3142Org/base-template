@@ -1,5 +1,13 @@
 [settings]
 # locked = true
 
+[tasks."ci:check"]
+run.tasks = ["format", "test --mode=unit", "lint"]
+
+[tasks."ci:build"]
+depends = ["ci:check"]
+run.tasks = ["assets"]
+
 [tasks.ci]
-depends = ["format", "test --mode=unit", "assets", "test --mode=integration", "lint"]
+depends = ["ci:build"]
+run.tasks = ["test --mode=integration"]

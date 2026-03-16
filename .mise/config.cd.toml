@@ -2,4 +2,4 @@
 # locked = true
 
 [tasks.cd]
-depends = ["assets"]
+run.tasks = ["assets"]

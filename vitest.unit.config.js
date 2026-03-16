@@ -9,6 +9,5 @@ export default defineConfig({
 		alias: {
 			"#duncan3142org/base-template": "./src/index.ts",
 		},
-		tsconfigPaths: true,
 	},
 })
