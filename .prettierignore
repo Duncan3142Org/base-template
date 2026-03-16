@@ -6,6 +6,3 @@ CHANGELOG.md
 
 # Semantic Release
 .github/actions/release/commit-partial.hbs
-
-# Agent
-.claude/plans

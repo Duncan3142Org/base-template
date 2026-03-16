@@ -36,9 +36,5 @@ node_modules
 !.prettierignore
 !.prettierrc.js
 
-# Claude Code
-!.claude/
-!.claude/.ignore
-
 # Terraform
 !.terraform.lock.hcl

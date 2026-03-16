@@ -10,4 +10,4 @@ cat >> "/root/.bashrc" << 'EOF'
 eval "$(mise activate bash)"
 EOF
 
-curl -fsSL https://claude.ai/install.sh | bash
+curl -fsSL https://gh.io/copilot-install | bash
