@@ -2,4 +2,4 @@
 # locked = true
 
 [tasks.ci]
-depends = ["format", "test", "assets", "lint"]
+depends = ["format", "test --mode=unit", "assets", "test --mode=integration", "lint"]
