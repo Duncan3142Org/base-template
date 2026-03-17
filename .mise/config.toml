@@ -27,8 +27,7 @@ file = "./tasks/clean.sh"
 run.tasks = ["format", "test --mode=unit", "lint"]
 
 [tasks.build]
-depends = ["check"]
-run.tasks = ["assets"]
+run.tasks = ["check", "assets"]
 
 [tasks.integrate]
 depends = ["build"]
