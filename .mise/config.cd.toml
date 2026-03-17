@@ -1,3 +1,4 @@
 [tasks.cd]
+description = "Install dependencies and compile release assets"
 depends = ["install"]
 run.tasks = ["assets"]

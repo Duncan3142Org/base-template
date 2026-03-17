@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-#MISE description="Format source code"
+#MISE description="Check or write source formatting"
 
 #USAGE flag "--mode <mode>" {
 #USAGE   choices "check" "write"
 #USAGE   default "check"
-#USAGE   help "Format mode"
+#USAGE   help "Formatting mode"
 #USAGE }
 
 set -ueC

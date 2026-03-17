@@ -100,6 +100,13 @@
 This repo is intended to be used as a GitHub repository template.
 To create a new repository from this template:
 
+Use Mise to discover and inspect available tasks:
+
+```bash
+mise tasks ls
+mise tasks info <task>
+```
+
 <!-- LICENSE -->
 
 ## License

@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-#MISE description="Merge default branch of template remote into local template branch"
+#MISE description="Sync the template branch from upstream"
 
 #USAGE flag "--template-branch <template-branch>" {
 #USAGE   env "TEMPLATE_BRANCH"
 #USAGE   default "TEMPLATE"
-#USAGE   help "Template branch name"
+#USAGE   help "Local branch used for template sync"
 #USAGE }
 
 set -ueC

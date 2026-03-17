@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#MISE description="Assets"
+#MISE description="Compile TypeScript assets"
 
 set -ueC
 set -o pipefail

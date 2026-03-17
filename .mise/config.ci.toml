@@ -1,3 +1,4 @@
 [tasks.ci]
+description = "Install dependencies and run the CI workflow"
 depends = ["install"]
 run.tasks = ["integrate"]

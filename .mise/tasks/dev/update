@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#MISE description="Update"
+#MISE description="Update npm dependencies and show outdated packages"
 
 set -ueC
 set -o pipefail

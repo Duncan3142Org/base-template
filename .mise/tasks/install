@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#MISE description="Install"
+#MISE description="Install npm dependencies"
 
 set -ueC
 set -o pipefail

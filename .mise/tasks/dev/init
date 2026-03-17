@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#MISE description="Init local repo"
+#MISE description="Set up Git hooks and GitHub CLI auth"
 
 # Git hooks and commit message template
 echo "⚙️  Setting up Git hooks and commit message template..."

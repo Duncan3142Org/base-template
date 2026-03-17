@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-#MISE description="Run tests"
+#MISE description="Run unit or integration tests"
 
 #USAGE flag "--mode <mode>" {
 #USAGE   choices "integration" "unit"
 #USAGE   default "unit"
-#USAGE   help "Test mode"
+#USAGE   help "Test suite to run"
 #USAGE }
 
 set -ueC

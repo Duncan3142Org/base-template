@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-#MISE description="Lint source code"
+#MISE description="Check or fix lint issues"
 
-#USAGE flag "--fix" help="Fix mode"
+#USAGE flag "--fix" {
+#USAGE   help "Apply ESLint fixes"
+#USAGE }
 
 set -ueC
 set -o pipefail

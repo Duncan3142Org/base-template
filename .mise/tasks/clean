@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#MISE description="Clean"
+#MISE description="Remove TypeScript and Prettier caches"
 
 set -ueC
 set -o pipefail

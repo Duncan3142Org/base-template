@@ -1,10 +1,10 @@
 #!/bin/bash
 
-#MISE description="Prepare files for clone repo"
+#MISE description="Prepare template files for a cloned repository"
 
 #USAGE arg "<repo_owner_name>" help="Repository owner name"
 #USAGE arg "<source_repo_name>" help="Source repository name"
-#USAGE arg "<clone_repo_name>" help="New repository name"
+#USAGE arg "<clone_repo_name>" help="Cloned repository name"
 
 set -ueC
 set -o pipefail
