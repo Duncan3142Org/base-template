@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#MISE description "Update"
+#MISE description="Update"
 
 set -ueC
 set -o pipefail

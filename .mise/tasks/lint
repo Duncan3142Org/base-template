@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-#MISE description "Lint source code"
+#MISE description="Lint source code"
+
 #USAGE flag "--fix" help="Fix mode"
 
 set -ueC

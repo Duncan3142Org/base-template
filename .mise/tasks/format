@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-#MISE description "Format source code"
+#MISE description="Format source code"
+
 #USAGE flag "--mode <mode>" {
 #USAGE   choices "check" "write"
 #USAGE   default "check"

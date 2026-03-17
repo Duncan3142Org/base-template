@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#MISE description "Merge default branch of template remote into local template branch"
+#MISE description="Merge default branch of template remote into local template branch"
 
 #USAGE flag "--template-branch <template-branch>" {
 #USAGE   env "TEMPLATE_BRANCH"

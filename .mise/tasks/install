@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#MISE description "Install"
+#MISE description="Install"
 
 set -ueC
 set -o pipefail

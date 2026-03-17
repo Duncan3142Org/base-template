@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-#MISE description "Run tests"
+#MISE description="Run tests"
+
 #USAGE flag "--mode <mode>" {
 #USAGE   choices "integration" "unit"
 #USAGE   default "unit"

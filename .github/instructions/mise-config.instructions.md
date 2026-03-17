@@ -13,6 +13,6 @@ applyTo: ".mise/*.toml"
 - Keep `.mise/config.dev.toml`, `.mise/config.ci.toml`, and `.mise/config.cd.toml` limited to environment-specific environment variables, overrides, or top-level orchestration.
 - Prefer composing existing tasks over duplicating workflow steps across multiple TOML files.
 - Pass explicit flags or arguments in `run.tasks` entries when selecting script behavior, following existing patterns such as `test --mode=unit`.
-- Keep composite task chains short and readable. If a workflow becomes hard to follow, introduce an intermediate named task instead of growing one long `run.tasks` list.
-- Keep task names aligned with the shell scripts they invoke and with the user-facing `mise run <task>` interface.
-- Treat the scripts in `.mise/tasks/` as the authoritative place for task descriptions, CLI metadata, and implementation details.
+- Keep composite task chains short and conceptually related. If a task becomes broad in scope, introduce an intermediate task instead.
+- Treat the scripts in `.mise/tasks/` as the authoritative place for script task descriptions, CLI metadata, and implementation details.
+- For composite tasks defined in the TOML, ensure the TOML entry has appropriate metadata, such as a description and usage annotations.

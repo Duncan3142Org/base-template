@@ -14,3 +14,4 @@ applyTo: ".mise/tasks/**"
 - Keep shell branching small and local. If modes start requiring substantially different setup or validation, split them only when a single script would become harder to understand.
 - When a shared script is used by multiple Mise tasks, prefer passing mode-specific values through the task definition rather than duplicating shell logic across files.
 - Keep task names and flag names aligned with the behavior they control, for example `--mode unit` or `--mode integration`.
+- Ensure the task has an informative description in the #MISE comment, and that the #USAGE annotations clearly explain the available modes and their effects.
