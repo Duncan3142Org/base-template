@@ -1,7 +1,7 @@
 ---
 name: testing-conventions
 description: "Use when working on TypeScript source or tests and you need this repository's test placement and testing-style rules."
-applyTo: "src/**/*.ts,test/**/*.ts"
+applyTo: "src/**/*.test.ts,test/**/*.spec.ts"
 ---
 
 # Testing Conventions
@@ -10,3 +10,4 @@ applyTo: "src/**/*.ts,test/**/*.ts"
 - Integration tests live in `test/` and use the `.spec.ts` suffix.
 - Single-process tests follow the Detroit style: test observable behavior, prefer real owned collaborators, and only mock or stub I/O boundaries.
 - If a test crosses a process boundary, uses real TCP sockets, or depends on external infrastructure, treat it as an integration test.
+- Consumer driven contract tests (Pact) verify assumptions about external systems, and should be executed and colocated alongside unit tests.

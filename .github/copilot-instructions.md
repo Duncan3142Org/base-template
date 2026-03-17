@@ -12,7 +12,7 @@ This repository is the base template for `@duncan3142org` projects.
 ## Repository Layout
 
 - `.github/` contains GitHub Actions workflows and repository environment Terraform configuration.
-- `.mise/` contains Mise tool configuration and the task scripts invoked by Mise tasks.
+- `.mise/` contains Mise tool configuration, composite task TOML files, and the task scripts invoked by Mise tasks.
 - `src/` contains source code and colocated unit tests.
 - `test/` contains integration tests.
 - `.devcontainer/` contains the development container configuration.
