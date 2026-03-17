@@ -19,6 +19,7 @@ const readFile = (path, base) => readFileSync(new URL(path, base), "utf8")
 
 const commitPartial = readFile("./commit-partial.hbs", cliDirUrl)
 const successComment = readFile("./success-comment.txt", cliDirUrl)
+const majorBranchPlugin = join(RELEASE_CLI_DIR, "major-branch.js")
 
 /**
  * Generates the path to a plugin based on its name.
@@ -59,5 +60,6 @@ export default {
 				successComment,
 			},
 		],
+		majorBranchPlugin,
 	],
 }
