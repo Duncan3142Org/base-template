@@ -1,3 +1,10 @@
+## [1.4.13](https://github.com/Duncan3142Org/base-template/compare/v1.4.12...v1.4.13) (2026-03-17)
+
+
+### Bug Fixes
+
+* major version branches ([#42](https://github.com/Duncan3142Org/base-template/issues/42)) ([f9b5f69]())
+
 ## [1.4.12](https://github.com/Duncan3142Org/base-template/compare/v1.4.11...v1.4.12) (2026-03-17)
 
 
