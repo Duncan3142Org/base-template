@@ -2,16 +2,16 @@ import assert from "node:assert"
 import { execa } from "execa"
 
 /**
- * semantic-release plugin that creates or updates vX and vX.Y branches
+ * semantic-release plugin that creates or updates v/X and v/X.Y branches
  * pointing to the same commit as the release tag.
  *
  * Runs in the "success" lifecycle step — after the vX.Y.Z tag has been
  * pushed and the release is fully complete.
  *
  * Configuration (all optional):
- * major    – push a vX branch          (default: true)
- * minor    – push a vX.Y branch        (default: false)
- * prefix   – branch name prefix        (default: "v")
+ * major    – push a v/X branch         (default: true)
+ * minor    – push a v/X.Y branch       (default: false)
+ * prefix   – branch path prefix        (default: "v")
  *
  * Example .releaserc.json:
  * ["semantic-release-branch-tags", { "major": true, "minor": true }]
@@ -23,9 +23,9 @@ import { execa } from "execa"
 
 /**
  * @typedef {object} PluginConfig
- * @property {boolean} [major=true] - Whether to update the major version branch (e.g., v1).
- * @property {boolean} [minor=false] - Whether to update the minor version branch (e.g., v1.2).
- * @property {string} [prefix="v"] - The prefix for the branch names.
+ * @property {boolean} [major=true] - Whether to update the major version branch (e.g., v/1).
+ * @property {boolean} [minor=false] - Whether to update the minor version branch (e.g., v/1.2).
+ * @property {string} [prefix="v"] - The prefix path segment for branch names.
  */
 
 /**
@@ -110,11 +110,11 @@ async function success(pluginConfig, context) {
 	const branches = []
 
 	if (major) {
-		branches.push(`${prefix}${majorVersion}`)
+		branches.push(`${prefix}/${majorVersion}`)
 	}
 
 	if (minor) {
-		branches.push(`${prefix}${majorVersion}.${minorVersion}`)
+		branches.push(`${prefix}/${majorVersion}.${minorVersion}`)
 	}
 
 	await pushBranches(branches, gitHead, repositoryUrl, logger)
