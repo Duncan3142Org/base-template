@@ -1,6 +1,3 @@
-[settings]
-# locked = true
-
 [tasks."ci:check"]
 run.tasks = ["format", "test --mode=unit", "lint"]
 

@@ -1,5 +1,2 @@
-[settings]
-# locked = true
-
 [tasks.cd]
 run.tasks = ["assets"]
