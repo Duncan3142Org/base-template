@@ -1,3 +1,4 @@
+import assert from "node:assert"
 import { execa } from "execa"
 
 /**
@@ -9,7 +10,7 @@ import { execa } from "execa"
  *
  * Configuration (all optional):
  * major    – push a vX branch          (default: true)
- * minor    – push a vX.Y branch        (default: true)
+ * minor    – push a vX.Y branch        (default: false)
  * prefix   – branch name prefix        (default: "v")
  *
  * Example .releaserc.json:
@@ -17,17 +18,27 @@ import { execa } from "execa"
  */
 
 /**
- * @import {Context} from "@semantic-release/release"
+ * @import { PublishContext} from "semantic-release"
  */
 
 /**
  * @typedef {object} PluginConfig
  * @property {boolean} [major=true] - Whether to update the major version branch (e.g., v1).
- * @property {boolean} [minor=true] - Whether to update the minor version branch (e.g., v1.2).
+ * @property {boolean} [minor=false] - Whether to update the minor version branch (e.g., v1.2).
  * @property {string} [prefix="v"] - The prefix for the branch names.
  */
 
+/**
+ * Pushes the release commit to the specified branches.
+ * @param {string[]} branches - The list of branch names to update.
+ * @param {string} gitHead - The commit SHA to which the branches should point.
+ * @param {string | undefined} repositoryUrl - The URL of the Git repository.
+ * @param {PublishContext['logger']} logger - The semantic-release logger for logging messages.
+ * @returns {Promise<void>} A promise that resolves when the branches have been pushed.
+ */
+
 async function pushBranches(branches, gitHead, repositoryUrl, logger) {
+	assert(repositoryUrl, "repositoryUrl is required to push branches")
 	if (branches.length === 0) {
 		logger.log("No alias branches enabled; skipping branch updates.")
 		return
@@ -51,12 +62,12 @@ async function pushBranches(branches, gitHead, repositoryUrl, logger) {
 /**
  * Checks the plugin configuration for validity.
  * @param {PluginConfig} pluginConfig - the plugin configuration object
- * @param {Context} context - the semantic-release context object, containing release information and utilities
+ * @param {PublishContext} context - the semantic-release context object, containing release information and utilities
  */
 async function verifyConditions(pluginConfig, context) {
 	// Nothing to verify beyond what core already checks (push access).
 	// If the user has misconfigured the options we'll catch it early.
-	const { major = true, minor = true } = pluginConfig
+	const { major = true, minor = false } = pluginConfig
 	const { logger } = context
 
 	if (!major && !minor) {
@@ -69,7 +80,7 @@ async function verifyConditions(pluginConfig, context) {
 /**
  * Updates the major and minor branches to point to the release commit.
  * @param {PluginConfig} pluginConfig - the plugin configuration object
- * @param {Context} context - the semantic-release context object, containing release information and utilities
+ * @param {PublishContext} context - the semantic-release context object, containing release information and utilities
  */
 async function success(pluginConfig, context) {
 	const {
@@ -78,7 +89,7 @@ async function success(pluginConfig, context) {
 		logger,
 	} = context
 
-	const { major = true, minor = true, prefix = "v" } = pluginConfig
+	const { major = true, minor = false, prefix = "v" } = pluginConfig
 
 	if (!major && !minor) {
 		logger.log("Both `major` and `minor` alias branches are disabled; skipping branch updates.")
