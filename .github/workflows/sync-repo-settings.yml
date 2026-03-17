@@ -7,9 +7,6 @@ concurrency:
   group: "Sync Repo Settings"
   cancel-in-progress: false
 
-env:
-  MISE_ENV: admin
-
 jobs:
   sync-repo-settings:
     name: Sync Repository Settings

@@ -90,7 +90,7 @@ git checkout -b "$bootstrap_branch" "$default_branch"
 
 # Prepare files for clone
 echo -e "${BLUE}🛠️  Preparing files for clone...${NC}"
-mise run prepare-clone "$repo_owner" "$source_repo_name" "$clone_repo_name"
+mise run admin:prepare-clone "$repo_owner" "$source_repo_name" "$clone_repo_name"
 
 # Create empty GitHub repository
 echo -e "${BLUE}📦 Creating empty repository on GitHub...${NC}"
