@@ -5,6 +5,9 @@ lockfile = true
 node = "24"
 npm = "11"
 
+[tasks.install]
+file = "./tasks/install.sh"
+
 [tasks.test]
 file = "./tasks/test.sh"
 
@@ -20,5 +23,13 @@ file = "./tasks/lint.sh"
 [tasks.clean]
 file = "./tasks/clean.sh"
 
-[tasks.install]
-file = "./tasks/install.sh"
+[tasks.check]
+run.tasks = ["format", "test --mode=unit", "lint"]
+
+[tasks.build]
+depends = ["check"]
+run.tasks = ["assets"]
+
+[tasks.integrate]
+depends = ["build"]
+run.tasks = ["test --mode=integration"]
