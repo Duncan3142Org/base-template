@@ -22,14 +22,14 @@ const custom = {
 		"import-x/prefer-default-export": "off",
 		"import-x/no-unresolved": "off", // tsc config
 		"import-x/extensions": "off", // tsc config
-		"import-x/no-relative-parent-imports": "error",
+		"import-x/no-relative-parent-imports": ["error", { ignore: ["#duncan3142org/*"] }],
 		"import-x/no-internal-modules": "off",
 		"import-x/no-extraneous-dependencies": "off",
 		"import-x/no-empty-named-blocks": "error",
 		"import-x/no-unassigned-import": "error",
 		"import-x/no-cycle": lintAll(),
 		"import-x/no-unused-modules": lintAll(),
-		"import-x/no-deprecated": lintAll(),
+		"import-x/no-deprecated": lintAll("warn"),
 		"import-x/no-self-import": "error",
 		"import-x/no-commonjs": "error",
 		"import-x/order": "error",
@@ -47,7 +47,6 @@ const custom = {
 const config = defineConfig({
 	name: "@duncan3142/eslint-config/import",
 	files: [filePattern(...FILE_EXTENSIONS.JSTS)],
-	// @ts-expect-error - Legacy ESLint types
 	extends: [importX.flatConfigs.recommended, importX.flatConfigs.typescript, custom],
 })
 

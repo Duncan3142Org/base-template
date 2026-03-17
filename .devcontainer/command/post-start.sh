@@ -17,5 +17,5 @@ mise_update() {
 
 mise_update
 
-mise run init
-mise run update
+mise run dev:init
+mise run dev:update

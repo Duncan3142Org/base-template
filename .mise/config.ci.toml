@@ -1,6 +1,4 @@
-[settings]
-# locked = true
-
 [tasks.ci]
-depends = ["format check", "test", "assets", "lint"]
-file = "./tasks/cicd/ci.sh"
+description = "Install dependencies and run the CI workflow"
+depends = ["install"]
+run.tasks = ["integrate"]

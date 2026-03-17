@@ -11,9 +11,6 @@ concurrency:
   group: "Clone Repo"
   cancel-in-progress: false
 
-env:
-  MISE_ENV: admin
-
 jobs:
   clone-repo:
     name: Clone Repository - '${{ github.event.inputs.repo_name }}'

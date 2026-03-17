@@ -5,20 +5,15 @@ lockfile = true
 node = "24"
 npm = "11"
 
-[tasks.test]
-file = "./tasks/test.sh"
+[tasks.check]
+description = "Run format, unit test, and lint checks"
+run.tasks = ["format", "test", "lint"]
 
-[tasks.assets]
-file = "./tasks/assets.sh"
+[tasks.build]
+description = "Run validation and compile TypeScript assets"
+run.tasks = ["check", "assets"]
 
-[tasks.format]
-file = "./tasks/format.sh"
-
-[tasks.lint]
-file = "./tasks/lint.sh"
-
-[tasks.clean]
-file = "./tasks/clean.sh"
-
-[tasks.install]
-file = "./tasks/install.sh"
+[tasks.integrate]
+description = "Run the full integration test workflow"
+depends = ["build"]
+run.tasks = ["test --mode=integration"]

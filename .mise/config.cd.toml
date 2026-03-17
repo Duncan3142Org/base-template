@@ -1,6 +1,4 @@
-[settings]
-# locked = true
-
 [tasks.cd]
-depends = ["assets"]
-file = "./tasks/cicd/cd.sh"
+description = "Install dependencies and compile release assets"
+depends = ["install"]
+run.tasks = ["assets"]

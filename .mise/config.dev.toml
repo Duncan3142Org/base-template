@@ -1,14 +1,3 @@
 [env]
 GITHUB_PKG_TOKEN = "{{ read_file(path='/run/secrets/github_pkg_token') | trim }}"
-
-[tasks.sync-template]
-depends = "init"
-file = "./tasks/dev/sync-template.sh"
-
-[tasks.init]
-depends = "install"
-file = "./tasks/dev/init.sh"
-
-[tasks.update]
-file = "./tasks/dev/update.sh"
-
+MISE_GITHUB_TOKEN = "{{ env.GITHUB_PKG_TOKEN }}"

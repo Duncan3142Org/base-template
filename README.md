@@ -100,8 +100,12 @@
 This repo is intended to be used as a GitHub repository template.
 To create a new repository from this template:
 
-- `export MISE_ENV=admin` (sets mise to use admin scripts)
-- `mise run clone <repo_name>` (runs the clone script to create a new repo from the template)
+Use Mise to discover and inspect available tasks:
+
+```bash
+mise tasks ls
+mise tasks info <task>
+```
 
 <!-- LICENSE -->
 

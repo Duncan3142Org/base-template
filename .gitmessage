@@ -27,7 +27,7 @@
 #    This is col 50 ----------------------------->
 # -> <scope> is optional and indicates the part of the codebase.
 #
-<type>:
+fix:
 
 # ------------------
 # Body (Optional)
