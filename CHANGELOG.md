@@ -1,3 +1,10 @@
+## [1.4.12](https://github.com/Duncan3142Org/base-template/compare/v1.4.11...v1.4.12) (2026-03-17)
+
+
+### Bug Fixes
+
+* claude skills ([#37](https://github.com/Duncan3142Org/base-template/issues/37)) ([8574235]())
+
 ## [1.4.11](https://github.com/Duncan3142Org/base-template/compare/v1.4.10...v1.4.11) (2026-03-01)
 
 
