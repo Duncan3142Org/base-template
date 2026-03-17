@@ -6,11 +6,14 @@ node = "24"
 npm = "11"
 
 [tasks.check]
-run.tasks = ["format", "test --mode=unit", "lint"]
+description = "Run format, unit test, and lint checks"
+run.tasks = ["format", "test", "lint"]
 
 [tasks.build]
+description = "Run validation and compile TypeScript assets"
 run.tasks = ["check", "assets"]
 
 [tasks.integrate]
+description = "Run the full integration test workflow"
 depends = ["build"]
 run.tasks = ["test --mode=integration"]

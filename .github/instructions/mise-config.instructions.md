@@ -16,3 +16,4 @@ applyTo: ".mise/*.toml"
 - Keep composite task chains short and conceptually related. If a task becomes broad in scope, introduce an intermediate task instead.
 - Treat the scripts in `.mise/tasks/` as the authoritative place for script task descriptions, CLI metadata, and implementation details.
 - For composite tasks defined in the TOML, ensure the TOML entry has appropriate metadata, such as an informative description
+- Run `mise tasks validate` to validate task definitions

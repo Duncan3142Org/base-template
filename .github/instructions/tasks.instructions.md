@@ -16,3 +16,4 @@ applyTo: ".mise/tasks/**"
 - Keep task names and flag names aligned with the behavior they control, for example `--mode unit` or `--mode integration`.
 - Ensure the task has an informative description in the #MISE comment
 - When a task supports inputs, ensure the options and their effects are clearly documented with #USAGE annotations.
+- Run `mise tasks validate` to validate task definitions
