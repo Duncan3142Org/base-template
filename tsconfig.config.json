@@ -8,5 +8,6 @@
 		"outDir": "${configDir}/.tsc",
 		"tsBuildInfoFile": "${configDir}/.tsc/tsconfig.config.tsbuildinfo"
 	},
-	"include": ["${configDir}/.*", "${configDir}/*", "${configDir}/eslint/**/*"]
+	"include": ["${configDir}/.*", "${configDir}/*", "${configDir}/eslint/**/*"],
+	"exclude": ["${configDir}/release.config.js"]
 }
