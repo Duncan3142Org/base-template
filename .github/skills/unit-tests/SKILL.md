@@ -1,6 +1,6 @@
----
 name: unit-tests
-description: "How to write unit tests in the Detroit (classicist) style. Use this skill whenever writing or reviewing tests that run in a single process — business logic, domain rules, API handlers with in-process substitutes (PGLite, light-my-request). Covers what constitutes a 'unit', social vs solitary tests, mocking at I/O boundaries only, subcutaneous unit tests, test naming, and assertions. If a test crosses a process boundary (real TCP, real database container), see `integration-tests` instead."
+description: "How to write unit tests in the Detroit (classicist) style. Use this skill when writing or reviewing in-process tests — business logic, domain rules, API handlers with in-process substitutes (PGLite, light-my-request). Covers what constitutes a 'unit', social vs solitary tests, mocking at I/O boundaries only, subcutaneous unit tests, test naming, fixtures, and assertions. If a test crosses a process boundary (real TCP, real database container), see `integration-tests` instead."
+
 ---
 
 # Unit Tests

@@ -34,4 +34,3 @@ This repository is the base template for `@duncan3142org` projects.
 - Keep changes minimal and consistent with the existing TypeScript, ESLint, and Prettier configuration.
 - Prefer updating existing task scripts and config files over introducing duplicate workflows.
 - When changing TypeScript code, run the relevant validation commands before finishing.
-- Use the reusable skills in `.github/skills/` when the task matches one of those workflows.
