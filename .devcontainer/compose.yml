@@ -6,14 +6,12 @@ x-config:
   terraform_plugin_cache_path: &terraform_plugin_cache_path /root/.terraform.d/plugin-cache
 
 volumes:
-  otel_lgtm_data:
+  node_modules:
+  terraform_env_workspace:
   mise_data:
   npm_cache:
-  node_modules:
-  terraform_env:
   terraform_plugin_cache:
-  gh_config:
-  local:
+  otel_lgtm_data:
 
 services:
   devcon:
@@ -33,16 +31,16 @@ services:
       - ..:/workspace
       - ${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock
       - ${HOME}/.terraform.d/credentials.tfrc.json:/root/.terraform.d/credentials.tfrc.json
+      - ./devcontainer/.config/mise:/root/.config/mise
+
+      - node_modules:/workspace/node_modules
+      - terraform_env_workspace:/workspace/.github/environments/.terraform
+
       - mise_data:/root/.local/share/mise
       - npm_cache:/root/.npm
-      - node_modules:/workspace/node_modules
-      - gh_config:/root/.config/gh
-      - terraform_env:/workspace/.github/environments/.terraform
       - type: volume
         source: terraform_plugin_cache
         target: *terraform_plugin_cache_path
-      - ./devcontainer/.config/mise:/root/.config/mise
-      - local:/root/.local
 
     env_file:
       - ./devcontainer/.env
