@@ -1,48 +1,47 @@
-networks:
-  monitoring:
-    driver: bridge
+include:
+  - ./compose.otel.yml
 
 x-config:
   terraform_plugin_cache_path: &terraform_plugin_cache_path /root/.terraform.d/plugin-cache
 
 volumes:
-  otel_lgtm_data:
-  mise_data:
-  npm_cache:
   node_modules:
-  terraform_env:
+  terraform_env_workspace:
+  local_bin:
+  mise_data:
+    name: shared-mise-data
+  npm_cache:
+    name: shared-npm-cache
   terraform_plugin_cache:
-  gh_config:
-  local:
+    name: shared-terraform-plugin-cache
 
 services:
   devcon:
-    build:
-      context: ./devcontainer/
-      dockerfile: Dockerfile
-    image: devcon:latest
+    image: mcr.microsoft.com/devcontainers/base:ubuntu-24.04
 
     # Keep container running indefinitely
     command: sleep infinity
 
     environment:
       TF_PLUGIN_CACHE_DIR: *terraform_plugin_cache_path
+      MISE_ENV: dev
 
     # Mount project folder and Docker socket
     volumes:
       - ..:/workspace
+      - ./devcontainer/.config/mise:/root/.config/mise
       - ${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock
       - ${HOME}/.terraform.d/credentials.tfrc.json:/root/.terraform.d/credentials.tfrc.json
+
+      - node_modules:/workspace/node_modules
+      - terraform_env_workspace:/workspace/.github/environments/.terraform
+      - local_bin:/root/.local/bin
+
       - mise_data:/root/.local/share/mise
       - npm_cache:/root/.npm
-      - node_modules:/workspace/node_modules
-      - gh_config:/root/.config/gh
-      - terraform_env:/workspace/.github/environments/.terraform
       - type: volume
         source: terraform_plugin_cache
         target: *terraform_plugin_cache_path
-      - ./devcontainer/.config/mise:/root/.config/mise
-      - local:/root/.local
 
     env_file:
       - ./devcontainer/.env
@@ -52,20 +51,7 @@ services:
       - source: gh_token
         target: gh_token
     networks:
-      - monitoring
-
-  # ------------------- #
-  #      OTel-LGTM      #
-  # ------------------- #
-  otel-lgtm:
-    image: grafana/otel-lgtm:0.19.1
-    restart: unless-stopped
-    ports:
-      - "3000" # Grafana UI
-    volumes:
-      - otel_lgtm_data:/data
-    networks:
-      - monitoring
+      - otel
 
 secrets:
   github_pkg_token:

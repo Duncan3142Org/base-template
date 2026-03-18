@@ -3,6 +3,8 @@
 set -ueC
 set -o pipefail
 
+gpgconf --launch gpg-agent || true
+
 (
 	cd ./.devcontainer/devcontainer/secrets
 	./prep.sh

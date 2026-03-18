@@ -1,0 +1,17 @@
+networks:
+  otel:
+    driver: bridge
+
+volumes:
+  otel_lgtm_data:
+
+services:
+  otel-lgtm:
+    image: grafana/otel-lgtm:0.21.0
+    restart: unless-stopped
+    ports:
+      - "3000" # Grafana UI
+    volumes:
+      - otel_lgtm_data:/data
+    networks:
+      - otel
