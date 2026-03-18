@@ -9,9 +9,13 @@ volumes:
   node_modules:
   terraform_env_workspace:
   mise_data:
+    name: shared-mise-data
   npm_cache:
+    name: shared-npm-cache
   terraform_plugin_cache:
+    name: shared-terraform-plugin-cache
   otel_lgtm_data:
+    name: shared-otel-lgtm-data
 
 services:
   devcon:
@@ -29,9 +33,9 @@ services:
     # Mount project folder and Docker socket
     volumes:
       - ..:/workspace
+      - ./devcontainer/.config/mise:/root/.config/mise
       - ${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock
       - ${HOME}/.terraform.d/credentials.tfrc.json:/root/.terraform.d/credentials.tfrc.json
-      - ./devcontainer/.config/mise:/root/.config/mise
 
       - node_modules:/workspace/node_modules
       - terraform_env_workspace:/workspace/.github/environments/.terraform
