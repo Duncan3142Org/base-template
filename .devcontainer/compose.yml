@@ -1,7 +1,5 @@
-networks:
-  otel:
-    name: otel
-    external: true
+include:
+  - ./compose.otel.yml
 
 x-config:
   terraform_plugin_cache_path: &terraform_plugin_cache_path /root/.terraform.d/plugin-cache

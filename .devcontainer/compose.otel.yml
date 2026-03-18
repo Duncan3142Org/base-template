@@ -5,14 +5,13 @@ networks:
 
 volumes:
   otel_lgtm_data:
-    name: otel-lgtm-data
 
 services:
   otel-lgtm:
-    image: grafana/otel-lgtm:0.19.1
+    image: grafana/otel-lgtm:0.21.0
     restart: unless-stopped
     ports:
-      - "3000:3000" # Grafana UI
+      - "3000" # Grafana UI
     volumes:
       - otel_lgtm_data:/data
     networks:
