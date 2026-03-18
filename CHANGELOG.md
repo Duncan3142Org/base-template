@@ -1,3 +1,10 @@
+## [1.4.14](https://github.com/Duncan3142Org/base-template/compare/v1.4.13...v1.4.14) (2026-03-18)
+
+
+### Bug Fixes
+
+* eslint10 ([#45](https://github.com/Duncan3142Org/base-template/issues/45)) ([53e75b0]())
+
 ## [1.4.13](https://github.com/Duncan3142Org/base-template/compare/v1.4.12...v1.4.13) (2026-03-17)
 
 
