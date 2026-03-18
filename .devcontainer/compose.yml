@@ -1,6 +1,7 @@
 networks:
-  monitoring:
-    driver: bridge
+  otel:
+    name: otel
+    external: true
 
 x-config:
   terraform_plugin_cache_path: &terraform_plugin_cache_path /root/.terraform.d/plugin-cache
@@ -8,14 +9,13 @@ x-config:
 volumes:
   node_modules:
   terraform_env_workspace:
+  local_bin:
   mise_data:
     name: shared-mise-data
   npm_cache:
     name: shared-npm-cache
   terraform_plugin_cache:
     name: shared-terraform-plugin-cache
-  otel_lgtm_data:
-    name: shared-otel-lgtm-data
 
 services:
   devcon:
@@ -39,6 +39,7 @@ services:
 
       - node_modules:/workspace/node_modules
       - terraform_env_workspace:/workspace/.github/environments/.terraform
+      - local_bin:/root/.local/bin
 
       - mise_data:/root/.local/share/mise
       - npm_cache:/root/.npm
@@ -54,20 +55,7 @@ services:
       - source: gh_token
         target: gh_token
     networks:
-      - monitoring
-
-  # ------------------- #
-  #      OTel-LGTM      #
-  # ------------------- #
-  otel-lgtm:
-    image: grafana/otel-lgtm:0.19.1
-    restart: unless-stopped
-    ports:
-      - "3000" # Grafana UI
-    volumes:
-      - otel_lgtm_data:/data
-    networks:
-      - monitoring
+      - otel
 
 secrets:
   github_pkg_token:
