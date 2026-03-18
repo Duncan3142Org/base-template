@@ -1,6 +1,5 @@
 networks:
   otel:
-    name: otel
     driver: bridge
 
 volumes:

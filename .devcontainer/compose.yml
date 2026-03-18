@@ -17,16 +17,14 @@ volumes:
 
 services:
   devcon:
-    build:
-      context: ./devcontainer/
-      dockerfile: Dockerfile
-    image: devcon:latest
+    image: mcr.microsoft.com/devcontainers/base:ubuntu-24.04
 
     # Keep container running indefinitely
     command: sleep infinity
 
     environment:
       TF_PLUGIN_CACHE_DIR: *terraform_plugin_cache_path
+      MISE_ENV: dev
 
     # Mount project folder and Docker socket
     volumes:
