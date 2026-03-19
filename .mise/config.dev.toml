@@ -1,3 +1,2 @@
 [env]
-GITHUB_PKG_TOKEN = "{{ read_file(path='/run/secrets/github_pkg_token') | trim }}"
-MISE_GITHUB_TOKEN = "{{ env.GITHUB_PKG_TOKEN }}"
+_.source = "./source-env.sh"
