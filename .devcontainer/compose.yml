@@ -25,11 +25,13 @@ services:
     environment:
       TF_PLUGIN_CACHE_DIR: *terraform_plugin_cache_path
       MISE_ENV: dev
+      DBUS_SESSION_BUS_ADDRESS: unix:path=/run/dbus-proxy/secrets.sock
 
     # Mount project folder and Docker socket
     volumes:
       - ..:/workspace
       - ./devcon/.config/mise:/root/.config/mise
+      - ./runtime:/run/dbus-proxy
       - ${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock
       - ${HOME}/.terraform.d/credentials.tfrc.json:/root/.terraform.d/credentials.tfrc.json
 
