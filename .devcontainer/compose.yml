@@ -29,7 +29,7 @@ services:
     # Mount project folder and Docker socket
     volumes:
       - ..:/workspace
-      - ./devcontainer/.config/mise:/root/.config/mise
+      - ./devcon/.config/mise:/root/.config/mise
       - ${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock
       - ${HOME}/.terraform.d/credentials.tfrc.json:/root/.terraform.d/credentials.tfrc.json
 
@@ -44,7 +44,7 @@ services:
         target: *terraform_plugin_cache_path
 
     env_file:
-      - ./devcontainer/.env
+      - ./devcon/.env
     secrets:
       - source: github_pkg_token
         target: github_pkg_token
@@ -55,6 +55,6 @@ services:
 
 secrets:
   github_pkg_token:
-    file: ./devcontainer/secrets/github_pkg_token
+    file: ./devcon/secrets/github_pkg_token
   gh_token:
-    file: ./devcontainer/secrets/gh_token
+    file: ./devcon/secrets/gh_token

@@ -6,11 +6,11 @@ set -o pipefail
 gpgconf --launch gpg-agent || true
 
 (
-	cd ./.devcontainer/devcontainer/secrets
+	cd ./.devcontainer/devcon/secrets
 	./prep.sh
 )
 (
-	cd ./.devcontainer/devcontainer
+	cd ./.devcontainer/devcon
 	if ! [ -f .env ]; then
 		cp .env.example .env
 	fi
