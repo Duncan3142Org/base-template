@@ -1,3 +1,10 @@
+## [1.4.15](https://github.com/Duncan3142Org/base-template/compare/v1.4.14...v1.4.15) (2026-03-20)
+
+
+### Bug Fixes
+
+* container secrets ([#47](https://github.com/Duncan3142Org/base-template/issues/47)) ([b0026d3]())
+
 ## [1.4.14](https://github.com/Duncan3142Org/base-template/compare/v1.4.13...v1.4.14) (2026-03-18)
 
 
