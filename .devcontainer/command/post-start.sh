@@ -14,6 +14,7 @@ fi
 mise_update() {
 	mise install
 	mise upgrade
+	mise outdated -l || true
 	mise lock
 	mise reshim
 }

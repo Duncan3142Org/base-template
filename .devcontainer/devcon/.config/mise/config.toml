@@ -3,7 +3,7 @@ lockfile = true
 
 [tools]
 node = "24"
-usage = "2"
+usage = "3"
 terraform = "1"
 "npm:husky" = "9"
 "github:cli/cli" = "2"
