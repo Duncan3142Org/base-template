@@ -2,5 +2,9 @@
 _.source = "./.mise/source.sh"
 
 [tools]
+usage = "3"
+terraform = "1"
+"github:cli/cli" = "2"
+"github:hadolint/hadolint" = "2"
 "npm:husky" = "9"
 "npm:@commitlint/cli" = "20"

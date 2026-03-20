@@ -19,11 +19,6 @@ mise_update() {
 	mise reshim
 }
 
-(
-	cd "$HOME"
-	mise_update
-)
-
 mise_update
 
 mise run dev:init
