@@ -33,6 +33,7 @@ services:
       - ..:/workspace
       - ./devcon/.config/mise:/root/.config/mise
       - ./devcon/profile.d/mise-tokens.sh:/etc/profile.d/mise-tokens.sh
+      - ./devcon/apt/sources.list.d/docker.sources:/etc/apt/sources.list.d/docker.sources
       - ./runtime:/run/dbus-proxy
       - ${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock
       - ${HOME}/.terraform.d/credentials.tfrc.json:/root/.terraform.d/credentials.tfrc.json

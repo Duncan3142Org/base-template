@@ -4,7 +4,10 @@ set -ueC
 set -o pipefail
 
 apt-get update
-apt-get install --yes --no-install-recommends dbus-bin libsecret-tools
+apt-get install --yes --no-install-recommends \
+	dbus-bin \
+	libsecret-tools \
+	docker-ce-cli docker-compose-plugin docker-buildx-plugin
 
 curl https://mise.run | sh
 
