@@ -29,7 +29,7 @@ services:
       TF_PLUGIN_CACHE_DIR: *terraform_plugin_cache_path
       MISE_ENV: dev
       DBUS_SESSION_BUS_ADDRESS: unix:path=/run/dbus-proxy/secrets.sock
-      GITHUB_USERNAME: ${GITHUB_USERNAME:?GITHUB_USERNAME not set}
+      GITHUB_USERNAME: ${GITHUB_USERNAME:?}
 
     # Mount project folder and Docker socket
     volumes:
