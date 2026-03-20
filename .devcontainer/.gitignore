@@ -4,10 +4,5 @@
 # Docker
 !.dockerignore
 
-# Secrets
-devcon/secrets/*
-!devcon/secrets/.gitkeep
-!devcon/secrets/prep.sh
-
 # Runtime
 runtime/secrets.sock

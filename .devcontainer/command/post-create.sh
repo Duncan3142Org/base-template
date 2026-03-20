@@ -12,4 +12,5 @@ cat >> "/root/.bashrc" << 'EOF'
 
 # Mise
 eval "$(mise activate bash)"
+. /etc/profile.d/mise-tokens.sh
 EOF

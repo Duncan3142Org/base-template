@@ -26,11 +26,13 @@ services:
       TF_PLUGIN_CACHE_DIR: *terraform_plugin_cache_path
       MISE_ENV: dev
       DBUS_SESSION_BUS_ADDRESS: unix:path=/run/dbus-proxy/secrets.sock
+      GITHUB_USERNAME: ${GITHUB_USERNAME:?GITHUB_USERNAME not set}
 
     # Mount project folder and Docker socket
     volumes:
       - ..:/workspace
       - ./devcon/.config/mise:/root/.config/mise
+      - ./devcon/profile.d/mise-tokens.sh:/etc/profile.d/mise-tokens.sh
       - ./runtime:/run/dbus-proxy
       - ${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock
       - ${HOME}/.terraform.d/credentials.tfrc.json:/root/.terraform.d/credentials.tfrc.json
@@ -47,16 +49,5 @@ services:
 
     env_file:
       - ./devcon/.env
-    secrets:
-      - source: github_pkg_token
-        target: github_pkg_token
-      - source: gh_token
-        target: gh_token
     networks:
       - otel
-
-secrets:
-  github_pkg_token:
-    file: ./devcon/secrets/github_pkg_token
-  gh_token:
-    file: ./devcon/secrets/gh_token

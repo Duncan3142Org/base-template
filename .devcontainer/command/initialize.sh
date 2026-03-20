@@ -14,10 +14,6 @@ setsid xdg-dbus-proxy "$DBUS_SESSION_BUS_ADDRESS" "$sock" \
 gpgconf --launch gpg-agent || true
 
 (
-	cd ./.devcontainer/devcon/secrets
-	./prep.sh
-)
-(
 	cd ./.devcontainer/devcon
 	if ! [ -f .env ]; then
 		cp .env.example .env

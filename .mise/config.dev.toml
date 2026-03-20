@@ -1,2 +1,2 @@
 [env]
-_.source = "./source-env.sh"
+_.source = "./.mise/source.sh"
