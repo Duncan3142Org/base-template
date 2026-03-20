@@ -1,2 +1,6 @@
 [env]
 _.source = "./.mise/source.sh"
+
+[tools]
+"npm:husky" = "9"
+"npm:@commitlint/cli" = "20"

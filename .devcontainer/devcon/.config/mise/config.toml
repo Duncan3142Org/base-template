@@ -2,10 +2,7 @@
 lockfile = true
 
 [tools]
-node = "24"
 usage = "3"
 terraform = "1"
-"npm:husky" = "9"
 "github:cli/cli" = "2"
-"npm:@commitlint/cli" = "20"
 "github:hadolint/hadolint" = "2"
