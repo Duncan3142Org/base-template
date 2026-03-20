@@ -8,8 +8,11 @@ volumes:
   node_modules:
   terraform_env_workspace:
   local_bin:
+  mise_state:
   mise_data:
     name: shared-mise-data
+  mise_cache:
+    name: shared-mise-cache
   npm_cache:
     name: shared-npm-cache
   terraform_plugin_cache:
@@ -25,36 +28,31 @@ services:
     environment:
       TF_PLUGIN_CACHE_DIR: *terraform_plugin_cache_path
       MISE_ENV: dev
+      DBUS_SESSION_BUS_ADDRESS: unix:path=/run/dbus-proxy/secrets.sock
+      GITHUB_USERNAME: ${GITHUB_USERNAME:?}
 
     # Mount project folder and Docker socket
     volumes:
       - ..:/workspace
-      - ./devcontainer/.config/mise:/root/.config/mise
+      - ./devcon/profile.d/mise-tokens.sh:/etc/profile.d/mise-tokens.sh
+      - ./devcon/apt/sources.list.d/docker.sources:/etc/apt/sources.list.d/docker.sources
+      - ./runtime:/run/dbus-proxy
       - ${XDG_RUNTIME_DIR}/docker.sock:/var/run/docker.sock
       - ${HOME}/.terraform.d/credentials.tfrc.json:/root/.terraform.d/credentials.tfrc.json
 
+      - mise_state:/root/.local/state/mise
       - node_modules:/workspace/node_modules
       - terraform_env_workspace:/workspace/.github/environments/.terraform
       - local_bin:/root/.local/bin
 
       - mise_data:/root/.local/share/mise
+      - mise_cache:/root/.cache/mise
       - npm_cache:/root/.npm
       - type: volume
         source: terraform_plugin_cache
         target: *terraform_plugin_cache_path
 
     env_file:
-      - ./devcontainer/.env
-    secrets:
-      - source: github_pkg_token
-        target: github_pkg_token
-      - source: gh_token
-        target: gh_token
+      - ./devcon/.env
     networks:
       - otel
-
-secrets:
-  github_pkg_token:
-    file: ./devcontainer/secrets/github_pkg_token
-  gh_token:
-    file: ./devcontainer/secrets/gh_token

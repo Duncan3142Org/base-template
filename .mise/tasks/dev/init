@@ -9,10 +9,11 @@ git config commit.template .gitmessage
 echo "  ✅  Git hooks and commit message template configured."
 
 # GitHub CLI
+gh_token=$(secret-tool lookup service gh:github.com | tr -d '\n')
 echo "🔑  Authenticating GitHub CLI..."
-if [ -f /run/secrets/gh_token ]; then
-    gh auth login --with-token < /run/secrets/gh_token
+if [ -n "${gh_token:-}" ]; then
+    echo -n "${gh_token}" | gh auth login --with-token
     echo "  ✅  GitHub CLI authenticated."
 else
-    echo "  ⚠️  No GitHub token found in /run/secrets/gh_token"
+    echo "  ⚠️  No GitHub token found in secret-tool"
 fi

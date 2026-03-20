@@ -17,6 +17,7 @@
 	"postCreateCommand": "./.devcontainer/command/post-create.sh",
 	"postStartCommand": "./.devcontainer/command/post-start.sh",
 
+	// Aligns with rootless docker
 	"containerUser": "root",
 	"remoteUser": "root",
 	"updateRemoteUserUID": false,
