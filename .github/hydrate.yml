@@ -52,15 +52,17 @@ transformations:
       - "test/**/*.spec.ts"
       - "src/**/*.test.ts"
     language: ".ts"
-    match: 'from "#:[owner~(?i)${REPO_OWNER}]/:[_]"'
-    rewrite: 'from "#:[owner]/${CLONE_NAME}"'
+    replacements:
+      - match: 'from "#:[owner~(?i)${REPO_OWNER}]/:[_]"'
+        rewrite: 'from "#:[owner]/${CLONE_NAME}"'
 
   - engine: comby
     files:
       - vitest.unit.config.js
     language: ".js"
-    match: '"#:[owner~(?i)${REPO_OWNER}]/:[_]"'
-    rewrite: '"#:[owner]/${CLONE_NAME}"'
+    replacements:
+      - match: '"#:[owner~(?i)${REPO_OWNER}]/:[_]"'
+        rewrite: '"#:[owner]/${CLONE_NAME}"'
 
   # ── Text replacements (JSONC, markdown) ────────────────────────
   - engine: sed
@@ -70,7 +72,7 @@ transformations:
       - .github/copilot-instructions.md
     replacements:
       - match: "${SOURCE_NAME}"
-        replace: "${CLONE_NAME}"
+        rewrite: "${CLONE_NAME}"
 
   # ── Filesystem cleanup ─────────────────────────────────────────
   - engine: rm

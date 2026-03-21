@@ -100,35 +100,36 @@ for (( i=0; i<entry_count; i++ )); do
 
     sed)
       mapfile -t matches < <(yq eval ".transformations[$i].replacements[].match" "$MANIFEST")
-      mapfile -t replaces < <(yq eval ".transformations[$i].replacements[].replace" "$MANIFEST")
+      mapfile -t rewrites < <(yq eval ".transformations[$i].replacements[].rewrite" "$MANIFEST")
       echo -e "${BLUE}🛠️  sed: processing ${#resolved_files[@]} file(s)...${NC}"
       for file in "${resolved_files[@]}"; do
         filepath="${root_dir}/${file#./}"
         echo "   ${file}"
         for (( r=0; r<${#matches[@]}; r++ )); do
-          # Expand env vars in match and replace strings (e.g. ${SOURCE_NAME}, ${CLONE_NAME})
           match_str=$(expand_vars "${matches[$r]}")
-          replace_str=$(expand_vars "${replaces[$r]}")
-          sed -i "s|${match_str}|${replace_str}|g" "$filepath"
+          rewrite_str=$(expand_vars "${rewrites[$r]}")
+          sed -i "s|${match_str}|${rewrite_str}|g" "$filepath"
         done
       done
       ;;
 
     comby)
-      match_raw=$(yq eval ".transformations[$i].match" "$MANIFEST")
-      rewrite_raw=$(yq eval ".transformations[$i].rewrite" "$MANIFEST")
       language=$(yq eval ".transformations[$i].language" "$MANIFEST")
-      # Expand known env vars in match and rewrite patterns
-      match_pattern=$(expand_vars "$match_raw")
-      rewrite_pattern=$(expand_vars "$rewrite_raw")
+      replacement_count=$(yq eval ".transformations[$i].replacements | length" "$MANIFEST")
       echo -e "${BLUE}🧩 comby: processing ${#resolved_files[@]} file(s)...${NC}"
       for file in "${resolved_files[@]}"; do
         filepath="${root_dir}/${file#./}"
         echo "   ${file}"
-        comby "$match_pattern" "$rewrite_pattern" \
-          -language "$language" \
-          -in-place \
-          -f "$filepath"
+        for (( r=0; r<replacement_count; r++ )); do
+          match_raw=$(yq eval ".transformations[$i].replacements[$r].match" "$MANIFEST")
+          rewrite_raw=$(yq eval ".transformations[$i].replacements[$r].rewrite" "$MANIFEST")
+          match_pattern=$(expand_vars "$match_raw")
+          rewrite_pattern=$(expand_vars "$rewrite_raw")
+          comby "$match_pattern" "$rewrite_pattern" \
+            -language "$language" \
+            -in-place \
+            -f "$filepath"
+        done
       done
       ;;
 
