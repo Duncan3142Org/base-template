@@ -74,6 +74,7 @@ for (( i=0; i<entry_count; i++ )); do
   mapfile -t resolved_files < <(
     shopt -s globstar nullglob
     cd "$root_dir"
+    IFS=
     for pattern in "${raw_patterns[@]}"; do
       for match in $pattern; do
         [[ -f "$match" || -d "$match" ]] && printf '%s\n' "$match"
@@ -99,16 +100,16 @@ for (( i=0; i<entry_count; i++ )); do
       ;;
 
     sed)
-      mapfile -t matches < <(yq eval ".transformations[$i].replacements[].match" "$MANIFEST")
-      mapfile -t rewrites < <(yq eval ".transformations[$i].replacements[].rewrite" "$MANIFEST")
+      replacement_count=$(yq eval ".transformations[$i].replacements | length" "$MANIFEST")
       echo -e "${BLUE}🛠️  sed: processing ${#resolved_files[@]} file(s)...${NC}"
       for file in "${resolved_files[@]}"; do
         filepath="${root_dir}/${file#./}"
         echo "   ${file}"
-        for (( r=0; r<${#matches[@]}; r++ )); do
-          match_str=$(expand_vars "${matches[$r]}")
-          rewrite_str=$(expand_vars "${rewrites[$r]}")
-          sed -i "s|${match_str}|${rewrite_str}|g" "$filepath"
+        for (( r=0; r<replacement_count; r++ )); do
+          match_str=$(expand_vars "$(yq eval ".transformations[$i].replacements[$r].match" "$MANIFEST")")
+          rewrite_str=$(expand_vars "$(yq eval ".transformations[$i].replacements[$r].rewrite" "$MANIFEST")")
+          sep=$'\x01'
+          sed -i "s${sep}${match_str}${sep}${rewrite_str}${sep}g" "$filepath"
         done
       done
       ;;

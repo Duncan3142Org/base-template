@@ -35,7 +35,7 @@ transformations:
       .description = "Service initialized from " + strenv(SOURCE_NAME) |
       .repository.url = "git+https://github.com/" + strenv(REPO_OWNER) + "/" + strenv(CLONE_NAME) + ".git" |
       .imports |= with_entries(
-        .key |= sub("#duncan3142org/" + strenv(SOURCE_NAME); "#duncan3142org/" + strenv(CLONE_NAME))
+        .key |= sub("(?i)#" + strenv(REPO_OWNER) + "/" + strenv(SOURCE_NAME); "#" + strenv(REPO_OWNER) + "/" + strenv(CLONE_NAME))
       )
 
   - engine: yq
@@ -43,7 +43,7 @@ transformations:
       - tsconfig.base.json
     expression: |
       .compilerOptions.paths |= with_entries(
-        .key |= sub("#duncan3142org/" + strenv(SOURCE_NAME); "#duncan3142org/" + strenv(CLONE_NAME))
+        .key |= sub("(?i)#" + strenv(REPO_OWNER) + "/" + strenv(SOURCE_NAME); "#" + strenv(REPO_OWNER) + "/" + strenv(CLONE_NAME))
       )
 
   # ── Syntax-aware code rewrites ─────────────────────────────────
