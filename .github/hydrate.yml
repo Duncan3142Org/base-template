@@ -52,15 +52,15 @@ transformations:
       - "test/**/*.spec.ts"
       - "src/**/*.test.ts"
     language: ".ts"
-    match: 'from "#duncan3142org/:[_]"'
-    rewrite: 'from "#duncan3142org/${CLONE_NAME}"'
+    match: 'from "#:[owner~(?i)${REPO_OWNER}]/:[_]"'
+    rewrite: 'from "#:[owner]/${CLONE_NAME}"'
 
   - engine: comby
     files:
       - vitest.unit.config.js
     language: ".js"
-    match: '"#duncan3142org/:[_]"'
-    rewrite: '"#duncan3142org/${CLONE_NAME}"'
+    match: '"#:[owner~(?i)${REPO_OWNER}]/:[_]"'
+    rewrite: '"#:[owner]/${CLONE_NAME}"'
 
   # ── Text replacements (JSONC, markdown) ────────────────────────
   - engine: sed

@@ -34,10 +34,16 @@ repo_owner="${usage_repo_owner:?}"
 source_name="${usage_source_repo_name:?}"
 clone_name="${usage_clone_repo_name:?}"
 
-# Export for yq/sed env var expansion
+# Export for env var expansion
 export REPO_OWNER="$repo_owner"
 export SOURCE_NAME="$source_name"
 export CLONE_NAME="$clone_name"
+
+# Restrict envsubst to only the known hydration variables
+expand_vars() {
+  # shellcheck disable=SC2016
+  envsubst '$REPO_OWNER $SOURCE_NAME $CLONE_NAME' <<< "$1"
+}
 
 MANIFEST="${root_dir}/.github/hydrate.yml"
 
@@ -101,19 +107,20 @@ for (( i=0; i<entry_count; i++ )); do
         echo "   ${file}"
         for (( r=0; r<${#matches[@]}; r++ )); do
           # Expand env vars in match and replace strings (e.g. ${SOURCE_NAME}, ${CLONE_NAME})
-          match_str=$(envsubst <<< "${matches[$r]}")
-          replace_str=$(envsubst <<< "${replaces[$r]}")
+          match_str=$(expand_vars "${matches[$r]}")
+          replace_str=$(expand_vars "${replaces[$r]}")
           sed -i "s|${match_str}|${replace_str}|g" "$filepath"
         done
       done
       ;;
 
     comby)
-      match_pattern=$(yq eval ".transformations[$i].match" "$MANIFEST")
+      match_raw=$(yq eval ".transformations[$i].match" "$MANIFEST")
       rewrite_raw=$(yq eval ".transformations[$i].rewrite" "$MANIFEST")
       language=$(yq eval ".transformations[$i].language" "$MANIFEST")
-      # Expand env vars (REPO_OWNER, SOURCE_NAME, CLONE_NAME) in rewrite pattern
-      rewrite_pattern=$(envsubst <<< "$rewrite_raw")
+      # Expand known env vars in match and rewrite patterns
+      match_pattern=$(expand_vars "$match_raw")
+      rewrite_pattern=$(expand_vars "$rewrite_raw")
       echo -e "${BLUE}🧩 comby: processing ${#resolved_files[@]} file(s)...${NC}"
       for file in "${resolved_files[@]}"; do
         filepath="${root_dir}/${file#./}"
