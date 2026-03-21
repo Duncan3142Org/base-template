@@ -88,9 +88,9 @@ for (( i=0; i<entry_count; i++ )); do
       for file in "${resolved_files[@]}"; do
         filepath="${root_dir}/${file#./}"
         echo "   ${file}"
-        jq --arg repo_owner "$repo_owner" \
-           --arg source_name "$source_name" \
-           --arg clone_name "$clone_name" \
+        jq --arg REPO_OWNER "$repo_owner" \
+           --arg SOURCE_NAME "$source_name" \
+           --arg CLONE_NAME "$clone_name" \
            "$expression" "$filepath" > "${filepath}.tmp" \
           && mv "${filepath}.tmp" "$filepath"
       done
@@ -114,8 +114,8 @@ for (( i=0; i<entry_count; i++ )); do
         filepath="${root_dir}/${file#./}"
         echo "   ${file}"
         for (( r=0; r<${#matches[@]}; r++ )); do
-          match_str="${matches[$r]}"
-          # Expand env vars in replace string (e.g. ${CLONE_NAME})
+          # Expand env vars in match and replace strings (e.g. ${SOURCE_NAME}, ${CLONE_NAME})
+          match_str=$(envsubst <<< "${matches[$r]}")
           replace_str=$(envsubst <<< "${replaces[$r]}")
           sed -i "s|${match_str}|${replace_str}|g" "$filepath"
         done

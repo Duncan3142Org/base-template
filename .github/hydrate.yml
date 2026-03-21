@@ -15,6 +15,13 @@
 #   SOURCE_NAME — source repository name   (e.g. base-template)
 #   CLONE_NAME  — cloned repository name   (e.g. my-service)
 #
+# Access syntax varies by engine:
+#   jq    — $REPO_OWNER          (--arg bindings, injection-safe)
+#   yq    — strenv(REPO_OWNER)   (env vars, for strings)
+#            env(REPO_OWNER)     (env vars, for parsed nodes)
+#   sed   — ${REPO_OWNER}        (envsubst expansion)
+#   comby — ${REPO_OWNER}        (envsubst expansion)
+#
 # Files support glob patterns, expanded relative to --root-dir.
 # Globs that match zero files are silently skipped.
 
@@ -24,13 +31,13 @@ transformations:
     files:
       - package.json
     expression: |
-      .name = ("@" + $repo_owner + "/" + $clone_name) |
+      .name = ("@" + $REPO_OWNER + "/" + $CLONE_NAME) |
       .version = "0.0.0" |
-      .description = ("Service initialized from " + $source_name) |
-      .repository.url = ("git+https://github.com/" + $repo_owner + "/" + $clone_name + ".git") |
+      .description = ("Service initialized from " + $SOURCE_NAME) |
+      .repository.url = ("git+https://github.com/" + $REPO_OWNER + "/" + $CLONE_NAME + ".git") |
       .imports = (.imports | to_entries | map(
-        if .key == ("#duncan3142org/" + $source_name)
-        then .key = ("#duncan3142org/" + $clone_name)
+        if .key == ("#duncan3142org/" + $SOURCE_NAME)
+        then .key = ("#duncan3142org/" + $CLONE_NAME)
         else .
         end
       ) | from_entries)
@@ -40,8 +47,8 @@ transformations:
       - tsconfig.base.json
     expression: |
       .compilerOptions.paths = (.compilerOptions.paths | to_entries | map(
-        if .key == ("#duncan3142org/" + $source_name)
-        then .key = ("#duncan3142org/" + $clone_name)
+        if .key == ("#duncan3142org/" + $SOURCE_NAME)
+        then .key = ("#duncan3142org/" + $CLONE_NAME)
         else .
         end
       ) | from_entries)
@@ -69,7 +76,7 @@ transformations:
       - README.md
       - .github/copilot-instructions.md
     replacements:
-      - match: base-template
+      - match: "${SOURCE_NAME}"
         replace: "${CLONE_NAME}"
 
   # ── Filesystem cleanup ─────────────────────────────────────────
