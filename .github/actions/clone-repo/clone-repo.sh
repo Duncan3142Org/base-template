@@ -90,7 +90,21 @@ git checkout -b "$bootstrap_branch" "$default_branch"
 
 # Prepare files for clone
 echo -e "${BLUE}🛠️  Preparing files for clone...${NC}"
-mise run admin:prepare-clone "$repo_owner" "$source_repo_name" "$clone_repo_name"
+mise run "${ACTION_PATH:?}/hydrate.sh" \
+  --root-dir "$(pwd)" \
+  --repo-owner "$repo_owner" \
+  --source-repo-name "$source_repo_name" \
+  --clone-repo-name "$clone_repo_name"
+
+# Format modified files
+echo -e "${BLUE}🎨 Formatting modified files...${NC}"
+mise run format --mode write || echo "Format step skipped"
+
+# Stage all changes
+git add .
+
+# Commit hydrated files
+git commit -m "chore: bootstrap repository from ${source_repo_name} [no ci]"
 
 # Create empty GitHub repository
 echo -e "${BLUE}📦 Creating empty repository on GitHub...${NC}"

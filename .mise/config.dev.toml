@@ -9,4 +9,4 @@ terraform = "1"
 "npm:husky" = "9"
 "npm:@commitlint/cli" = "20"
 "yq" = "4"
-"github:comby-tools/comby" = { version = "1", asset_pattern = "comby-*-x86_64-linux.tar.gz", rename_exe = "comby", "bin_path" = "." }
+"github:comby-tools/comby" = { version = "1", rename_exe = "comby", "bin_path" = "." }

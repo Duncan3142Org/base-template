@@ -50,35 +50,12 @@ provenance = "github-attestations"
 version = "1.8.1"
 backend = "github:comby-tools/comby"
 
-[tools."github:comby-tools/comby".options]
-asset_pattern = "comby-*-x86_64-linux.tar.gz"
-
-[tools."github:comby-tools/comby"."platforms.linux-arm64"]
-url = "https://github.com/comby-tools/comby/releases/download/1.8.1/comby-1.8.1-x86_64-linux.tar.gz"
-url_api = "https://api.github.com/repos/comby-tools/comby/releases/assets/69847814"
-
-[tools."github:comby-tools/comby"."platforms.linux-arm64-musl"]
-url = "https://github.com/comby-tools/comby/releases/download/1.8.1/comby-1.8.1-x86_64-linux.tar.gz"
-url_api = "https://api.github.com/repos/comby-tools/comby/releases/assets/69847814"
-
 [tools."github:comby-tools/comby"."platforms.linux-x64"]
 checksum = "blake3:96a8fe05ba26a7574f99cc56e431703381737205f70afd7416c95283be50f0e3"
 url = "https://github.com/comby-tools/comby/releases/download/1.8.1/comby-1.8.1-x86_64-linux.tar.gz"
 url_api = "https://api.github.com/repos/comby-tools/comby/releases/assets/69847814"
 
 [tools."github:comby-tools/comby"."platforms.linux-x64-musl"]
-url = "https://github.com/comby-tools/comby/releases/download/1.8.1/comby-1.8.1-x86_64-linux.tar.gz"
-url_api = "https://api.github.com/repos/comby-tools/comby/releases/assets/69847814"
-
-[tools."github:comby-tools/comby"."platforms.macos-arm64"]
-url = "https://github.com/comby-tools/comby/releases/download/1.8.1/comby-1.8.1-x86_64-linux.tar.gz"
-url_api = "https://api.github.com/repos/comby-tools/comby/releases/assets/69847814"
-
-[tools."github:comby-tools/comby"."platforms.macos-x64"]
-url = "https://github.com/comby-tools/comby/releases/download/1.8.1/comby-1.8.1-x86_64-linux.tar.gz"
-url_api = "https://api.github.com/repos/comby-tools/comby/releases/assets/69847814"
-
-[tools."github:comby-tools/comby"."platforms.windows-x64"]
 url = "https://github.com/comby-tools/comby/releases/download/1.8.1/comby-1.8.1-x86_64-linux.tar.gz"
 url_api = "https://api.github.com/repos/comby-tools/comby/releases/assets/69847814"
 

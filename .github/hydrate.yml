@@ -1,0 +1,80 @@
+# Declarative manifest for clone hydration.
+#
+# Defines file transformations to apply when cloning this template
+# repository into a new project. Processed by hydrate.sh.
+#
+# Available engines:
+#   jq    — structured JSON edits (expression receives --arg bindings)
+#   yq    — structured YAML edits (expression receives env vars)
+#   sed   — literal text replacements (JSONC, markdown, plain text)
+#   comby — syntax-aware code rewrites (TypeScript, JavaScript, HCL)
+#   rm    — file / directory deletion
+#
+# Variables available to expressions:
+#   REPO_OWNER  — target repository owner  (e.g. duncan3142org)
+#   SOURCE_NAME — source repository name   (e.g. base-template)
+#   CLONE_NAME  — cloned repository name   (e.g. my-service)
+#
+# Files support glob patterns, expanded relative to --root-dir.
+# Globs that match zero files are silently skipped.
+
+transformations:
+  # ── Structured JSON ────────────────────────────────────────────
+  - engine: jq
+    files:
+      - package.json
+    expression: |
+      .name = ("@" + $repo_owner + "/" + $clone_name) |
+      .version = "0.0.0" |
+      .description = ("Service initialized from " + $source_name) |
+      .repository.url = ("git+https://github.com/" + $repo_owner + "/" + $clone_name + ".git") |
+      .imports = (.imports | to_entries | map(
+        if .key == ("#duncan3142org/" + $source_name)
+        then .key = ("#duncan3142org/" + $clone_name)
+        else .
+        end
+      ) | from_entries)
+
+  - engine: jq
+    files:
+      - tsconfig.base.json
+    expression: |
+      .compilerOptions.paths = (.compilerOptions.paths | to_entries | map(
+        if .key == ("#duncan3142org/" + $source_name)
+        then .key = ("#duncan3142org/" + $clone_name)
+        else .
+        end
+      ) | from_entries)
+
+  # ── Syntax-aware code rewrites ─────────────────────────────────
+  - engine: comby
+    files:
+      - "test/**/*.spec.ts"
+      - "src/**/*.test.ts"
+    language: ".ts"
+    match: 'from "#duncan3142org/:[_]"'
+    rewrite: 'from "#duncan3142org/${CLONE_NAME}"'
+
+  - engine: comby
+    files:
+      - vitest.unit.config.js
+    language: ".js"
+    match: '"#duncan3142org/:[_]"'
+    rewrite: '"#duncan3142org/${CLONE_NAME}"'
+
+  # ── Text replacements (JSONC, markdown) ────────────────────────
+  - engine: sed
+    files:
+      - .devcontainer/devcontainer.json
+      - README.md
+      - .github/copilot-instructions.md
+    replacements:
+      - match: base-template
+        replace: "${CLONE_NAME}"
+
+  # ── Filesystem cleanup ─────────────────────────────────────────
+  - engine: rm
+    files:
+      - CHANGELOG.md
+      - package-lock.json
+      - .github/environments/.terraform.lock.hcl
