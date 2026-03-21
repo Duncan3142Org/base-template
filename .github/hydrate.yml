@@ -4,8 +4,8 @@
 # repository into a new project. Processed by hydrate.sh.
 #
 # Available engines:
-#   jq    — structured JSON edits (expression receives --arg bindings)
-#   yq    — structured YAML edits (expression receives env vars)
+#   yq    — structured data edits for YAML, JSON, XML, CSV, TOML,
+#            HCL and properties (env vars via strenv/env)
 #   sed   — literal text replacements (JSONC, markdown, plain text)
 #   comby — syntax-aware code rewrites (TypeScript, JavaScript, HCL)
 #   rm    — file / directory deletion
@@ -16,7 +16,6 @@
 #   CLONE_NAME  — cloned repository name   (e.g. my-service)
 #
 # Access syntax varies by engine:
-#   jq    — $REPO_OWNER          (--arg bindings, injection-safe)
 #   yq    — strenv(REPO_OWNER)   (env vars, for strings)
 #            env(REPO_OWNER)     (env vars, for parsed nodes)
 #   sed   — ${REPO_OWNER}        (envsubst expansion)
@@ -27,31 +26,25 @@
 
 transformations:
   # ── Structured JSON ────────────────────────────────────────────
-  - engine: jq
+  - engine: yq
     files:
       - package.json
     expression: |
-      .name = ("@" + $REPO_OWNER + "/" + $CLONE_NAME) |
+      .name = "@" + strenv(REPO_OWNER) + "/" + strenv(CLONE_NAME) |
       .version = "0.0.0" |
-      .description = ("Service initialized from " + $SOURCE_NAME) |
-      .repository.url = ("git+https://github.com/" + $REPO_OWNER + "/" + $CLONE_NAME + ".git") |
-      .imports = (.imports | to_entries | map(
-        if .key == ("#duncan3142org/" + $SOURCE_NAME)
-        then .key = ("#duncan3142org/" + $CLONE_NAME)
-        else .
-        end
-      ) | from_entries)
+      .description = "Service initialized from " + strenv(SOURCE_NAME) |
+      .repository.url = "git+https://github.com/" + strenv(REPO_OWNER) + "/" + strenv(CLONE_NAME) + ".git" |
+      .imports |= with_entries(
+        .key |= sub("#duncan3142org/" + strenv(SOURCE_NAME); "#duncan3142org/" + strenv(CLONE_NAME))
+      )
 
-  - engine: jq
+  - engine: yq
     files:
       - tsconfig.base.json
     expression: |
-      .compilerOptions.paths = (.compilerOptions.paths | to_entries | map(
-        if .key == ("#duncan3142org/" + $SOURCE_NAME)
-        then .key = ("#duncan3142org/" + $CLONE_NAME)
-        else .
-        end
-      ) | from_entries)
+      .compilerOptions.paths |= with_entries(
+        .key |= sub("#duncan3142org/" + strenv(SOURCE_NAME); "#duncan3142org/" + strenv(CLONE_NAME))
+      )
 
   # ── Syntax-aware code rewrites ─────────────────────────────────
   - engine: comby

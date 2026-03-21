@@ -42,7 +42,7 @@ export CLONE_NAME="$clone_name"
 MANIFEST="${root_dir}/.github/hydrate.yml"
 
 # --- Tool checks ---
-for tool in jq yq comby envsubst; do
+for tool in yq comby envsubst; do
   if ! command -v "$tool" &> /dev/null; then
     echo -e "${RED}Error: '$tool' is not installed.${NC}"
     exit 1
@@ -81,20 +81,6 @@ for (( i=0; i<entry_count; i++ )); do
   fi
 
   case "$engine" in
-
-    jq)
-      expression=$(yq eval ".transformations[$i].expression" "$MANIFEST")
-      echo -e "${BLUE}🛠️  jq: processing ${#resolved_files[@]} file(s)...${NC}"
-      for file in "${resolved_files[@]}"; do
-        filepath="${root_dir}/${file#./}"
-        echo "   ${file}"
-        jq --arg REPO_OWNER "$repo_owner" \
-           --arg SOURCE_NAME "$source_name" \
-           --arg CLONE_NAME "$clone_name" \
-           "$expression" "$filepath" > "${filepath}.tmp" \
-          && mv "${filepath}.tmp" "$filepath"
-      done
-      ;;
 
     yq)
       expression=$(yq eval ".transformations[$i].expression" "$MANIFEST")
