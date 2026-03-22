@@ -1,3 +1,10 @@
+## [1.4.16](https://github.com/Duncan3142Org/base-template/compare/v1.4.15...v1.4.16) (2026-03-22)
+
+
+### Bug Fixes
+
+* hydrate clone ([#48](https://github.com/Duncan3142Org/base-template/issues/48)) ([b4cb8d4]())
+
 ## [1.4.15](https://github.com/Duncan3142Org/base-template/compare/v1.4.14...v1.4.15) (2026-03-20)
 
 
