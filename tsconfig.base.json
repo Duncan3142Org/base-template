@@ -1,6 +1,6 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
-	"extends": ["./tsconfig.core.json"],
+	"extends": ["./tsconfig/tsconfig.core.json"],
 	"compilerOptions": {
 		"paths": {
 			"#duncan3142org/base-template": ["./src/index.ts"]

@@ -1,0 +1,11 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"compilerOptions": {
+		"allowJs": true,
+		"checkJs": true,
+		"isolatedDeclarations": false,
+		"outDir": "${configDir}/.tsc",
+		"tsBuildInfoFile": "${configDir}/.tsc/tsconfig.config.tsbuildinfo"
+	},
+	"include": ["${configDir}/.*", "${configDir}/*"]
+}

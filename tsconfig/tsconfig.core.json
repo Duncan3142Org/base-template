@@ -51,6 +51,5 @@
 		"isolatedDeclarations": true,
 		"allowImportingTsExtensions": true,
 		"rewriteRelativeImportExtensions": true
-	},
-	"include": []
+	}
 }

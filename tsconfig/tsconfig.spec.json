@@ -1,0 +1,9 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"compilerOptions": {
+		"rootDir": "${configDir}/test",
+		"outDir": "${configDir}/.tsc/test",
+		"tsBuildInfoFile": "${configDir}/.tsc/tsconfig.spec.tsbuildinfo"
+	},
+	"include": ["${configDir}/test/**/*"]
+}
