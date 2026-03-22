@@ -51,14 +51,6 @@ expand_vars() {
 
 MANIFEST="${root_dir}/.github/hydrate.yml"
 
-# --- Tool checks ---
-for tool in yq comby envsubst; do
-  if ! command -v "$tool" &> /dev/null; then
-    echo -e "${RED}Error: '$tool' is not installed.${NC}"
-    exit 1
-  fi
-done
-
 # --- Manifest check ---
 if [[ ! -f "$MANIFEST" ]]; then
   echo -e "${RED}Error: Hydration manifest not found at ${MANIFEST}${NC}"

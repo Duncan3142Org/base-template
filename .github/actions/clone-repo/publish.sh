@@ -55,9 +55,11 @@ cd "$workspace_dir"
 bootstrap_branch="bootstrap/${clone_repo_name}"
 default_branch=$(gh api "repos/:owner/:repo" --jq '.default_branch')
 
-# Format modified files
-echo -e "${BLUE}🎨 Formatting modified files...${NC}"
-mise run format --mode write || echo "Format step skipped"
+# Format modified files if task exists
+if mise tasks info format &>/dev/null; then
+  echo -e "${BLUE}🎨 Formatting modified files...${NC}"
+  mise run format --mode write
+fi
 
 # Stage all changes
 git add .

@@ -6,7 +6,7 @@
 # Available engines:
 #   yq    — structured data edits for YAML, JSON, XML, CSV, TOML,
 #            HCL and properties (env vars via strenv/env)
-#   sed   — literal text replacements (JSONC, markdown, plain text)
+#   sed   — regex text replacements (JSONC, markdown, plain text)
 #   comby — syntax-aware code rewrites (TypeScript, JavaScript, HCL)
 #   rm    — file / directory deletion
 #

@@ -39,27 +39,12 @@ NC='\033[0m' # No Color
 
 repo_owner="${usage_repo_owner:?}"
 clone_repo_name="${usage_clone_repo_name:?}"
-source_repo_name="${usage_source_repo_name:?}"
 github_token="${usage_github_token:?}"
 workspace_dir="${usage_workspace_dir:?}"
 
 export GH_TOKEN="$github_token"
 
 cd "$workspace_dir"
-
-# --- Validate Inputs ---
-for name in "$repo_owner" "$clone_repo_name" "$source_repo_name"; do
-  if [[ ! "$name" =~ ^[a-zA-Z0-9._-]+$ ]]; then
-    echo -e "${RED}Invalid name '${name}'. Only alphanumeric characters, dots, underscores, and hyphens are allowed.${NC}"
-    exit 1
-  fi
-done
-
-# Tool checks
-if ! command -v gh &> /dev/null; then
-  echo -e "${RED}Error: GitHub CLI (gh) is not installed.${NC}"
-  exit 1
-fi
 
 # Use github cli to get default branch
 default_branch=$(gh api "repos/:owner/:repo" --jq '.default_branch')
