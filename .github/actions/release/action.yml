@@ -63,4 +63,5 @@ runs:
         RELEASE_MAJOR_BRANCH: ${{ inputs.major-branch }}
         RELEASE_MINOR_BRANCH: ${{ inputs.minor-branch }}
         RELEASE_BRANCH_PREFIX: ${{ inputs.branch-prefix }}
-      run: ${{ github.action_path }}/node_modules/.bin/semantic-release --extends ${{ github.action_path }}/release.config.js
+      run: |
+        '${{ github.action_path }}/node_modules/.bin/semantic-release' --extends '${{ github.action_path }}/release.config.js'

@@ -16,4 +16,5 @@ runs:
       shell: bash
       env:
         DANGER_GITHUB_API_TOKEN: ${{ inputs.github-token }}
-      run: ${{ github.action_path }}/node_modules/.bin/danger ci --failOnErrors --failOnWarnings --dangerfile ${{ github.action_path }}/dangerfile.js
+      run: |
+        '${{ github.action_path }}/node_modules/.bin/danger' ci --failOnErrors --failOnWarnings --dangerfile '${{ github.action_path }}/dangerfile.js'
