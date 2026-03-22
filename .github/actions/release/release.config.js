@@ -6,9 +6,9 @@ import { env } from "node:process"
 const {
 	RELEASE_PLUGIN_DIR = dirname(fileURLToPath(import.meta.url)),
 	RELEASE_ASSETS,
-	RELEASE_MAJOR = "false",
-	RELEASE_MINOR = "false",
-	RELEASE_PREFIX = "v",
+	RELEASE_MAJOR_BRANCH = "false",
+	RELEASE_MINOR_BRANCH = "false",
+	RELEASE_BRANCH_PREFIX = "v",
 } = env
 
 const releaseCliDir = RELEASE_PLUGIN_DIR
@@ -51,10 +51,10 @@ function parseAssets(raw) {
 }
 
 const assets = parseAssets(RELEASE_ASSETS)
-const majorOptions = {
-	major: RELEASE_MAJOR === "true",
-	minor: RELEASE_MINOR === "true",
-	prefix: RELEASE_PREFIX,
+const majorBranchOptions = {
+	major: RELEASE_MAJOR_BRANCH === "true",
+	minor: RELEASE_MINOR_BRANCH === "true",
+	prefix: RELEASE_BRANCH_PREFIX,
 }
 
 /**
@@ -96,6 +96,6 @@ export default {
 				successComment,
 			},
 		],
-		[majorBranchPlugin, majorOptions],
+		[majorBranchPlugin, majorBranchOptions],
 	],
 }
