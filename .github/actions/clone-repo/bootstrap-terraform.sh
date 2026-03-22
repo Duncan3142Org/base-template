@@ -63,11 +63,16 @@ if [[ "$tf_workspace_http_code" == "404" ]]; then
   create_ws_http_code="${create_ws_response##*$'\n'}"
   create_ws_body="${create_ws_response%$'\n'*}"
 
+  if [[ "$create_ws_http_code" != "201" ]]; then
+    echo -e "${RED}❌ Error creating workspace (HTTP $create_ws_http_code): $(echo "$create_ws_body" | jq -r '.errors[0].detail // "unknown error"')${NC}"
+    exit 1
+  fi
+
   # Extract new Workspace ID
   tf_workspace_id=$(echo "$create_ws_body" | jq -r '.data.id')
 
   if [[ -z "$tf_workspace_id" || "$tf_workspace_id" == "null" ]]; then
-    echo -e "${RED}❌ Error creating workspace (HTTP $create_ws_http_code): $(echo "$create_ws_body" | jq -r '.errors[0].detail // "unknown error"')${NC}"
+    echo -e "${RED}❌ Error: workspace created but ID missing from response${NC}"
     exit 1
   fi
   echo "   ✅ Workspace created (ID: $tf_workspace_id)."
@@ -86,7 +91,7 @@ if [[ "$tf_workspace_http_code" == "404" ]]; then
   create_var_http_code="${create_var_response##*$'\n'}"
   create_var_body="${create_var_response%$'\n'*}"
 
-  if jq -e '.errors' > /dev/null 2>&1 <<< "$create_var_body"; then
+  if [[ "$create_var_http_code" != "201" ]]; then
     echo -e "${RED}❌ Error setting variable (HTTP $create_var_http_code): $(echo "$create_var_body" | jq -r '.errors[0].detail // "unknown error"')${NC}"
     exit 1
   fi

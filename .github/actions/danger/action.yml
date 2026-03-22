@@ -1,5 +1,9 @@
 name: "Danger CI"
 description: "Runs Danger JS to lint PR metadata"
+inputs:
+  github-token:
+    description: "GitHub token for Danger to read/comment on PRs"
+    required: true
 runs:
   using: "composite"
   steps:
@@ -10,4 +14,7 @@ runs:
 
     - name: Run Danger
       shell: bash
-      run: ${{ github.action_path }}/node_modules/.bin/danger ci --failOnErrors --failOnWarnings --dangerfile ${{ github.action_path }}/dangerfile.js
+      env:
+        DANGER_GITHUB_API_TOKEN: ${{ inputs.github-token }}
+      run: |
+        '${{ github.action_path }}/node_modules/.bin/danger' ci --failOnErrors --failOnWarnings --dangerfile '${{ github.action_path }}/dangerfile.js'

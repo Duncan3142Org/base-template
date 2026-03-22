@@ -9,7 +9,7 @@ import { execa } from "execa"
  * pushed and the release is fully complete.
  *
  * Configuration (all optional):
- * major    – push a v/X branch         (default: true)
+ * major    – push a v/X branch         (default: false)
  * minor    – push a v/X.Y branch       (default: false)
  * prefix   – branch path prefix        (default: "v")
  *
@@ -23,7 +23,7 @@ import { execa } from "execa"
 
 /**
  * @typedef {object} PluginConfig
- * @property {boolean} [major=true] - Whether to update the major version branch (e.g., v/1).
+ * @property {boolean} [major=false] - Whether to update the major version branch (e.g., v/1).
  * @property {boolean} [minor=false] - Whether to update the minor version branch (e.g., v/1.2).
  * @property {string} [prefix="v"] - The prefix path segment for branch names.
  */
@@ -67,7 +67,7 @@ async function pushBranches(branches, gitHead, repositoryUrl, logger) {
 async function verifyConditions(pluginConfig, context) {
 	// Nothing to verify beyond what core already checks (push access).
 	// If the user has misconfigured the options we'll catch it early.
-	const { major = true, minor = false } = pluginConfig
+	const { major = false, minor = false } = pluginConfig
 	const { logger } = context
 
 	if (!major && !minor) {
@@ -89,7 +89,7 @@ async function success(pluginConfig, context) {
 		logger,
 	} = context
 
-	const { major = true, minor = false, prefix = "v" } = pluginConfig
+	const { major = false, minor = false, prefix = "v" } = pluginConfig
 
 	if (!major && !minor) {
 		logger.log("Both `major` and `minor` alias branches are disabled; skipping branch updates.")

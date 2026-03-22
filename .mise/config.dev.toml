@@ -8,3 +8,5 @@ terraform = "1"
 "github:hadolint/hadolint" = "2"
 "npm:husky" = "9"
 "npm:@commitlint/cli" = "20"
+"yq" = "4"
+"github:comby-tools/comby" = { version = "1", rename_exe = "comby", "bin_path" = "." }

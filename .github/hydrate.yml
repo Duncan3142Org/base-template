@@ -1,0 +1,82 @@
+# Declarative manifest for clone hydration.
+#
+# Defines file transformations to apply when cloning this template
+# repository into a new project. Processed by hydrate.sh.
+#
+# Available engines:
+#   yq    — structured data edits for YAML, JSON, XML, CSV, TOML,
+#            HCL and properties (env vars via strenv/env)
+#   sed   — regex text replacements (JSONC, markdown, plain text)
+#   comby — syntax-aware code rewrites (TypeScript, JavaScript, HCL)
+#   rm    — file / directory deletion
+#
+# Variables available to expressions:
+#   REPO_OWNER  — target repository owner  (e.g. duncan3142org)
+#   SOURCE_NAME — source repository name   (e.g. base-template)
+#   CLONE_NAME  — cloned repository name   (e.g. my-service)
+#
+# Access syntax varies by engine:
+#   yq    — strenv(REPO_OWNER)   (env vars, for strings)
+#            env(REPO_OWNER)     (env vars, for parsed nodes)
+#   sed   — ${REPO_OWNER}        (envsubst expansion)
+#   comby — ${REPO_OWNER}        (envsubst expansion)
+#
+# Files support glob patterns, expanded relative to --root-dir.
+# Globs that match zero files are silently skipped.
+
+transformations:
+  # ── Structured JSON ────────────────────────────────────────────
+  - engine: yq
+    files:
+      - package.json
+    expression: |
+      .name = "@" + strenv(REPO_OWNER) + "/" + strenv(CLONE_NAME) |
+      .version = "0.0.0" |
+      .description = "Service initialized from " + strenv(SOURCE_NAME) |
+      .repository.url = "git+https://github.com/" + strenv(REPO_OWNER) + "/" + strenv(CLONE_NAME) + ".git" |
+      .imports |= with_entries(
+        .key |= sub("(?i)#" + strenv(REPO_OWNER) + "/" + strenv(SOURCE_NAME); "#" + strenv(REPO_OWNER) + "/" + strenv(CLONE_NAME))
+      )
+
+  - engine: yq
+    files:
+      - tsconfig.base.json
+    expression: |
+      .compilerOptions.paths |= with_entries(
+        .key |= sub("(?i)#" + strenv(REPO_OWNER) + "/" + strenv(SOURCE_NAME); "#" + strenv(REPO_OWNER) + "/" + strenv(CLONE_NAME))
+      )
+
+  # ── Syntax-aware code rewrites ─────────────────────────────────
+  - engine: comby
+    files:
+      - "test/**/*.spec.ts"
+      - "src/**/*.test.ts"
+    language: ".ts"
+    replacements:
+      - match: 'from "#:[owner~(?i)${REPO_OWNER}]/:[_]"'
+        rewrite: 'from "#:[owner]/${CLONE_NAME}"'
+
+  - engine: comby
+    files:
+      - vitest.unit.config.js
+    language: ".js"
+    replacements:
+      - match: '"#:[owner~(?i)${REPO_OWNER}]/:[_]"'
+        rewrite: '"#:[owner]/${CLONE_NAME}"'
+
+  # ── Text replacements (JSONC, markdown) ────────────────────────
+  - engine: sed
+    files:
+      - .devcontainer/devcontainer.json
+      - README.md
+      - .github/copilot-instructions.md
+    replacements:
+      - match: "${SOURCE_NAME}"
+        rewrite: "${CLONE_NAME}"
+
+  # ── Filesystem cleanup ─────────────────────────────────────────
+  - engine: rm
+    files:
+      - CHANGELOG.md
+      - package-lock.json
+      - .github/environments/.terraform.lock.hcl
