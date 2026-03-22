@@ -1,6 +1,6 @@
+---
 name: pg-schema-design
 description: "Use this skill when creating, altering, or reviewing PostgreSQL database schema. Triggers include: writing SQL migrations, defining new tables or columns, designing domain models for PostgreSQL persistence, creating or modifying custom types (composites, domains, enums, ranges), defining foreign key constraints and cascade strategies, designing indexes (B-tree, GiST, GIN, partial, covering), and scaffolding schema for a new service or library. Also activate when reviewing existing schema for anti-patterns. Do NOT use for application-layer query building, ORM configuration, or non-PostgreSQL databases. For transactional concurrency patterns (locking, isolation levels), see `pg-data-access`."
-
 ---
 
 # PostgreSQL Schema Design
