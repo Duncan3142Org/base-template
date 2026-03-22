@@ -63,9 +63,9 @@ export TF_TOKEN_app_terraform_io="${tf_token}"
 
 echo -e "📦  ${BLUE}Using Terraform workspace: ${TF_WORKSPACE}${NC}"
 echo -e "⚙️  ${BLUE}Initializing Terraform...${NC}"
-terraform -chdir="$environments_workspace_dir" init
+terraform -chdir="$environments_workspace_dir" init -input=false
 echo -e "🚀  ${BLUE}Applying Terraform configuration...${NC}"
-terraform -chdir="$environments_workspace_dir" apply -auto-approve
+terraform -chdir="$environments_workspace_dir" apply -auto-approve -input=false
 echo -e "✅  ${BLUE}Environments synced successfully.${NC}"
 
 # Pull request settings
