@@ -28,7 +28,7 @@ runs:
     - name: Extract Package Metadata
       shell: bash
       run: |
-        PKG_NAME=$(jq -r '.name | split("/") | .[1]' ./package.json)
+        PKG_NAME=$(jq -r '.name | split("/") | last' ./package.json)
         echo "PKG_NAME=$PKG_NAME" >> $GITHUB_ENV
 
     - name: Run Semantic Release

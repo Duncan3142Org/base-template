@@ -25,7 +25,37 @@ const successComment = readFile("success-comment.txt")
 const majorBranchPlugin = join(releaseCliDir, "major-branch.js")
 const defaultAssets = ["CHANGELOG.md", "package.json", "package-lock.json"]
 
-const assets = RELEASE_ASSETS ? JSON.parse(RELEASE_ASSETS) : defaultAssets
+/**
+ * Parses the RELEASE_ASSETS env var as a JSON array of strings.
+ * @param {string | undefined} raw - The raw env var value.
+ * @returns {string[]} The parsed assets array.
+ */
+function parseAssets(raw) {
+	if (!raw) {
+		return defaultAssets
+	}
+
+	const parse = () => {
+		try {
+			return JSON.parse(raw)
+		} catch {
+			throw new Error(`RELEASE_ASSETS is not valid JSON: ${raw}`)
+		}
+	}
+	const parsed = parse()
+
+	if (!Array.isArray(parsed) || !parsed.every((item) => typeof item === "string")) {
+		throw new Error(`RELEASE_ASSETS must be a JSON array of strings: ${raw}`)
+	}
+	return parsed
+}
+
+const assets = parseAssets(RELEASE_ASSETS)
+const majorOptions = {
+	major: RELEASE_MAJOR === "true",
+	minor: RELEASE_MINOR === "true",
+	prefix: RELEASE_PREFIX,
+}
 
 /**
  * Generates the path to a plugin based on its name.
@@ -66,13 +96,6 @@ export default {
 				successComment,
 			},
 		],
-		[
-			majorBranchPlugin,
-			{
-				major: RELEASE_MAJOR === "true",
-				minor: RELEASE_MINOR === "true",
-				prefix: RELEASE_PREFIX,
-			},
-		],
+		[majorBranchPlugin, majorOptions],
 	],
 }
