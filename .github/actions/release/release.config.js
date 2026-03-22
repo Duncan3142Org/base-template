@@ -1,12 +1,15 @@
 import { fileURLToPath } from "node:url"
 import { readFileSync } from "node:fs"
 import { dirname, join } from "node:path"
+import { env } from "node:process"
 
 /**
  * @import {PluginConfig as MajorBranchConfig } from "./major-branch.js"
  */
 
-const releaseCliDir = dirname(fileURLToPath(import.meta.url))
+const { RELEASE_PLUGIN_DIR = dirname(fileURLToPath(import.meta.url)) } = env
+
+const releaseCliDir = RELEASE_PLUGIN_DIR
 
 /**
  * Reads a file from the release action directory.
