@@ -3,11 +3,13 @@ import { readFileSync } from "node:fs"
 import { dirname, join } from "node:path"
 import { env } from "node:process"
 
-/**
- * @import {PluginConfig as MajorBranchConfig } from "./major-branch.js"
- */
-
-const { RELEASE_PLUGIN_DIR = dirname(fileURLToPath(import.meta.url)) } = env
+const {
+	RELEASE_PLUGIN_DIR = dirname(fileURLToPath(import.meta.url)),
+	RELEASE_ASSETS,
+	RELEASE_MAJOR = "false",
+	RELEASE_MINOR = "false",
+	RELEASE_PREFIX = "v",
+} = env
 
 const releaseCliDir = RELEASE_PLUGIN_DIR
 
@@ -23,6 +25,8 @@ const successComment = readFile("success-comment.txt")
 const majorBranchPlugin = join(releaseCliDir, "major-branch.js")
 const defaultAssets = ["CHANGELOG.md", "package.json", "package-lock.json"]
 
+const assets = RELEASE_ASSETS ? JSON.parse(RELEASE_ASSETS) : defaultAssets
+
 /**
  * Generates the path to a plugin based on its name.
  * @param {string} name - The name of the plugin.
@@ -30,53 +34,45 @@ const defaultAssets = ["CHANGELOG.md", "package.json", "package-lock.json"]
  */
 const plugin = (name) => join(releaseCliDir, "node_modules", name)
 
-/**
- * @typedef {object} ReleaseConfigOptions
- * @property {string[]} [assets=defaultAssets] - Files committed by the git plugin after release.
- * @property {MajorBranchConfig} [branchConfig] - Configuration passed to the major branch plugin.
- */
-
-/**
- * Creates semantic-release configuration for this action.
- * @param {ReleaseConfigOptions} [options] - Repo-specific release config options.
- * @returns {{branches: string[], plugins: unknown[]}} Semantic-release configuration.
- */
-export function createReleaseConfig(options = {}) {
-	const { assets = defaultAssets, branchConfig = {} } = options
-
-	return {
-		branches: ["main"],
-		plugins: [
-			plugin("@semantic-release/commit-analyzer"),
-			[
-				plugin("@semantic-release/release-notes-generator"),
-				{
-					writerOpts: {
-						commitPartial,
-					},
+export default {
+	branches: ["main"],
+	plugins: [
+		plugin("@semantic-release/commit-analyzer"),
+		[
+			plugin("@semantic-release/release-notes-generator"),
+			{
+				writerOpts: {
+					commitPartial,
 				},
-			],
-			[
-				plugin("@semantic-release/changelog"),
-				{
-					changelogFile: "CHANGELOG.md",
-				},
-			],
-			plugin("@semantic-release/npm"),
-			[
-				plugin("@semantic-release/git"),
-				{
-					assets,
-					message: "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}",
-				},
-			],
-			[
-				plugin("@semantic-release/github"),
-				{
-					successComment,
-				},
-			],
-			[majorBranchPlugin, branchConfig],
+			},
 		],
-	}
+		[
+			plugin("@semantic-release/changelog"),
+			{
+				changelogFile: "CHANGELOG.md",
+			},
+		],
+		plugin("@semantic-release/npm"),
+		[
+			plugin("@semantic-release/git"),
+			{
+				assets,
+				message: "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}",
+			},
+		],
+		[
+			plugin("@semantic-release/github"),
+			{
+				successComment,
+			},
+		],
+		[
+			majorBranchPlugin,
+			{
+				major: RELEASE_MAJOR === "true",
+				minor: RELEASE_MINOR === "true",
+				prefix: RELEASE_PREFIX,
+			},
+		],
+	],
 }
