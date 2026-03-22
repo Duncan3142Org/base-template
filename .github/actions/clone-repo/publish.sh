@@ -52,7 +52,6 @@ export GH_TOKEN="$github_token"
 
 cd "$workspace_dir"
 
-bootstrap_branch="bootstrap/${clone_repo_name}"
 default_branch=$(gh api "repos/:owner/:repo" --jq '.default_branch')
 
 # Create empty GitHub repository
@@ -78,7 +77,7 @@ fi
 
 # Push bootstrap branch to new repo and set upstream
 echo -e "${BLUE}📤 Pushing to clone bootstrap branch...${NC}"
-git push -u "${clone_repo_name}" "$bootstrap_branch:$template_branch" --no-tags
+git push -u "${clone_repo_name}" "HEAD:$template_branch" --no-tags
 
 # Construct remote default branch via API, bypassing rulesets
 echo -e "${BLUE}🏗️  Constructing '$default_branch' branch via API...${NC}"
