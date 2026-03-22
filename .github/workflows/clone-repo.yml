@@ -34,11 +34,13 @@ jobs:
       - uses: ./.github/actions/clone-repo
         with:
           repo_name: ${{ github.event.inputs.repo_name }}
+          source_repo_name: ${{ github.event.repository.name }}
           template_branch: ${{ vars.TEMPLATE_BRANCH }}
           github_token: ${{ steps.token.outputs.token }}
           tf_org_token: ${{ secrets.ADMIN_TF_ORG_API_TOKEN }}
           tf_project_id: ${{ vars.ADMIN_TF_PROJECT_ID }}
           tf_org_name: ${{ vars.ADMIN_TF_ORG_NAME }}
+          workspace_dir: ${{ github.workspace }}
       - uses: ./.github/actions/sync-settings
         with:
           repo_name: ${{ github.event.inputs.repo_name }}
