@@ -4,18 +4,22 @@
 
 #USAGE flag "--root-dir <root-dir>" {
 #USAGE   required #true
+#USAGE   env "WORKSPACE_DIR"
 #USAGE   help "Repository root directory (files resolved relative to this)"
 #USAGE }
 #USAGE flag "--repo-owner <repo-owner>" {
 #USAGE   required #true
+#USAGE   env "GITHUB_REPOSITORY_OWNER"
 #USAGE   help "Target repository owner (e.g. Duncan3142Org)"
 #USAGE }
 #USAGE flag "--source-repo-name <source-repo-name>" {
 #USAGE   required #true
+#USAGE   env "SOURCE_REPO_NAME"
 #USAGE   help "Source (template) repository name"
 #USAGE }
 #USAGE flag "--clone-repo-name <clone-repo-name>" {
 #USAGE   required #true
+#USAGE   env "CLONE_REPO_NAME"
 #USAGE   help "Cloned repository name"
 #USAGE }
 
