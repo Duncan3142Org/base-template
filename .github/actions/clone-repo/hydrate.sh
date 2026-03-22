@@ -2,7 +2,7 @@
 
 #MISE description="Apply declarative hydration manifest to transform template files for a cloned repository"
 
-#USAGE flag "--root-dir <root-dir>" {
+#USAGE flag "--workspace-dir <workspace-dir>" {
 #USAGE   required #true
 #USAGE   env "WORKSPACE_DIR"
 #USAGE   help "Repository root directory (files resolved relative to this)"
@@ -33,7 +33,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # --- Inputs ---
-root_dir="${usage_root_dir:?}"
+workspace_dir="${usage_workspace_dir:?}"
 repo_owner="${usage_repo_owner:?}"
 source_name="${usage_source_repo_name:?}"
 clone_name="${usage_clone_repo_name:?}"
@@ -49,7 +49,7 @@ expand_vars() {
   envsubst '$REPO_OWNER $SOURCE_NAME $CLONE_NAME' <<< "$1"
 }
 
-MANIFEST="${root_dir}/.github/hydrate.yml"
+MANIFEST="${workspace_dir}/.github/hydrate.yml"
 
 # --- Manifest check ---
 if [[ ! -f "$MANIFEST" ]]; then
@@ -65,11 +65,11 @@ entry_count=$(yq eval '.transformations | length' "$MANIFEST")
 for (( i=0; i<entry_count; i++ )); do
   engine=$(yq eval ".transformations[$i].engine" "$MANIFEST")
 
-  # Expand file globs relative to root_dir using bash globstar
+  # Expand file globs relative to workspace_dir using bash globstar
   mapfile -t raw_patterns < <(yq eval ".transformations[$i].files[]" "$MANIFEST")
   mapfile -t resolved_files < <(
     shopt -s globstar nullglob
-    cd "$root_dir"
+    cd "$workspace_dir"
     IFS=
     for pattern in "${raw_patterns[@]}"; do
       for match in $pattern; do
@@ -89,7 +89,7 @@ for (( i=0; i<entry_count; i++ )); do
       expression=$(yq eval ".transformations[$i].expression" "$MANIFEST")
       echo -e "${BLUE}🛠️  yq: processing ${#resolved_files[@]} file(s)...${NC}"
       for file in "${resolved_files[@]}"; do
-        filepath="${root_dir}/${file#./}"
+        filepath="${workspace_dir}/${file#./}"
         echo "   ${file}"
         yq eval -i "$expression" "$filepath"
       done
@@ -99,7 +99,7 @@ for (( i=0; i<entry_count; i++ )); do
       replacement_count=$(yq eval ".transformations[$i].replacements | length" "$MANIFEST")
       echo -e "${BLUE}🛠️  sed: processing ${#resolved_files[@]} file(s)...${NC}"
       for file in "${resolved_files[@]}"; do
-        filepath="${root_dir}/${file#./}"
+        filepath="${workspace_dir}/${file#./}"
         echo "   ${file}"
         for (( r=0; r<replacement_count; r++ )); do
           match_str=$(expand_vars "$(yq eval ".transformations[$i].replacements[$r].match" "$MANIFEST")")
@@ -115,7 +115,7 @@ for (( i=0; i<entry_count; i++ )); do
       replacement_count=$(yq eval ".transformations[$i].replacements | length" "$MANIFEST")
       echo -e "${BLUE}🧩 comby: processing ${#resolved_files[@]} file(s)...${NC}"
       for file in "${resolved_files[@]}"; do
-        filepath="${root_dir}/${file#./}"
+        filepath="${workspace_dir}/${file#./}"
         echo "   ${file}"
         for (( r=0; r<replacement_count; r++ )); do
           match_raw=$(yq eval ".transformations[$i].replacements[$r].match" "$MANIFEST")
@@ -133,7 +133,7 @@ for (( i=0; i<entry_count; i++ )); do
     rm)
       echo -e "${BLUE}🧹 rm: removing ${#resolved_files[@]} file(s)...${NC}"
       for file in "${resolved_files[@]}"; do
-        filepath="${root_dir}/${file#./}"
+        filepath="${workspace_dir}/${file#./}"
         echo "   ${file}"
         rm -rf "$filepath"
       done
@@ -146,4 +146,19 @@ for (( i=0; i<entry_count; i++ )); do
   esac
 done
 
-echo -e "${GREEN}✅ Hydration complete.${NC}"
+(
+	cd "$workspace_dir"
+	# Format modified files if task exists
+	if mise tasks info format &>/dev/null; then
+		echo -e "${BLUE}🎨 Formatting modified files...${NC}"
+		mise run format --mode write
+	fi
+
+	# Stage all changes
+	git add .
+
+	# Commit hydrated files
+	git commit -m "chore: bootstrap repository [no ci]"
+
+	echo -e "${GREEN}✅ Hydration complete.${NC}"
+)
