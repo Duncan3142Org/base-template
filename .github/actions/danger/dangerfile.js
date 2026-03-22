@@ -7,10 +7,18 @@ import { marked } from "marked"
  * @import { Token } from "marked"
  */
 
+async function loadCommitlintConfig() {
+	const config = await load()
+	if (Object.keys(config.rules).length > 0) {
+		return config
+	}
+	return load({ extends: ["@commitlint/config-conventional"] })
+}
+
 async function validateTitle() {
 	const prTitle = danger.github.pr.title
 
-	const { rules, parserPreset } = await load()
+	const { rules, parserPreset } = await loadCommitlintConfig()
 	const result = await lint(
 		prTitle,
 		rules,

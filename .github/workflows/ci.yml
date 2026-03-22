@@ -19,7 +19,6 @@ permissions:
 
 env:
   GITHUB_PKG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   MISE_ENV: ci
 
 jobs:
@@ -35,3 +34,5 @@ jobs:
           mise run ci
       - name: Danger
         uses: ./.github/actions/danger
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
