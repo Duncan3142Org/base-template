@@ -5,4 +5,9 @@ export default defineConfig({
 		name: "integration",
 		include: ["test/**/*.spec.ts"],
 	},
+	ssr: {
+		resolve: {
+			conditions: ["@duncan3142org/base-template:test", "import", "default"],
+		},
+	},
 })

@@ -5,9 +5,14 @@ export default defineConfig({
 		name: "unit",
 		include: ["test/**/*.test.ts"],
 	},
-	resolve: {
-		alias: {
-			"#duncan3142org/base-template": "./src/index.ts",
+	ssr: {
+		resolve: {
+			conditions: [
+				"@duncan3142org/base-template:src",
+				"@duncan3142org/base-template:test",
+				"import",
+				"default",
+			],
 		},
 	},
 })

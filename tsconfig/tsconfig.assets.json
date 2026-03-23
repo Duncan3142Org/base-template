@@ -1,5 +1,6 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
+	"extends": ["./tsconfig.core.json"],
 	"compilerOptions": {
 		"emitDeclarationOnly": false,
 		"rootDir": "${configDir}/src",

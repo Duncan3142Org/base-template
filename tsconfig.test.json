@@ -1,5 +1,11 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
-	"extends": ["./tsconfig.base.json", "./tsconfig/tsconfig.test.json"],
-	"references": [{ "path": "./tsconfig.assets.json" }]
+	"extends": ["./tsconfig/tsconfig.test.json"],
+	"references": [{ "path": "./tsconfig.assets.json" }],
+	"compilerOptions": {
+		"customConditions": [
+			"@duncan3142org/base-template:src",
+			"@duncan3142org/base-template:test"
+		]
+	}
 }

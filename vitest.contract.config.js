@@ -6,9 +6,14 @@ export default defineConfig({
 		include: ["test/**/*.contract.ts"],
 		passWithNoTests: true,
 	},
-	resolve: {
-		alias: {
-			"#duncan3142org/base-template": "./src/index.ts",
+	ssr: {
+		resolve: {
+			conditions: [
+				"@duncan3142org/base-template:src",
+				"@duncan3142org/base-template:test",
+				"import",
+				"default",
+			],
 		},
 	},
 })

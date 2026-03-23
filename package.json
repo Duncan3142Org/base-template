@@ -20,7 +20,14 @@
 		".tsc/dist/**/*"
 	],
 	"imports": {
-		"#duncan3142org/base-template": "./.tsc/dist/index.js"
+		"#src": {
+			"@duncan3142org/base-template:src": "./src/index.ts",
+			"default": "./.tsc/dist/index.js"
+		},
+		"#test/*": {
+			"@duncan3142org/base-template:test": "./test/*/index.ts",
+			"default": null
+		}
 	},
 	"exports": {
 		".": {
@@ -45,6 +52,6 @@
 		"prettier": "^3.8.1",
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.57.1",
-		"vitest": "^4.1.0"
+		"vitest": "^4.1.1"
 	}
 }

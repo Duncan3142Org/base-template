@@ -22,7 +22,7 @@ const custom = {
 		"import-x/prefer-default-export": "off",
 		"import-x/no-unresolved": "off", // tsc config
 		"import-x/extensions": "off", // tsc config
-		"import-x/no-relative-parent-imports": ["error", { ignore: ["#duncan3142org/*"] }],
+		"import-x/no-relative-parent-imports": ["error", { ignore: ["#*"] }],
 		"import-x/no-internal-modules": "off",
 		"import-x/no-extraneous-dependencies": "off",
 		"import-x/no-empty-named-blocks": "error",
