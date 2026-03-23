@@ -96,7 +96,7 @@ The domain core and application use cases can be tested without any infrastructu
 database, no HTTP server. Inject an in-memory implementation of the driven port:
 
 ```typescript
-// In-memory adapter for tests (lives in src/, not spec/)
+// In-memory adapter for tests (lives in test/, not src/)
 export class InMemoryUserRepository implements UserRepository {
 	private readonly store = new Map<string, User>()
 

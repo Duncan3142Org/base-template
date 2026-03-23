@@ -33,15 +33,13 @@ unit-tests skill.
 
 ## Test File Location
 
-Integration test files live in the `spec/` directory at the repository root —
-not colocated with source files. This reflects the process-boundary distinction:
-unit tests (in-process) live alongside source in `src/`, integration tests
-(out-of-process) live in `spec/`.
+All tests live in the `test/` directory at the repository root. Integration test
+files use the `.spec.ts` suffix and live under `test/integration/`.
 
 ```
-src/users/user-repository.ts          # source
-src/users/user-repository.test.ts     # unit test (colocated)
-spec/users/user-repository.test.ts    # integration test (spec/ directory)
+src/users/user-repository.ts                          # source
+test/unit/users/user-repository.test.ts               # unit test
+test/integration/users/user-repository.spec.ts        # integration test
 ```
 
 ## Owned Infrastructure: Dev Containers

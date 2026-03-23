@@ -159,7 +159,7 @@ scattered across tests. Builders supply sensible defaults and allow individual
 fields to be overridden:
 
 ```typescript
-// src/users/user.fixture.ts
+// test/fixture/users/user.fixture.ts
 export function buildUser(overrides: Partial<User> = {}): User {
 	return {
 		id: 1,
@@ -171,8 +171,8 @@ export function buildUser(overrides: Partial<User> = {}): User {
 }
 ```
 
-Fixture files use the `.fixture.ts` suffix and are colocated with the code they
-support. The convention `build<Entity>()` is used throughout.
+Fixture files use the `.fixture.ts` suffix and live in the `test/fixture/`
+directory. The convention `build<Entity>()` is used throughout.
 
 Builders keep test setup readable and resilient to schema changes — when a new
 required field is added, only the builder needs updating, not every test that
@@ -197,16 +197,15 @@ internal structure of the code (without altering its behaviour) causes
 tests to fail, those tests are testing implementation rather than
 behaviour and are candidates for revision.
 
-## Test File Colocation
+## Test File Location
 
-Unit test files live alongside the source files they test, in the same directory:
+Unit test files live in the `test/unit/` directory, mirroring the `src/` structure:
 
 ```
-src/users/registration.service.ts
-src/users/registration.service.test.ts
+src/users/registration.service.ts              # source
+test/unit/users/registration.service.test.ts   # unit test
 ```
 
-This makes the relationship between test and source explicit and avoids maintaining
-parallel directory trees. Test files use the `.test.ts` suffix (not `.spec.ts`).
-Files containing only test helpers or fixtures use a `.helper.ts` or `.fixture.ts`
-suffix and are colocated with the tests that use them.
+Test files use the `.test.ts` suffix (not `.spec.ts`).
+Shared test fixtures live in `test/fixture/` and use a `.fixture.ts` suffix.
+Test helpers use a `.helper.ts` suffix.
