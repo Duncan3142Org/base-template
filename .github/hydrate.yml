@@ -49,8 +49,8 @@ transformations:
   # ── Syntax-aware code rewrites ─────────────────────────────────
   - engine: comby
     files:
-      - "test/**/*.spec.ts"
-      - "src/**/*.test.ts"
+      - "test/**/*.ts"
+      - "src/**/*.ts"
     language: ".ts"
     replacements:
       - match: 'from "#:[owner~(?i)${REPO_OWNER}]/:[_]"'

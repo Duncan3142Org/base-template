@@ -6,6 +6,5 @@
 		"outDir": "${configDir}/.tsc/dist",
 		"tsBuildInfoFile": "${configDir}/.tsc/tsconfig.assets.tsbuildinfo"
 	},
-	"include": ["${configDir}/src/**/*"],
-	"exclude": ["${configDir}/src/**/*.test.*"]
+	"include": ["${configDir}/src/**/*"]
 }

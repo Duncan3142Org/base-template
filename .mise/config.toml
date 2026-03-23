@@ -7,7 +7,7 @@ npm = "11"
 
 [tasks.check]
 description = "Run format, unit test, and lint checks"
-run.tasks = ["format", "test", "lint"]
+run.tasks = ["format", "test", "test --mode=contract", "lint"]
 
 [tasks.build]
 description = "Run validation and compile TypeScript assets"
