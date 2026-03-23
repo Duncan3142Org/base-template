@@ -139,36 +139,36 @@ checksum = "sha256:e81958c47acde7bb64e0126c5c45c3919da1ecd51042d84e79030835cbbfd
 url = "https://releases.hashicorp.com/terraform/1.14.7/terraform_1.14.7_windows_amd64.zip"
 
 [[tools.usage]]
-version = "3.0.0"
+version = "3.1.0"
 backend = "aqua:jdx/usage"
 
 [tools.usage."platforms.linux-arm64"]
-checksum = "sha256:6c32e248c2203d3d0b43bed07a9c6d25b05773e8443fb99b4c4a724f9c8fc64a"
-url = "https://github.com/jdx/usage/releases/download/v3.0.0/usage-aarch64-unknown-linux-musl.tar.gz"
+checksum = "sha256:91a89899b5d489df1c69e6a1abe485c70addaf2f1f8d4b2a41da124c7e9c43f2"
+url = "https://github.com/jdx/usage/releases/download/v3.1.0/usage-aarch64-unknown-linux-musl.tar.gz"
 
 [tools.usage."platforms.linux-arm64-musl"]
-checksum = "sha256:6c32e248c2203d3d0b43bed07a9c6d25b05773e8443fb99b4c4a724f9c8fc64a"
-url = "https://github.com/jdx/usage/releases/download/v3.0.0/usage-aarch64-unknown-linux-musl.tar.gz"
+checksum = "sha256:91a89899b5d489df1c69e6a1abe485c70addaf2f1f8d4b2a41da124c7e9c43f2"
+url = "https://github.com/jdx/usage/releases/download/v3.1.0/usage-aarch64-unknown-linux-musl.tar.gz"
 
 [tools.usage."platforms.linux-x64"]
-checksum = "sha256:e9d4c42cbc28668da0c1ee02eaea1948ab043ee1ef2637fa90737095da487e1c"
-url = "https://github.com/jdx/usage/releases/download/v3.0.0/usage-x86_64-unknown-linux-musl.tar.gz"
+checksum = "sha256:2be4d047dca2051d9166113f4776dc859481813d1ae5ee137ec384801af42022"
+url = "https://github.com/jdx/usage/releases/download/v3.1.0/usage-x86_64-unknown-linux-musl.tar.gz"
 
 [tools.usage."platforms.linux-x64-musl"]
-checksum = "sha256:e9d4c42cbc28668da0c1ee02eaea1948ab043ee1ef2637fa90737095da487e1c"
-url = "https://github.com/jdx/usage/releases/download/v3.0.0/usage-x86_64-unknown-linux-musl.tar.gz"
+checksum = "sha256:2be4d047dca2051d9166113f4776dc859481813d1ae5ee137ec384801af42022"
+url = "https://github.com/jdx/usage/releases/download/v3.1.0/usage-x86_64-unknown-linux-musl.tar.gz"
 
 [tools.usage."platforms.macos-arm64"]
-checksum = "sha256:4de86e95923dd57d8171a5ae40ca65492ef84b69175fefd7ab14442ab3ea0fc2"
-url = "https://github.com/jdx/usage/releases/download/v3.0.0/usage-universal-apple-darwin.tar.gz"
+checksum = "sha256:d9f286a40b5c04b5e0b124a33bb46545b6a595b518e109077e34333816bb1465"
+url = "https://github.com/jdx/usage/releases/download/v3.1.0/usage-universal-apple-darwin.tar.gz"
 
 [tools.usage."platforms.macos-x64"]
-checksum = "sha256:4de86e95923dd57d8171a5ae40ca65492ef84b69175fefd7ab14442ab3ea0fc2"
-url = "https://github.com/jdx/usage/releases/download/v3.0.0/usage-universal-apple-darwin.tar.gz"
+checksum = "sha256:d9f286a40b5c04b5e0b124a33bb46545b6a595b518e109077e34333816bb1465"
+url = "https://github.com/jdx/usage/releases/download/v3.1.0/usage-universal-apple-darwin.tar.gz"
 
 [tools.usage."platforms.windows-x64"]
-checksum = "sha256:b0a8cb81f4a259f8eaee134d9d427ed8284177141d615669dce2bde184ab06b3"
-url = "https://github.com/jdx/usage/releases/download/v3.0.0/usage-x86_64-pc-windows-msvc.zip"
+checksum = "sha256:a4f4e4e33a64e86f92051c16336349a41064380f1c6a7ea48cb105ed8454e9f3"
+url = "https://github.com/jdx/usage/releases/download/v3.1.0/usage-x86_64-pc-windows-msvc.zip"
 
 [[tools.yq]]
 version = "4.52.4"
