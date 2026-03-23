@@ -30,13 +30,13 @@ transformations:
     files:
       - package.json
     expression: |
-      .name = "@" + strenv(REPO_OWNER) + "/" + strenv(CLONE_NAME) |
+      .name = "@" + (strenv(REPO_OWNER) | downcase) + "/" + strenv(CLONE_NAME) |
       .version = "0.0.0" |
       .description = "Service initialized from " + strenv(SOURCE_NAME) |
       .repository.url = "git+https://github.com/" + strenv(REPO_OWNER) + "/" + strenv(CLONE_NAME) + ".git" |
       .imports |= with_entries(
         .value |= with_entries(
-          .key |= sub("(?i)@" + strenv(REPO_OWNER) + "/" + strenv(SOURCE_NAME); "@" + strenv(REPO_OWNER) + "/" + strenv(CLONE_NAME))
+          .key |= sub("(?i)@" + strenv(REPO_OWNER) + "/" + strenv(SOURCE_NAME); "@" + (strenv(REPO_OWNER) | downcase) + "/" + strenv(CLONE_NAME))
         )
       )
 
@@ -46,7 +46,7 @@ transformations:
       - tsconfig.test.json
     expression: |
       .compilerOptions.customConditions |= map(
-        sub("(?i)@" + strenv(REPO_OWNER) + "/" + strenv(SOURCE_NAME); "@" + strenv(REPO_OWNER) + "/" + strenv(CLONE_NAME))
+        sub("(?i)@" + strenv(REPO_OWNER) + "/" + strenv(SOURCE_NAME); "@" + (strenv(REPO_OWNER) | downcase) + "/" + strenv(CLONE_NAME))
       )
 
   - engine: yq
