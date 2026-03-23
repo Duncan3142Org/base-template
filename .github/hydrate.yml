@@ -35,41 +35,41 @@ transformations:
       .description = "Service initialized from " + strenv(SOURCE_NAME) |
       .repository.url = "git+https://github.com/" + strenv(REPO_OWNER) + "/" + strenv(CLONE_NAME) + ".git" |
       .imports |= with_entries(
-        .key |= sub("(?i)#" + strenv(REPO_OWNER) + "/" + strenv(SOURCE_NAME); "#" + strenv(REPO_OWNER) + "/" + strenv(CLONE_NAME))
+        .value |= with_entries(
+          .key |= sub("(?i)@" + strenv(REPO_OWNER) + "/" + strenv(SOURCE_NAME); "@" + strenv(REPO_OWNER) + "/" + strenv(CLONE_NAME))
+        )
       )
 
   - engine: yq
     files:
-      - tsconfig.base.json
+      - tsconfig.assets.json
+      - tsconfig.test.json
     expression: |
-      .compilerOptions.paths |= with_entries(
-        .key |= sub("(?i)#" + strenv(REPO_OWNER) + "/" + strenv(SOURCE_NAME); "#" + strenv(REPO_OWNER) + "/" + strenv(CLONE_NAME))
+      .compilerOptions.customConditions |= map(
+        sub("(?i)@" + strenv(REPO_OWNER) + "/" + strenv(SOURCE_NAME); "@" + strenv(REPO_OWNER) + "/" + strenv(CLONE_NAME))
       )
+
+  - engine: yq
+    files:
+      - .devcontainer/devcontainer.json
+    expression: |
+      .name = strenv(CLONE_NAME)
 
   # ── Syntax-aware code rewrites ─────────────────────────────────
   - engine: comby
     files:
-      - "test/**/*.ts"
-      - "src/**/*.ts"
-    language: ".ts"
-    replacements:
-      - match: 'from "#:[owner~(?i)${REPO_OWNER}]/:[_]"'
-        rewrite: 'from "#:[owner]/${CLONE_NAME}"'
-
-  - engine: comby
-    files:
       - vitest.unit.config.js
+      - vitest.integration.config.js
+      - vitest.contract.config.js
     language: ".js"
     replacements:
-      - match: '"#:[owner~(?i)${REPO_OWNER}]/:[_]"'
-        rewrite: '"#:[owner]/${CLONE_NAME}"'
+      - match: '"@:[owner~(?i)${REPO_OWNER}]/${SOURCE_NAME}::[suffix]"'
+        rewrite: '"@:[owner]/${CLONE_NAME}::[suffix]"'
 
-  # ── Text replacements (JSONC, markdown) ────────────────────────
+  # ── Text replacements (markdown) ────────────────────────
   - engine: sed
     files:
-      - .devcontainer/devcontainer.json
       - README.md
-      - .github/copilot-instructions.md
     replacements:
       - match: "${SOURCE_NAME}"
         rewrite: "${CLONE_NAME}"

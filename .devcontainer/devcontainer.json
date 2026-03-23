@@ -1,5 +1,3 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/universal
 {
 	"name": "base-template",
 
@@ -17,7 +15,6 @@
 	"postCreateCommand": "./.devcontainer/command/post-create.sh",
 	"postStartCommand": "./.devcontainer/command/post-start.sh",
 
-	// Aligns with rootless docker
 	"containerUser": "root",
 	"remoteUser": "root",
 	"updateRemoteUserUID": false,
