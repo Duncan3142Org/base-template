@@ -1,6 +1,6 @@
 ---
 name: integration-tests
-description: "How to write integration tests that cross a process boundary. Use this skill whenever a test connects to a real TCP socket — Postgres in a container, WireMock for sibling services, a real message broker. Covers dev container infrastructure setup, over-the-wire mocking, subcutaneous integration tests, and scope discipline. If everything runs in-process (PGLite, in-memory), see `unit-tests` instead."
+description: "How to write integration tests that cross a process boundary. Use this skill whenever a test connects to an out-of-process resource — Postgres in a container, WireMock for sibling services, a real message broker. Covers dev container infrastructure setup, over-the-wire mocking, subcutaneous integration tests, and scope discipline. If everything runs in-process (PGLite, in-memory), see `unit-tests` instead."
 ---
 
 # Integration Tests
