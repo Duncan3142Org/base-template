@@ -6,7 +6,7 @@ import { FILE_EXTENSIONS } from "./core.js"
 
 /** @type {Configs} */
 const config = defineConfig({
-	name: "@duncan3142/eslint-config/vitest",
+	name: "@deafrex/eslint-config/vitest",
 	files: [`test/**/*.{test,spec,contract}.{${FILE_EXTENSIONS.JSTS.join(",")}}`],
 	extends: [vitest.configs.recommended],
 })

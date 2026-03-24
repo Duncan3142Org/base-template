@@ -1,5 +1,5 @@
 {
-	"name": "base-template",
+	"name": "node-template",
 
 	"dockerComposeFile": "./compose.yml",
 	"service": "devcon",

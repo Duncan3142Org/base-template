@@ -21,7 +21,7 @@ env:
 jobs:
   cd:
     name: CD
-    if: (github.actor_id != vars.DELIVERY_ACTOR_ID) && (github.event.before != '0000000000000000000000000000000000000000')
+    if: (github.actor_id != vars.DELIVERY_ACTOR_ID)
     environment: GitHub
     runs-on: ubuntu-22.04
     steps:

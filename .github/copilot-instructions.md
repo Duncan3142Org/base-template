@@ -1,6 +1,6 @@
 # Repository Instructions
 
-This repository is the base template for `@duncan3142org` projects.
+This repository is the base template for `@deafrex` projects.
 
 - Use the dev container configuration in `.devcontainer/` as the expected development environment.
 - The container sets `MISE_ENV=dev`. Do not change or remove that variable.

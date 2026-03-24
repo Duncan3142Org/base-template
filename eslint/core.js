@@ -71,7 +71,7 @@ const lintAll = (severity) => {
 
 /** @type {Config} */
 const config = {
-	name: "@duncan3142/eslint-config/core",
+	name: "@deafrex/eslint-config/core",
 	linterOptions: {
 		reportUnusedDisableDirectives: "error",
 		reportUnusedInlineConfigs: "error",

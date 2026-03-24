@@ -5,7 +5,7 @@ import { defineConfig } from "eslint/config"
 
 /** @type {Config} */
 const custom = {
-	name: "@duncan3142/eslint-config/comments/custom",
+	name: "@deafrex/eslint-config/comments/custom",
 	rules: {
 		"@eslint-community/eslint-comments/disable-enable-pair": [
 			"error",
@@ -17,7 +17,7 @@ const custom = {
 
 /** @type {Configs} */
 const config = defineConfig({
-	name: "@duncan3142/eslint-config/comments",
+	name: "@deafrex/eslint-config/comments",
 	extends: [comments.recommended, custom],
 })
 

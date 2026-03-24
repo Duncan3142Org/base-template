@@ -7,7 +7,7 @@ export default defineConfig({
 	},
 	ssr: {
 		resolve: {
-			conditions: ["@duncan3142org/base-template:test", "import", "default"],
+			conditions: ["@deafrex/node-template:test", "import", "default"],
 		},
 	},
 })

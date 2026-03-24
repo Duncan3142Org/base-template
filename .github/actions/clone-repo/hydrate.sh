@@ -10,7 +10,7 @@
 #USAGE flag "--repo-owner <repo-owner>" {
 #USAGE   required #true
 #USAGE   env "GITHUB_REPOSITORY_OWNER"
-#USAGE   help "Target repository owner (e.g. Duncan3142Org)"
+#USAGE   help "Target repository owner (e.g. deafrex)"
 #USAGE }
 #USAGE flag "--source-repo-name <source-repo-name>" {
 #USAGE   required #true

@@ -8,8 +8,8 @@ export default defineConfig({
 	ssr: {
 		resolve: {
 			conditions: [
-				"@duncan3142org/base-template:src",
-				"@duncan3142org/base-template:test",
+				"@deafrex/node-template:src",
+				"@deafrex/node-template:test",
 				"import",
 				"default",
 			],

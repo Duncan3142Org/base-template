@@ -3,9 +3,6 @@
 	"extends": ["./tsconfig/tsconfig.test.json"],
 	"references": [{ "path": "./tsconfig.assets.json" }],
 	"compilerOptions": {
-		"customConditions": [
-			"@duncan3142org/base-template:src",
-			"@duncan3142org/base-template:test"
-		]
+		"customConditions": ["@deafrex/node-template:src", "@deafrex/node-template:test"]
 	}
 }

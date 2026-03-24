@@ -1,9 +1,16 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
 	"compilerOptions": {
-		"lib": ["ES2024"],
+		"lib": [
+			"ES2024",
+			"ESNext.Array",
+			"ESNext.Collection",
+			"ESNext.Error",
+			"ESNext.Iterator",
+			"ESNext.Promise"
+		],
 		"module": "nodenext",
-		"target": "ES2022",
+		"target": "ES2024",
 		"noEmitOnError": true,
 		"emitDeclarationOnly": true,
 		"esModuleInterop": true,
@@ -18,7 +25,6 @@
 		"pretty": true,
 		"erasableSyntaxOnly": true,
 		"libReplacement": false,
-		// Types
 		"skipLibCheck": true,
 		"allowJs": false,
 		"checkJs": false,

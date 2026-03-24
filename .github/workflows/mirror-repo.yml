@@ -13,8 +13,6 @@ jobs:
   repo-mirror:
     environment: GitLab
     runs-on: ubuntu-22.04
-    # Prevent triggering on branch creation
-    if: github.event.before != '0000000000000000000000000000000000000000'
     steps:
       - name: Checkout code
         uses: actions/checkout@v6

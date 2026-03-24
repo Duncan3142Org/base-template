@@ -11,8 +11,8 @@
 #   rm    — file / directory deletion
 #
 # Variables available to expressions:
-#   REPO_OWNER  — target repository owner  (e.g. duncan3142org)
-#   SOURCE_NAME — source repository name   (e.g. base-template)
+#   REPO_OWNER  — target repository owner  (e.g. deafrex)
+#   SOURCE_NAME — source repository name   (e.g. node-template)
 #   CLONE_NAME  — cloned repository name   (e.g. my-service)
 #
 # Access syntax varies by engine:

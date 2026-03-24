@@ -1,11 +1,10 @@
 {
-	"name": "@duncan3142org/base-template",
+	"name": "@deafrex/node-template",
 	"description": "Base repo template",
-	"author": "Duncan3142Org",
 	"version": "1.4.16",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/Duncan3142Org/base-template.git"
+		"url": "git+https://github.com/deafrex/node-template.git"
 	},
 	"publishConfig": {
 		"registry": "https://npm.pkg.github.com"
@@ -21,11 +20,11 @@
 	],
 	"imports": {
 		"#src": {
-			"@duncan3142org/base-template:src": "./src/index.ts",
+			"@deafrex/node-template:src": "./src/index.ts",
 			"default": "./.tsc/dist/index.js"
 		},
 		"#test/*": {
-			"@duncan3142org/base-template:test": "./test/*/index.ts",
+			"@deafrex/node-template:test": "./test/*/index.ts",
 			"default": null
 		}
 	},
@@ -51,7 +50,7 @@
 		"eslint-plugin-jsdoc": "^62.8.0",
 		"prettier": "^3.8.1",
 		"typescript": "^5.9.3",
-		"typescript-eslint": "^8.57.1",
+		"typescript-eslint": "^8.57.2",
 		"vitest": "^4.1.1"
 	}
 }
