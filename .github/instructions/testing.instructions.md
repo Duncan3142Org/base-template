@@ -11,6 +11,6 @@ applyTo: "test/**/*.test.ts,test/**/*.spec.ts,test/**/*.contract.ts"
 - Integration tests use the `.spec.ts` suffix.
 - Contract tests (Pact) use the `.contract.ts` suffix.
 - Shared test fixtures live in `test/fixture/`.
-- Single-process tests follow the Detroit style: test observable behavior, prefer real owned collaborators, and only mock or stub I/O boundaries.
-- If a test crosses a process boundary, uses real TCP sockets, or depends on external infrastructure, treat it as an integration test.
+- Unit tests follow the Detroit style: test observable behavior, prefer real owned collaborators, and only mock or stub I/O boundaries.
+- If a test crosses a process boundary (e.g. uses real TCP sockets, depends on WireMock), treat it as an integration test.
 - Consumer driven contract tests (Pact) verify assumptions about external systems.
