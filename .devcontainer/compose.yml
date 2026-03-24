@@ -13,6 +13,8 @@ volumes:
     name: shared-mise-data
   mise_cache:
     name: shared-mise-cache
+  apt_cache:
+    name: shared-apt-cache
   npm_cache:
     name: shared-npm-cache
   terraform_plugin_cache:
@@ -47,6 +49,7 @@ services:
 
       - mise_data:/root/.local/share/mise
       - mise_cache:/root/.cache/mise
+      - apt_cache:/var/cache/apt
       - npm_cache:/root/.npm
       - type: volume
         source: terraform_plugin_cache
