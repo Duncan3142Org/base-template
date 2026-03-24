@@ -1,0 +1,17 @@
+[settings]
+lockfile = true
+
+[tools]
+"yq" = "4"
+"github:comby-tools/comby" = { version = "1", rename_exe = "comby", bin_path = "." }
+
+[tasks."hydrate:test"]
+description = "Dry-run the hydration manifest against the local workspace"
+run.task = """
+  hydrate \
+    --workspace-dir /workspace \
+    --repo-owner deafrex \
+    --source-repo-name node-template \
+    --clone-repo-name test-clone \
+    --no-commit
+"""

@@ -1,6 +1,0 @@
-[settings]
-lockfile = true
-
-[tools]
-"yq" = "4"
-"github:comby-tools/comby" = { version = "1", rename_exe = "comby", bin_path = "." }

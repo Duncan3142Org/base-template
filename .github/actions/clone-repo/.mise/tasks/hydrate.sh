@@ -22,6 +22,9 @@
 #USAGE   env "CLONE_REPO_NAME"
 #USAGE   help "Cloned repository name"
 #USAGE }
+#USAGE flag "--no-commit" {
+#USAGE   help "Skip git add and commit after hydration"
+#USAGE }
 
 set -ueC
 set -o pipefail
@@ -37,6 +40,7 @@ workspace_dir="${usage_workspace_dir:?}"
 repo_owner="${usage_repo_owner:?}"
 source_name="${usage_source_repo_name:?}"
 clone_name="${usage_clone_repo_name:?}"
+no_commit="${usage_no_commit:-false}"
 
 # Export for env var expansion
 export REPO_OWNER="$repo_owner"
@@ -154,11 +158,13 @@ done
 		mise run format --mode write
 	fi
 
-	# Stage all changes
-	git add .
+	if [[ "$no_commit" != "true" ]]; then
+		# Stage all changes
+		git add .
 
-	# Commit hydrated files
-	git commit -m "chore: bootstrap repository [no ci]"
+		# Commit hydrated files
+		git commit -m "chore: bootstrap repository [no ci]"
+	fi
 
 	echo -e "${GREEN}✅ Hydration complete.${NC}"
 )
