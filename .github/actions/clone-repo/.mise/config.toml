@@ -3,6 +3,7 @@ lockfile = true
 
 [tools]
 "yq" = "4"
+"node" = "24"
 "github:comby-tools/comby" = { version = "1", rename_exe = "comby", bin_path = "." }
 
 [tasks."hydrate:test"]
