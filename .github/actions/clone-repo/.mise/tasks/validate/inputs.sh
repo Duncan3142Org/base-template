@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #MISE description="Validate inputs and required tools for clone-repo action"
 

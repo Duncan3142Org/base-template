@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #MISE description="Validate inputs and create bootstrap branch for cloned repository"
 

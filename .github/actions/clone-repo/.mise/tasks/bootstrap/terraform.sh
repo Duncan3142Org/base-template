@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #MISE description="Bootstrap a Terraform Cloud workspace"
 

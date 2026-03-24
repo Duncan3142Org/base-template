@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #MISE description="Apply declarative hydration manifest to transform template files for a cloned repository"
 

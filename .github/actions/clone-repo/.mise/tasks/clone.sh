@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #MISE description="Format, commit, create GitHub repository, and push bootstrap branch"
 
