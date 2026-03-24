@@ -37,8 +37,8 @@ tf_org_name="${usage_tf_org_name:?}"
 
 # --- Validate name inputs ---
 for name in "$repo_owner" "$clone_repo_name" "$source_repo_name" "$tf_org_name"; do
-  if [[ ! "$name" =~ ^[a-zA-Z0-9._-]+$ ]]; then
-    echo -e "${RED}Invalid name '${name}'. Only alphanumeric characters, dots, underscores, and hyphens are allowed.${NC}"
+  if [[ ! "$name" =~ ^[a-z-]+$ ]]; then
+    echo -e "${RED}Invalid name '${name}'. Only lowercase characters and hyphens are allowed.${NC}"
     exit 1
   fi
 done
