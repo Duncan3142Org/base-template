@@ -77,7 +77,11 @@ console.log(`${BLUE}Fetching remotes...${NC}`)
 await $({ stdio: "inherit" })`git fetch origin`
 await $({ stdio: "inherit" })`git fetch ${templateRemoteName}`
 
-const hasRef = (ref) => $`git show-ref --verify --quiet ${ref}`.catch(() => false)
+const hasRef = (ref) =>
+	$`git show-ref --verify --quiet ${ref}`.then(
+		() => true,
+		() => false
+	)
 
 // --- Switch to / Create local template branch ---
 if (await hasRef(`refs/heads/${TEMPLATE_BRANCH}`)) {

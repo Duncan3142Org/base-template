@@ -35,6 +35,7 @@ runs:
       run: |
         mise trust -q
         mise install
+        npm ci
     - name: Validate Inputs
       shell: bash
       working-directory: ${{ github.action_path }}
