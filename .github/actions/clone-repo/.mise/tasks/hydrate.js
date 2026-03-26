@@ -98,7 +98,11 @@ if (!existsSync(manifestPath)) {
 	exit(1)
 }
 
-const { transformations } = parse(await readFile(manifestPath, "utf8"))
+const manifest = await readFile(manifestPath, "utf8").then(parse)
+if (typeof manifest !== "object" || manifest === null) {
+	failManifest("root document must be an object")
+}
+const { transformations } = manifest
 ensureArray(transformations, "transformations")
 
 console.log(`${BLUE}🚀 Starting hydration: ${sourceName} → ${cloneName}${NC}`)
