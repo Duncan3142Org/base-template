@@ -11,6 +11,6 @@
 set -ueC
 set -o pipefail
 
-mode="${usage_mode?}"
+mode="${usage_mode:?}"
 
 npm exec -- vitest run --config "./vitest.${mode}.config.js"
