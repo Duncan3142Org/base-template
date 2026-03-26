@@ -226,17 +226,17 @@ const hasFormatTask = await $({ cwd: workspaceDir })`mise tasks info format`
 	.catch(() => false)
 if (hasFormatTask) {
 	console.log(`${BLUE}🎨 Formatting modified files...${NC}`)
-	await $({ stdio: "inherit", cwd: workspaceDir })`mise run format --mode write`
+	await $({ stdout: "inherit", cwd: workspaceDir })`mise run format --mode write`
 }
 
 if (!noCommit) {
-	await $({ stdio: "inherit", cwd: workspaceDir })`git add .`
+	await $({ stdout: "inherit", cwd: workspaceDir })`git add .`
 	const hasStagedChanges = await $({ cwd: workspaceDir })`git diff --cached --quiet`
 		.then(() => false)
 		.catch(() => true)
 	if (hasStagedChanges) {
 		await $({
-			stdio: "inherit",
+			stdout: "inherit",
 			cwd: workspaceDir,
 		})`git commit -m ${"chore: bootstrap repository [no ci]"}`
 	} else {

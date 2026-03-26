@@ -58,7 +58,7 @@ const { stdout: defaultBranch } = await $`gh api repos/:owner/:repo --jq .defaul
 
 // Create empty GitHub repository
 console.log(`${BLUE}📦 Creating empty repository on GitHub...${NC}`)
-await $({ stdio: "inherit" })`gh repo create ${repoOwner}/${cloneRepoName} --private`
+await $({ stdout: "inherit" })`gh repo create ${repoOwner}/${cloneRepoName} --private`
 
 // Add 'clone-of' custom property to new repo
 console.log(`${BLUE}🏷️  Adding 'clone-of' property to new repository...${NC}`)
@@ -78,7 +78,7 @@ await $`git remote get-url ${cloneRepoName}`.catch(
 // Push bootstrap branch to new repo and set upstream
 console.log(`${BLUE}📤 Pushing to clone bootstrap branch...${NC}`)
 await $({
-	stdio: "inherit",
+	stdout: "inherit",
 })`git push -u ${cloneRepoName} HEAD:${templateBranch} --no-tags`
 
 // Construct remote default branch via API, bypassing rulesets
@@ -89,7 +89,7 @@ await $`gh api repos/${repoOwner}/${cloneRepoName}/git/refs -f ref=${`refs/heads
 // Set remote default branch to default branch
 console.log(`${BLUE}⚙️  Setting default branch to '${defaultBranch}'...${NC}`)
 await $({
-	stdio: "inherit",
+	stdout: "inherit",
 })`gh repo edit ${repoOwner}/${cloneRepoName} --default-branch ${defaultBranch}`
 
 console.log(`${GREEN}✅ Success! Repository '${repoOwner}/${cloneRepoName}' is live.${NC}`)

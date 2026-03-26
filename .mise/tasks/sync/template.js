@@ -74,8 +74,8 @@ if (status.length !== 0) {
 
 // --- Fetch Remotes ---
 console.log(`${BLUE}Fetching remotes...${NC}`)
-await $({ stdio: "inherit" })`git fetch origin`
-await $({ stdio: "inherit" })`git fetch ${templateRemoteName}`
+await $({ stdout: "inherit" })`git fetch origin`
+await $({ stdout: "inherit" })`git fetch ${templateRemoteName}`
 
 const hasRef = (ref) =>
 	$`git show-ref --verify --quiet ${ref}`.then(
@@ -86,28 +86,28 @@ const hasRef = (ref) =>
 // --- Switch to / Create local template branch ---
 if (await hasRef(`refs/heads/${TEMPLATE_BRANCH}`)) {
 	console.log(`${BLUE}Switching to local '${TEMPLATE_BRANCH}' branch...${NC}`)
-	await $({ stdio: "inherit" })`git checkout ${TEMPLATE_BRANCH}`
+	await $({ stdout: "inherit" })`git checkout ${TEMPLATE_BRANCH}`
 
 	console.log(`${BLUE}Pulling latest changes from origin...${NC}`)
-	await $({ stdio: "inherit" })`git pull --ff-only`
+	await $({ stdout: "inherit" })`git pull --ff-only`
 } else if (await hasRef(`refs/remotes/origin/${TEMPLATE_BRANCH}`)) {
 	console.log(`${BLUE}Local '${TEMPLATE_BRANCH}' does not exist, but found on origin.${NC}`)
 	console.log(
 		`${BLUE}Creating local '${TEMPLATE_BRANCH}' tracking 'origin/${TEMPLATE_BRANCH}'...${NC}`
 	)
-	await $({ stdio: "inherit" })`git checkout -b ${TEMPLATE_BRANCH} origin/${TEMPLATE_BRANCH}`
+	await $({ stdout: "inherit" })`git checkout -b ${TEMPLATE_BRANCH} origin/${TEMPLATE_BRANCH}`
 } else {
 	console.log(`${BLUE}Branch '${TEMPLATE_BRANCH}' not found locally or on origin.${NC}`)
 	console.log(
 		`${BLUE}Creating '${TEMPLATE_BRANCH}' from '${templateRemoteName}/${templateDefaultBranch}'...${NC}`
 	)
 	await $({
-		stdio: "inherit",
+		stdout: "inherit",
 	})`git checkout -b ${TEMPLATE_BRANCH} ${templateRemoteName}/${templateDefaultBranch}`
 }
 
 const merge = (ref) =>
-	$({ stdio: "inherit" })`git merge ${ref} --no-edit`.catch(({ exitCode }) => {
+	$({ stdout: "inherit" })`git merge ${ref} --no-edit`.catch(({ exitCode }) => {
 		console.error("Resolve conflicts, then run: git add <files> && git commit")
 		exit(exitCode)
 	})
@@ -125,5 +125,5 @@ console.log(`${BLUE}Merging '${upstreamRef}' into '${TEMPLATE_BRANCH}'...${NC}`)
 await merge(upstreamRef)
 
 console.log(`${GREEN}Successfully merged '${upstreamRef}' into '${TEMPLATE_BRANCH}'.${NC}`)
-await $({ stdio: "inherit" })`git push -u origin ${TEMPLATE_BRANCH}`
+await $({ stdout: "inherit" })`git push -u origin ${TEMPLATE_BRANCH}`
 console.log(`${GREEN}Sync complete.${NC}`)

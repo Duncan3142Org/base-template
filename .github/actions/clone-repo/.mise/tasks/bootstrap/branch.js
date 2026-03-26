@@ -86,6 +86,6 @@ if (repoExists) {
 // Create bootstrap branch from default branch
 const bootstrapBranch = `bootstrap/${cloneRepoName}`
 console.log(`${BLUE}🌱 Creating bootstrap branch '${bootstrapBranch}'...${NC}`)
-await $({ stdio: "inherit" })`git checkout -b ${bootstrapBranch} ${defaultBranch}`
+await $({ stdout: "inherit" })`git checkout -b ${bootstrapBranch} ${defaultBranch}`
 
 console.log(`${GREEN}✅ Bootstrap branch '${bootstrapBranch}' created.${NC}`)
