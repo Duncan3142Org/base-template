@@ -23,9 +23,9 @@
 //USAGE   help "Name of the new repository"
 //USAGE }
 
+/*global fetch -- fetch*/
 import console from "node:console"
 import { env, exit } from "node:process"
-import fetch from "node:fetch"
 
 // --- Visual Helpers ---
 const RED = "\x1b[0;31m"
