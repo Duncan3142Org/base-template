@@ -18,8 +18,8 @@
 # Access syntax varies by engine:
 #   yq    — strenv(REPO_OWNER)   (env vars, for strings)
 #            env(REPO_OWNER)     (env vars, for parsed nodes)
-#   sed   — ${REPO_OWNER}        (envsubst expansion)
-#   comby — ${REPO_OWNER}        (envsubst expansion)
+#   sed   — {{REPO_OWNER}}       (template interpolation)
+#   comby — {{REPO_OWNER}}       (template interpolation)
 #
 # Files support glob patterns, expanded relative to --root-dir.
 # Globs that match zero files are silently skipped.
@@ -63,16 +63,16 @@ transformations:
       - vitest.contract.config.js
     language: ".js"
     replacements:
-      - match: '"@${REPO_OWNER}/${SOURCE_NAME}::[suffix]"'
-        rewrite: '"@${REPO_OWNER}/${CLONE_NAME}::[suffix]"'
+      - match: '"@{{REPO_OWNER}}/{{SOURCE_NAME}}::[suffix]"'
+        rewrite: '"@{{REPO_OWNER}}/{{CLONE_NAME}}::[suffix]"'
 
   # ── Text replacements (markdown) ────────────────────────
   - engine: sed
     files:
       - README.md
     replacements:
-      - match: "${SOURCE_NAME}"
-        rewrite: "${CLONE_NAME}"
+      - match: "{{SOURCE_NAME}}"
+        rewrite: "{{CLONE_NAME}}"
 
   # ── Filesystem cleanup ─────────────────────────────────────────
   - engine: rm
