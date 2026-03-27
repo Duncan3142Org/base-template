@@ -13,8 +13,6 @@
 		"target": "ES2024",
 		"noEmitOnError": true,
 		"emitDeclarationOnly": true,
-		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
 		"composite": true,
 		"moduleResolution": "nodenext",
 		"resolveJsonModule": true,
@@ -47,7 +45,6 @@
 		"noImplicitThis": true,
 		"allowUnreachableCode": false,
 		"allowUnusedLabels": false,
-		"alwaysStrict": true,
 		"noPropertyAccessFromIndexSignature": true,
 		"noUncheckedIndexedAccess": true,
 		"exactOptionalPropertyTypes": true,
@@ -56,6 +53,7 @@
 		"useDefineForClassFields": true,
 		"isolatedDeclarations": true,
 		"allowImportingTsExtensions": true,
-		"rewriteRelativeImportExtensions": true
+		"rewriteRelativeImportExtensions": true,
+		"types": ["node"]
 	}
 }
