@@ -4,10 +4,10 @@
 		"lib": [
 			"ES2024",
 			"ESNext.Array",
-			"ESNext.Collection",
 			"ESNext.Error",
-			"ESNext.Iterator",
-			"ESNext.Promise"
+			"ES2025.Collection",
+			"ES2025.Iterator",
+			"ES2025.Promise"
 		],
 		"module": "nodenext",
 		"target": "ES2024",
