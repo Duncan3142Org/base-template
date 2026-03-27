@@ -9,6 +9,7 @@ volumes:
   terraform_env_workspace:
   local_bin:
   mise_state:
+  copilot_state:
   mise_data:
     name: shared-mise-data
   mise_cache:
@@ -43,6 +44,7 @@ services:
       - ${HOME}/.terraform.d/credentials.tfrc.json:/root/.terraform.d/credentials.tfrc.json
 
       - mise_state:/root/.local/state/mise
+      - copilot_state:/root/.copilot
       - node_modules:/workspace/node_modules
       - terraform_env_workspace:/workspace/.github/environments/.terraform
       - local_bin:/root/.local/bin

@@ -59,6 +59,45 @@ url_api = "https://api.github.com/repos/comby-tools/comby/releases/assets/698478
 url = "https://github.com/comby-tools/comby/releases/download/1.8.1/comby-1.8.1-x86_64-linux.tar.gz"
 url_api = "https://api.github.com/repos/comby-tools/comby/releases/assets/69847814"
 
+[[tools."github:github/copilot-cli"]]
+version = "1.0.12"
+backend = "github:github/copilot-cli"
+
+[tools."github:github/copilot-cli"."platforms.linux-arm64"]
+checksum = "sha256:20126df3d59f757a93ffbb71cf3bc05dc431c24d3816ede25b06c938e0f46fac"
+url = "https://github.com/github/copilot-cli/releases/download/v1.0.12/copilot-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/github/copilot-cli/releases/assets/382420198"
+
+[tools."github:github/copilot-cli"."platforms.linux-arm64-musl"]
+checksum = "sha256:20126df3d59f757a93ffbb71cf3bc05dc431c24d3816ede25b06c938e0f46fac"
+url = "https://github.com/github/copilot-cli/releases/download/v1.0.12/copilot-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/github/copilot-cli/releases/assets/382420198"
+
+[tools."github:github/copilot-cli"."platforms.linux-x64"]
+checksum = "sha256:42a1593bd04d5b3fbc7b8042f4ab7160ef4cdf2e637b2e6cc7b8cca71dfb59f6"
+url = "https://github.com/github/copilot-cli/releases/download/v1.0.12/copilot-linux-x64.tar.gz"
+url_api = "https://api.github.com/repos/github/copilot-cli/releases/assets/382420209"
+
+[tools."github:github/copilot-cli"."platforms.linux-x64-musl"]
+checksum = "sha256:42a1593bd04d5b3fbc7b8042f4ab7160ef4cdf2e637b2e6cc7b8cca71dfb59f6"
+url = "https://github.com/github/copilot-cli/releases/download/v1.0.12/copilot-linux-x64.tar.gz"
+url_api = "https://api.github.com/repos/github/copilot-cli/releases/assets/382420209"
+
+[tools."github:github/copilot-cli"."platforms.macos-arm64"]
+checksum = "sha256:9ab09d670bff7f432e9a6b6d02f3319496c07e8959686a881bd43e513a1e6153"
+url = "https://github.com/github/copilot-cli/releases/download/v1.0.12/copilot-darwin-arm64.tar.gz"
+url_api = "https://api.github.com/repos/github/copilot-cli/releases/assets/382420199"
+
+[tools."github:github/copilot-cli"."platforms.macos-x64"]
+checksum = "sha256:4c66d684094b56cde800f5708015d0a6607fc8f5183637995fc937daa728b09e"
+url = "https://github.com/github/copilot-cli/releases/download/v1.0.12/copilot-darwin-x64.tar.gz"
+url_api = "https://api.github.com/repos/github/copilot-cli/releases/assets/382420202"
+
+[tools."github:github/copilot-cli"."platforms.windows-x64"]
+checksum = "sha256:80877eb2db2197cddccf001dc170a6fe14fef125253a3a3f52c456d78fcd4ab1"
+url = "https://github.com/github/copilot-cli/releases/download/v1.0.12/copilot-win32-x64.zip"
+url_api = "https://api.github.com/repos/github/copilot-cli/releases/assets/382420257"
+
 [[tools."github:hadolint/hadolint"]]
 version = "2.14.0"
 backend = "github:hadolint/hadolint"

@@ -10,3 +10,4 @@ terraform = "1"
 "npm:@commitlint/cli" = "20"
 "yq" = "4"
 "github:comby-tools/comby" = { version = "1", rename_exe = "comby", "bin_path" = "." }
+"github:github/copilot-cli" = "1"

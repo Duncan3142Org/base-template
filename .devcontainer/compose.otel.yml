@@ -7,7 +7,7 @@ volumes:
 
 services:
   otel-lgtm:
-    image: grafana/otel-lgtm:0.21.0
+    image: grafana/otel-lgtm:0.22.1
     restart: unless-stopped
     ports:
       - "3000" # Grafana UI
