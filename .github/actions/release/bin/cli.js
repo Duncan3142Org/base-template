@@ -44,15 +44,52 @@ const { values } = parseArgs({
 			short: "d",
 			description: "Run without publishing",
 		},
+		ci: {
+			type: "boolean",
+			default: DEFAULT_OPTIONS.ci,
+			short: "c",
+			description: "Run in CI mode",
+		},
 		"repo-dir": {
 			type: "string",
 			short: "r",
 			default: DEFAULT_OPTIONS.repoRoot,
 			description: "Repository root directory of the release",
 		},
+		"github-pkg-token": {
+			type: "string",
+			short: "p",
+			description: "GitHub token with permissions to publish packages",
+		},
+		"github-token": {
+			type: "string",
+			short: "t",
+			description: "GitHub token with permissions to create releases and push commits",
+		},
+		"git-author-name": {
+			type: "string",
+			description: "Name to use for the author of release commits",
+		},
+		"git-author-email": {
+			type: "string",
+			description: "Email to use for the author of release commits",
+		},
 	},
 	strict: true,
 })
+
+const requireArg = (name) => {
+	const argValue = values[name]
+	if (typeof argValue === "undefined") {
+		console.error(`Error: Missing required argument -- "${name}"`)
+		process.exit(1)
+	}
+}
+
+requireArg("github-pkg-token")
+requireArg("github-token")
+requireArg("git-author-name")
+requireArg("git-author-email")
 
 /** @type {ReleaseOptions} */
 const options = {
@@ -62,7 +99,12 @@ const options = {
 	branchPrefix: values["branch-prefix"],
 	branches: values.branch,
 	dryRun: values["dry-run"],
+	ci: values.ci,
 	repoRoot: values["repo-dir"],
+	githubToken: values["github-token"],
+	githubPkgToken: values["github-pkg-token"],
+	gitAuthorName: values["git-author-name"],
+	gitAuthorEmail: values["git-author-email"],
 }
 
 await release(options)

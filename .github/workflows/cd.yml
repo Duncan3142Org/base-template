@@ -40,17 +40,13 @@ jobs:
           fetch-depth: 0
           token: ${{ steps.token.outputs.token }}
       - uses: jdx/mise-action@v3
+      - name: Install Release CLI
+        uses: ./.github/actions/release
       - name: CD
         run: |
           mise run cd
-        env:
-          GITHUB_PKG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Release
-        uses: ./.github/actions/release
-        with:
-          github-pkg-token: ${{ secrets.GITHUB_TOKEN }}
-          github-token: ${{ steps.token.outputs.token }}
-          git-author-name: ${{ env.BOT_NAME }}
-          git-author-email: ${{ env.BOT_EMAIL }}
-          git-committer-name: ${{ env.BOT_NAME }}
-          git-committer-email: ${{ env.BOT_EMAIL }}
+          npm-release \
+            --github-pkg-token "${{ secrets.GITHUB_TOKEN }}" \
+            --github-token "${{ steps.token.outputs.token }}" \
+            --git-author-name "${{ env.BOT_NAME }}" \
+            --git-author-email "${{ env.BOT_EMAIL }}"

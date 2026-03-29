@@ -30,7 +30,12 @@ const resolvePlugin = (name) => join(packageDir, "node_modules", name)
  * @property {string} branchPrefix - Prefix path for version branches.
  * @property {string[]} branches - Git branches to release from.
  * @property {boolean} dryRun - Run without publishing.
+ * @property {boolean} ci - Run in CI mode.
  * @property {string} repoRoot - Current working directory for the release process.
+ * @property {string} githubToken - GitHub token with permissions to create releases and push commits.
+ * @property {string} githubPkgToken - GitHub token with permissions to publish packages.
+ * @property {string} gitAuthorName - Name to use for the author of release commits.
+ * @property {string} gitAuthorEmail - Email to use for the author of release commits.
  */
 
 /** @type {ReleaseOptions} */
@@ -41,6 +46,7 @@ const DEFAULT_OPTIONS = {
 	branchPrefix: "v",
 	branches: ["main"],
 	dryRun: false,
+	ci: true,
 	repoRoot: process.cwd(),
 }
 
@@ -54,12 +60,29 @@ async function release(options) {
 	const successComment = readTemplate("success-comment.txt")
 	const majorBranchPlugin = join(packageDir, "lib", "major-branch-plugin.js")
 
-	const { assets, majorBranch, minorBranch, branchPrefix, branches, dryRun, repoRoot } = options
+	const {
+		assets,
+		majorBranch,
+		minorBranch,
+		branchPrefix,
+		branches,
+		dryRun,
+		ci,
+		repoRoot,
+		githubToken,
+		githubPkgToken,
+		gitAuthorName,
+		gitAuthorEmail,
+	} = options
+
+	const pkgJson = JSON.parse(readFileSync(join(repoRoot, "package.json"), "utf8"))
+	const pkgName = pkgJson.name.split("/").pop()
 
 	return semanticRelease(
 		{
 			branches,
 			dryRun,
+			ci,
 			plugins: [
 				resolvePlugin("@semantic-release/commit-analyzer"),
 				[
@@ -95,6 +118,16 @@ async function release(options) {
 		},
 		{
 			cwd: repoRoot,
+			env: {
+				...process.env,
+				PKG_NAME: pkgName,
+				GITHUB_PKG_TOKEN: githubPkgToken,
+				GITHUB_TOKEN: githubToken,
+				GIT_AUTHOR_NAME: gitAuthorName,
+				GIT_AUTHOR_EMAIL: gitAuthorEmail,
+				GIT_COMMITTER_NAME: gitAuthorName,
+				GIT_COMMITTER_EMAIL: gitAuthorEmail,
+			},
 		}
 	)
 }
