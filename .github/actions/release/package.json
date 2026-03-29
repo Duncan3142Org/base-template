@@ -15,7 +15,8 @@
 	},
 	"files": [
 		"lib/",
-		"bin/"
+		"bin/",
+		"root.js"
 	],
 	"dependencies": {
 		"@semantic-release/changelog": "^6.0.3",
