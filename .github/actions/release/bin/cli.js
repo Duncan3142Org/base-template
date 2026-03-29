@@ -7,7 +7,7 @@ import { release, DEFAULT_OPTIONS } from "#lib"
 
 /** @import { ReleaseOptions } from "#lib" */
 
-const { values } = parseArgs({
+const { values, positionals } = parseArgs({
 	options: {
 		asset: {
 			type: "string",
@@ -50,12 +50,6 @@ const { values } = parseArgs({
 			short: "c",
 			description: "Run in CI mode",
 		},
-		"repo-dir": {
-			type: "string",
-			short: "r",
-			default: DEFAULT_OPTIONS.repoRoot,
-			description: "Repository root directory of the release",
-		},
 		"github-pkg-token": {
 			type: "string",
 			short: "p",
@@ -75,6 +69,7 @@ const { values } = parseArgs({
 			description: "Email to use for the author of release commits",
 		},
 	},
+	allowPositionals: true,
 	strict: true,
 })
 
@@ -91,6 +86,8 @@ requireArg("github-token")
 requireArg("git-author-name")
 requireArg("git-author-email")
 
+const [repoRoot = DEFAULT_OPTIONS.repoRoot] = positionals
+
 /** @type {ReleaseOptions} */
 const options = {
 	assets: values.asset,
@@ -100,7 +97,7 @@ const options = {
 	branches: values.branch,
 	dryRun: values["dry-run"],
 	ci: values.ci,
-	repoRoot: values["repo-dir"],
+	repoRoot,
 	githubToken: values["github-token"],
 	githubPkgToken: values["github-pkg-token"],
 	gitAuthorName: values["git-author-name"],

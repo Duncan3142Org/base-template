@@ -1,4 +1,4 @@
-import { join } from "node:path"
+import { join, resolve } from "node:path"
 import process from "node:process"
 import { readFileSync } from "node:fs"
 import semanticRelease from "semantic-release"
@@ -75,7 +75,9 @@ async function release(options) {
 		gitAuthorEmail,
 	} = options
 
-	const pkgJson = JSON.parse(readFileSync(join(repoRoot, "package.json"), "utf8"))
+	const resolvedRoot = resolve(repoRoot)
+
+	const pkgJson = JSON.parse(readFileSync(join(resolvedRoot, "package.json"), "utf8"))
 	const pkgName = pkgJson.name.split("/").pop()
 
 	return semanticRelease(
@@ -117,7 +119,7 @@ async function release(options) {
 			],
 		},
 		{
-			cwd: repoRoot,
+			cwd: resolvedRoot,
 			env: {
 				...process.env,
 				PKG_NAME: pkgName,
