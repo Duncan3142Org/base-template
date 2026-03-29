@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#MISE description="Check or fix lint issues"
+#MISE description="Check or fix ESLint issues"
 
 #USAGE flag "--fix" {
 #USAGE   help "Apply ESLint fixes"

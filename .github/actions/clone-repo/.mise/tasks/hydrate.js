@@ -226,7 +226,7 @@ const hasFormatTask = await $({ cwd: workspaceDir })`mise tasks info format`
 	.catch(() => false)
 if (hasFormatTask) {
 	console.log(`${BLUE}🎨 Formatting modified files...${NC}`)
-	await $({ stdout: "inherit", cwd: workspaceDir })`mise run format --mode write`
+	await $({ stdout: "inherit", cwd: workspaceDir })`mise run format:write`
 }
 
 if (!noCommit) {

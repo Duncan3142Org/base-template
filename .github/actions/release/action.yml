@@ -58,7 +58,6 @@ runs:
         GIT_AUTHOR_EMAIL: ${{ inputs.git-author-email }}
         GIT_COMMITTER_NAME: ${{ inputs.git-committer-name }}
         GIT_COMMITTER_EMAIL: ${{ inputs.git-committer-email }}
-        RELEASE_PLUGIN_DIR: ${{ github.action_path }}
         RELEASE_ASSETS: ${{ inputs.assets }}
         RELEASE_MAJOR_BRANCH: ${{ inputs.major-branch }}
         RELEASE_MINOR_BRANCH: ${{ inputs.minor-branch }}

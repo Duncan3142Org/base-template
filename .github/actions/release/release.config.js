@@ -4,14 +4,13 @@ import { dirname, join } from "node:path"
 import { env } from "node:process"
 
 const {
-	RELEASE_PLUGIN_DIR = dirname(fileURLToPath(import.meta.url)),
 	RELEASE_ASSETS,
 	RELEASE_MAJOR_BRANCH = "false",
 	RELEASE_MINOR_BRANCH = "false",
 	RELEASE_BRANCH_PREFIX = "v",
 } = env
 
-const releaseCliDir = RELEASE_PLUGIN_DIR
+const releaseCliDir = dirname(fileURLToPath(import.meta.url))
 
 /**
  * Reads a file from the release action directory.

@@ -7,7 +7,7 @@ applyTo: ".mise/tasks/**"
 # Task Script Conventions
 
 - Prefer a single task script with `#USAGE` flags or arguments when multiple task modes call the same underlying tool.
-- Use `.mise/tasks/format` as the reference pattern for usage annotations, defaults, and shell structure.
+- Use `.mise/tasks/format/prettier.sh` as the reference pattern for usage annotations, defaults, and shell structure.
 - Default the script to the most common or safest mode, and let alternate modes be selected through explicit flags.
 - Map task flags directly to the underlying tool invocation when practical so the relationship between the task interface and the called command stays obvious.
 - Avoid adding separate wrapper scripts for unit, integration, check, write, or similar modes unless the implementations materially differ.
