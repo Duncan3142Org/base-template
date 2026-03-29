@@ -1,8 +1,22 @@
 {
-	"name": "release-cd",
+	"name": "@deafrex/npm-release",
 	"private": true,
-	"description": "Release CD action",
+	"description": "NPM release",
 	"type": "module",
+	"bin": {
+		"npm-release": "./bin/cli.js"
+	},
+	"imports": {
+		"#lib": "./lib/index.js",
+		"#root": "./root.js"
+	},
+	"exports": {
+		".": "./lib/index.js"
+	},
+	"files": [
+		"lib/",
+		"bin/"
+	],
 	"dependencies": {
 		"@semantic-release/changelog": "^6.0.3",
 		"@semantic-release/commit-analyzer": "^13.0.1",
