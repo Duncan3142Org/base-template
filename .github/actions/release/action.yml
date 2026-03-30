@@ -6,4 +6,6 @@ runs:
     - name: Install Package
       shell: bash
       working-directory: ${{ github.action_path }}
-      run: npm i -g
+      run: |
+        npm ci
+        npm i -g
