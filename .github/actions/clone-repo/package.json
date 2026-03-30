@@ -1,7 +1,21 @@
 {
-	"name": "admin-clone-repo",
+	"name": "@deafrex/clone-repo",
 	"private": true,
 	"type": "module",
+	"description": "Clone a template repository",
+	"bin": {
+		"clone-repo": "./bin/cli.js"
+	},
+	"imports": {
+		"#lib": "./lib/index.js"
+	},
+	"exports": {
+		".": "./lib/index.js"
+	},
+	"files": [
+		"lib/",
+		"bin/"
+	],
 	"dependencies": {
 		"execa": "^9.6.1",
 		"yaml": "^2.7.1"
