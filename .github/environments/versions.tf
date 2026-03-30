@@ -2,7 +2,7 @@ terraform {
   required_version = ">= 1.0"
 
   cloud {
-    organization = "duncan3142"
+    organization = "deafrex"
     workspaces {} # Workspace name set via TF_WORKSPACE env var
   }
 

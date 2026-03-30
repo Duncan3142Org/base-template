@@ -1,12 +1,7 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
-	"extends": ["./tsconfig.base.json"],
+	"extends": ["./tsconfig/tsconfig.assets.json"],
 	"compilerOptions": {
-		"emitDeclarationOnly": false,
-		"rootDir": "${configDir}/src",
-		"outDir": "${configDir}/.tsc/dist",
-		"tsBuildInfoFile": "${configDir}/.tsc/tsconfig.assets.tsbuildinfo"
-	},
-	"include": ["${configDir}/src/**/*"],
-	"exclude": ["${configDir}/src/**/*.test.*"]
+		"customConditions": ["@deafrex/node-template:src"]
+	}
 }

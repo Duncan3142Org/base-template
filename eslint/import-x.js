@@ -10,7 +10,7 @@ import { filePattern, FILE_EXTENSIONS, lintAll } from "./core.js"
 
 /** @type {Config} */
 const custom = {
-	name: "@duncan3142/eslint-config/import/custom",
+	name: "@deafrex/eslint-config/import/custom",
 	rules: {
 		"import-x/named": "off", // tsc config
 		"import-x/namespace": "off", // tsc config
@@ -22,7 +22,7 @@ const custom = {
 		"import-x/prefer-default-export": "off",
 		"import-x/no-unresolved": "off", // tsc config
 		"import-x/extensions": "off", // tsc config
-		"import-x/no-relative-parent-imports": ["error", { ignore: ["#duncan3142org/*"] }],
+		"import-x/no-relative-parent-imports": ["error", { ignore: ["#*"] }],
 		"import-x/no-internal-modules": "off",
 		"import-x/no-extraneous-dependencies": "off",
 		"import-x/no-empty-named-blocks": "error",
@@ -45,7 +45,7 @@ const custom = {
 }
 
 const config = defineConfig({
-	name: "@duncan3142/eslint-config/import",
+	name: "@deafrex/eslint-config/import",
 	files: [filePattern(...FILE_EXTENSIONS.JSTS)],
 	extends: [importX.flatConfigs.recommended, importX.flatConfigs.typescript, custom],
 })

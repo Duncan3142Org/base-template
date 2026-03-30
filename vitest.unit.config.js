@@ -3,11 +3,16 @@ import { defineConfig } from "vitest/config"
 export default defineConfig({
 	test: {
 		name: "unit",
-		include: ["src/**/*.test.ts"],
+		include: ["test/**/*.test.ts"],
 	},
-	resolve: {
-		alias: {
-			"#duncan3142org/base-template": "./src/index.ts",
+	ssr: {
+		resolve: {
+			conditions: [
+				"@deafrex/node-template:src",
+				"@deafrex/node-template:test",
+				"import",
+				"default",
+			],
 		},
 	},
 })

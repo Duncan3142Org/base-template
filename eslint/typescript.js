@@ -16,7 +16,7 @@ const extraExtensions = [...FILE_EXTENSIONS.JSON, ...FILE_EXTENSIONS.NODE]
 
 /** @type {Config} */
 const custom = {
-	name: "@duncan3142/eslint-config/typescipt/custom",
+	name: "@deafrex/eslint-config/typescipt/custom",
 	languageOptions: {
 		sourceType: "module",
 		ecmaVersion: 2024,
@@ -116,14 +116,14 @@ const custom = {
 
 /** @type {Configs} */
 const typed = defineConfig({
-	name: "@duncan3142/eslint-config/typescipt",
+	name: "@deafrex/eslint-config/typescipt",
 	files: [filePattern(...FILE_EXTENSIONS.JSTS)],
 	extends: [tseslint.configs.strictTypeChecked, tseslint.configs.stylisticTypeChecked, custom],
 })
 
 /** @type {Configs} */
 const untyped = defineConfig({
-	name: "@duncan3142/eslint-config/untyped",
+	name: "@deafrex/eslint-config/untyped",
 	files: [filePattern(...FILE_EXTENSIONS.JS)],
 	extends: [tseslint.configs.disableTypeChecked],
 	rules: {

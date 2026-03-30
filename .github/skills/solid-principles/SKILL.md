@@ -1,6 +1,6 @@
+---
 name: solid-principles
 description: "SOLID design principles (SRP, OCP, LSP, ISP, DIP) for writing maintainable, extensible, testable TypeScript code. Use this skill when a task explicitly involves SOLID principles, when diagnosing structural design issues such as god classes, fat interfaces, or hard dependencies on concretions, or when designing extension points and type hierarchies. Pairs with `hexagonal-ddd` for system-level architecture."
-
 ---
 
 # SOLID Design Principles

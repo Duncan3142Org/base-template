@@ -9,10 +9,13 @@ volumes:
   terraform_env_workspace:
   local_bin:
   mise_state:
+  copilot_state:
   mise_data:
     name: shared-mise-data
   mise_cache:
     name: shared-mise-cache
+  apt_cache:
+    name: shared-apt-cache
   npm_cache:
     name: shared-npm-cache
   terraform_plugin_cache:
@@ -41,12 +44,14 @@ services:
       - ${HOME}/.terraform.d/credentials.tfrc.json:/root/.terraform.d/credentials.tfrc.json
 
       - mise_state:/root/.local/state/mise
+      - copilot_state:/root/.copilot
       - node_modules:/workspace/node_modules
       - terraform_env_workspace:/workspace/.github/environments/.terraform
       - local_bin:/root/.local/bin
 
       - mise_data:/root/.local/share/mise
       - mise_cache:/root/.cache/mise
+      - apt_cache:/var/cache/apt
       - npm_cache:/root/.npm
       - type: volume
         source: terraform_plugin_cache

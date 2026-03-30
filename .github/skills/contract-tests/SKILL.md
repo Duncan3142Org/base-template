@@ -50,6 +50,16 @@ both HTTP (synchronous) and message (asynchronous) interactions.
 Generated pact files live in a `pacts/` directory at the repository root. This directory
 is either committed directly or published to a Pact Broker as part of the CI pipeline.
 
+## Test File Location
+
+Contract test files live in the `test/contract/` directory and use the `.contract.ts`
+suffix. This separates them from unit tests (`.test.ts`) and integration tests
+(`.spec.ts`) while keeping all tests under the shared `test/` root.
+
+```
+test/contract/users/user-service.contract.ts   # consumer contract test
+```
+
 ## When to Use HTTP vs Message Interactions
 
 | Scenario                                               | Interaction kind                         |

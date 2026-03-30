@@ -1,13 +1,18 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
 	"compilerOptions": {
-		"lib": ["ES2024"],
+		"lib": [
+			"ES2024",
+			"ESNext.Array",
+			"ESNext.Error",
+			"ES2025.Collection",
+			"ES2025.Iterator",
+			"ES2025.Promise"
+		],
 		"module": "nodenext",
-		"target": "ES2022",
+		"target": "ES2024",
 		"noEmitOnError": true,
 		"emitDeclarationOnly": true,
-		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
 		"composite": true,
 		"moduleResolution": "nodenext",
 		"resolveJsonModule": true,
@@ -18,7 +23,6 @@
 		"pretty": true,
 		"erasableSyntaxOnly": true,
 		"libReplacement": false,
-		// Types
 		"skipLibCheck": true,
 		"allowJs": false,
 		"checkJs": false,
@@ -41,7 +45,6 @@
 		"noImplicitThis": true,
 		"allowUnreachableCode": false,
 		"allowUnusedLabels": false,
-		"alwaysStrict": true,
 		"noPropertyAccessFromIndexSignature": true,
 		"noUncheckedIndexedAccess": true,
 		"exactOptionalPropertyTypes": true,
@@ -50,7 +53,7 @@
 		"useDefineForClassFields": true,
 		"isolatedDeclarations": true,
 		"allowImportingTsExtensions": true,
-		"rewriteRelativeImportExtensions": true
-	},
-	"include": []
+		"rewriteRelativeImportExtensions": true,
+		"types": ["node"]
+	}
 }

@@ -1,6 +1,6 @@
 ---
 name: integration-tests
-description: "How to write integration tests that cross a process boundary. Use this skill whenever a test connects to a real TCP socket — Postgres in a container, WireMock for sibling services, a real message broker. Covers dev container infrastructure setup, over-the-wire mocking, subcutaneous integration tests, and scope discipline. If everything runs in-process (PGLite, in-memory), see `unit-tests` instead."
+description: "How to write integration tests that cross a process boundary. Use this skill whenever a test connects to an out-of-process resource — Postgres in a container, WireMock for sibling services, a real message broker. Covers dev container infrastructure setup, over-the-wire mocking, subcutaneous integration tests, and scope discipline. If everything runs in-process (PGLite, in-memory), see `unit-tests` instead. To test contracts with external systems, see `contract-tests` instead."
 ---
 
 # Integration Tests
@@ -33,15 +33,13 @@ unit-tests skill.
 
 ## Test File Location
 
-Integration test files live in the `test/` directory at the repository root —
-not colocated with source files. This reflects the process-boundary distinction:
-unit tests (in-process) live alongside source in `src/`, integration tests
-(out-of-process) live in `test/`.
+All tests live in the `test/` directory at the repository root. Integration test
+files use the `.spec.ts` suffix and live under `test/integration/`.
 
 ```
-src/users/user-repository.ts          # source
-src/users/user-repository.test.ts     # unit test (colocated)
-test/users/user-repository.test.ts    # integration test (test/ directory)
+src/users/user-repository.ts                          # source
+test/unit/users/user-repository.test.ts               # unit test
+test/integration/users/user-repository.spec.ts        # integration test
 ```
 
 ## Owned Infrastructure: Dev Containers

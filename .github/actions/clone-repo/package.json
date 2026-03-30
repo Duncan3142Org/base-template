@@ -1,0 +1,9 @@
+{
+	"name": "admin-clone-repo",
+	"private": true,
+	"type": "module",
+	"dependencies": {
+		"execa": "^9.6.1",
+		"yaml": "^2.7.1"
+	}
+}

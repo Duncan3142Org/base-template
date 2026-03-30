@@ -6,7 +6,7 @@ import { filePattern, FILE_EXTENSIONS } from "./core.js"
 
 /** @type {Config} */
 const custom = {
-	name: "@duncan3142/eslint-config/base/custom",
+	name: "@deafrex/eslint-config/base/custom",
 	languageOptions: {
 		sourceType: "module",
 		ecmaVersion: 2024,
@@ -49,7 +49,7 @@ const custom = {
 
 /** @type {Configs} */
 const config = defineConfig({
-	name: "@duncan3142/eslint-config/base",
+	name: "@deafrex/eslint-config/base",
 	files: [filePattern(...FILE_EXTENSIONS.JSTS)],
 	extends: [eslintjs.configs.recommended, custom],
 })

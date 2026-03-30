@@ -5,9 +5,29 @@ lockfile = true
 node = "24"
 npm = "11"
 
+# [tasks.format]
+# description = "Check or fix source formatting"
+# usage = '''
+# flag "--mode <mode>" {
+#   choices "check" "write"
+#   default "check"
+#   help "Formatting mode"
+# 	env "FORMAT_MODE"
+# }
+# '''
+# run.tasks = [ "format:prettier --mode {{ usage.mode }}", "format:terraform --mode {{ usage.mode }}" ]
+
+[tasks."format:check"]
+description = "Check source formatting"
+run.tasks = ["format:prettier --mode=check", "format:terraform --mode=check"]
+
+[tasks."format:write"]
+description = "Fix source formatting"
+run.tasks = ["format:prettier --mode=write", "format:terraform --mode=write"]
+
 [tasks.check]
 description = "Run format, unit test, and lint checks"
-run.tasks = ["format", "test", "lint"]
+run.tasks = ["format:check", "test", "test --mode=contract", "lint"]
 
 [tasks.build]
 description = "Run validation and compile TypeScript assets"

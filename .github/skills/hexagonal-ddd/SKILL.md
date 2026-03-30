@@ -1,6 +1,6 @@
+---
 name: hexagonal-ddd
 description: "Hexagonal Architecture (Ports and Adapters) combined with Domain-Driven Design for structuring services with a clean, framework-independent domain core. Load this skill when designing a service using hexagonal or ports-and-adapters architecture, defining domain models, placing code in the correct architectural layer, or reviewing whether dependencies point in the correct direction. Covers ports, adapters, dependency direction, DDD entities/value objects/aggregates/repositories, and how the two patterns combine. Pairs with `solid-principles` for class-level design."
-
 ---
 
 # Hexagonal Architecture + Domain-Driven Design
@@ -96,7 +96,7 @@ The domain core and application use cases can be tested without any infrastructu
 database, no HTTP server. Inject an in-memory implementation of the driven port:
 
 ```typescript
-// In-memory adapter for tests (lives in src/, not test/)
+// In-memory adapter for tests (lives in test/, not src/)
 export class InMemoryUserRepository implements UserRepository {
 	private readonly store = new Map<string, User>()
 

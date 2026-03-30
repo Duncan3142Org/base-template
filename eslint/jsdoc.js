@@ -6,7 +6,7 @@ import { filePattern, FILE_EXTENSIONS } from "./core.js"
 
 /** @type {Configs} */
 const custom = defineConfig({
-	name: "@duncan3142/eslint-config/jsdoc/custom",
+	name: "@deafrex/eslint-config/jsdoc/custom",
 	rules: {
 		"jsdoc/require-jsdoc": [
 			"warn",
@@ -38,14 +38,14 @@ const custom = defineConfig({
 
 /** @type {Configs} */
 const ts = defineConfig({
-	name: "@duncan3142/eslint-config/jsdoc",
+	name: "@deafrex/eslint-config/jsdoc",
 	files: [filePattern(...FILE_EXTENSIONS.TS)],
 	extends: [jsDoc.configs["flat/recommended-typescript-error"], custom],
 })
 
 /** @type {Configs} */
 const js = defineConfig({
-	name: "@duncan3142/eslint-config/jsdoc",
+	name: "@deafrex/eslint-config/jsdoc",
 	files: [filePattern(...FILE_EXTENSIONS.JS)],
 	extends: [jsDoc.configs["flat/recommended-error"], custom],
 })

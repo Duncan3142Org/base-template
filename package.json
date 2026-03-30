@@ -1,11 +1,10 @@
 {
-	"name": "@duncan3142org/base-template",
-	"description": "Base repo template",
-	"author": "Duncan3142Org",
+	"name": "@deafrex/node-template",
+	"description": "Node.js repo template",
 	"version": "1.4.16",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/Duncan3142Org/base-template.git"
+		"url": "git+https://github.com/deafrex/node-template.git"
 	},
 	"publishConfig": {
 		"registry": "https://npm.pkg.github.com"
@@ -17,11 +16,17 @@
 		"npm": ">=11"
 	},
 	"files": [
-		".tsc/dist/**/*",
-		"!.tsc/dist/**/*.test.*"
+		".tsc/dist/**/*"
 	],
 	"imports": {
-		"#duncan3142org/base-template": "./.tsc/dist/index.js"
+		"#src": {
+			"@deafrex/node-template:src": "./src/index.ts",
+			"default": "./.tsc/dist/index.js"
+		},
+		"#test/*": {
+			"@deafrex/node-template:test": "./test/*/index.ts",
+			"default": null
+		}
 	},
 	"exports": {
 		".": {
@@ -37,15 +42,16 @@
 		"@eslint/js": "^10.0.1",
 		"@types/eslint": "^9.6.1",
 		"@types/node": "^24.12.0",
-		"@vitest/eslint-plugin": "^1.6.12",
+		"@vitest/eslint-plugin": "^1.6.13",
 		"eslint": "^10.1.0",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-import-resolver-typescript": "^4.4.4",
 		"eslint-plugin-import-x": "^4.16.2",
-		"eslint-plugin-jsdoc": "^62.8.0",
+		"eslint-plugin-jsdoc": "^62.8.1",
+		"execa": "^9.6.1",
 		"prettier": "^3.8.1",
-		"typescript": "^5.9.3",
-		"typescript-eslint": "^8.57.1",
-		"vitest": "^4.1.0"
+		"typescript": "^6.0.2",
+		"typescript-eslint": "^8.58.0",
+		"vitest": "^4.1.2"
 	}
 }

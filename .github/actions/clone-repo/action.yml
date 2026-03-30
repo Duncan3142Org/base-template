@@ -35,6 +35,7 @@ runs:
       run: |
         mise trust -q
         mise install
+        npm ci
     - name: Validate Inputs
       shell: bash
       working-directory: ${{ github.action_path }}
@@ -42,7 +43,7 @@ runs:
         CLONE_REPO_NAME: ${{ inputs.repo_name }}
         SOURCE_REPO_NAME: ${{ inputs.source_repo_name }}
         TF_ORG_NAME: ${{ inputs.tf_org_name }}
-      run: mise run ./validate-inputs.sh
+      run: mise run validate:inputs
     - name: Bootstrap TF Workspace
       shell: bash
       working-directory: ${{ github.action_path }}
@@ -51,7 +52,7 @@ runs:
         TF_ORG_TOKEN: ${{ inputs.tf_org_token }}
         TF_PROJECT_ID: ${{ inputs.tf_project_id }}
         TF_ORG_NAME: ${{ inputs.tf_org_name }}
-      run: mise run ./bootstrap-terraform.sh
+      run: mise run bootstrap:terraform
     - name: Bootstrap Branch
       shell: bash
       working-directory: ${{ github.action_path }}
@@ -60,7 +61,7 @@ runs:
         SOURCE_REPO_NAME: ${{ inputs.source_repo_name }}
         GH_TOKEN: ${{ inputs.github_token }}
         WORKSPACE_DIR: ${{ inputs.workspace_dir }}
-      run: mise run ./bootstrap-branch.sh
+      run: mise run bootstrap:branch
     - name: Hydrate Template
       shell: bash
       working-directory: ${{ github.action_path }}
@@ -68,7 +69,7 @@ runs:
         CLONE_REPO_NAME: ${{ inputs.repo_name }}
         SOURCE_REPO_NAME: ${{ inputs.source_repo_name }}
         WORKSPACE_DIR: ${{ inputs.workspace_dir }}
-      run: mise run ./hydrate.sh
+      run: mise run hydrate
     - name: Publish Repository
       shell: bash
       working-directory: ${{ github.action_path }}
@@ -78,4 +79,4 @@ runs:
         TEMPLATE_BRANCH: ${{ inputs.template_branch }}
         GH_TOKEN: ${{ inputs.github_token }}
         WORKSPACE_DIR: ${{ inputs.workspace_dir }}
-      run: mise run ./publish.sh
+      run: mise run clone

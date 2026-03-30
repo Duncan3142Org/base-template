@@ -1,124 +1,124 @@
-## [1.4.16](https://github.com/Duncan3142Org/base-template/compare/v1.4.15...v1.4.16) (2026-03-22)
+## [1.4.16](https://github.com/deafrex/node-template/compare/v1.4.15...v1.4.16) (2026-03-22)
 
 
 ### Bug Fixes
 
-* hydrate clone ([#48](https://github.com/Duncan3142Org/base-template/issues/48)) ([b4cb8d4]())
+* hydrate clone ([#48](https://github.com/deafrex/node-template/issues/48)) ([b4cb8d4]())
 
-## [1.4.15](https://github.com/Duncan3142Org/base-template/compare/v1.4.14...v1.4.15) (2026-03-20)
-
-
-### Bug Fixes
-
-* container secrets ([#47](https://github.com/Duncan3142Org/base-template/issues/47)) ([b0026d3]())
-
-## [1.4.14](https://github.com/Duncan3142Org/base-template/compare/v1.4.13...v1.4.14) (2026-03-18)
+## [1.4.15](https://github.com/deafrex/node-template/compare/v1.4.14...v1.4.15) (2026-03-20)
 
 
 ### Bug Fixes
 
-* eslint10 ([#45](https://github.com/Duncan3142Org/base-template/issues/45)) ([53e75b0]())
+* container secrets ([#47](https://github.com/deafrex/node-template/issues/47)) ([b0026d3]())
 
-## [1.4.13](https://github.com/Duncan3142Org/base-template/compare/v1.4.12...v1.4.13) (2026-03-17)
-
-
-### Bug Fixes
-
-* major version branches ([#42](https://github.com/Duncan3142Org/base-template/issues/42)) ([f9b5f69]())
-
-## [1.4.12](https://github.com/Duncan3142Org/base-template/compare/v1.4.11...v1.4.12) (2026-03-17)
+## [1.4.14](https://github.com/deafrex/node-template/compare/v1.4.13...v1.4.14) (2026-03-18)
 
 
 ### Bug Fixes
 
-* claude skills ([#37](https://github.com/Duncan3142Org/base-template/issues/37)) ([8574235]())
+* eslint10 ([#45](https://github.com/deafrex/node-template/issues/45)) ([53e75b0]())
 
-## [1.4.11](https://github.com/Duncan3142Org/base-template/compare/v1.4.10...v1.4.11) (2026-03-01)
-
-
-### Bug Fixes
-
-* config ([#32](https://github.com/Duncan3142Org/base-template/issues/32)) ([55ed427]())
-
-## [1.4.10](https://github.com/Duncan3142Org/base-template/compare/v1.4.9...v1.4.10) (2026-02-21)
+## [1.4.13](https://github.com/deafrex/node-template/compare/v1.4.12...v1.4.13) (2026-03-17)
 
 
 ### Bug Fixes
 
-* devcontainer prep ([#26](https://github.com/Duncan3142Org/base-template/issues/26)) ([2e436e2]())
+* major version branches ([#42](https://github.com/deafrex/node-template/issues/42)) ([f9b5f69]())
 
-## [1.4.9](https://github.com/Duncan3142Org/base-template/compare/v1.4.8...v1.4.9) (2026-02-21)
-
-
-### Bug Fixes
-
-* agent instructions ([#20](https://github.com/Duncan3142Org/base-template/issues/20)) ([c2352e1]())
-
-## [1.4.8](https://github.com/Duncan3142Org/base-template/compare/v1.4.7...v1.4.8) (2026-02-08)
+## [1.4.12](https://github.com/deafrex/node-template/compare/v1.4.11...v1.4.12) (2026-03-17)
 
 
 ### Bug Fixes
 
-* clone action ([#18](https://github.com/Duncan3142Org/base-template/issues/18)) ([92299bf]())
+* claude skills ([#37](https://github.com/deafrex/node-template/issues/37)) ([8574235]())
 
-## [1.4.7](https://github.com/Duncan3142Org/base-template/compare/v1.4.6...v1.4.7) (2026-02-01)
+## [1.4.11](https://github.com/deafrex/node-template/compare/v1.4.10...v1.4.11) (2026-03-01)
 
 
 ### Bug Fixes
 
-* clean clone ([#17](https://github.com/Duncan3142Org/base-template/issues/17)) ([a40666c]())
+* config ([#32](https://github.com/deafrex/node-template/issues/32)) ([55ed427]())
+
+## [1.4.10](https://github.com/deafrex/node-template/compare/v1.4.9...v1.4.10) (2026-02-21)
+
+
+### Bug Fixes
+
+* devcontainer prep ([#26](https://github.com/deafrex/node-template/issues/26)) ([2e436e2]())
+
+## [1.4.9](https://github.com/deafrex/node-template/compare/v1.4.8...v1.4.9) (2026-02-21)
+
+
+### Bug Fixes
+
+* agent instructions ([#20](https://github.com/deafrex/node-template/issues/20)) ([c2352e1]())
+
+## [1.4.8](https://github.com/deafrex/node-template/compare/v1.4.7...v1.4.8) (2026-02-08)
+
+
+### Bug Fixes
+
+* clone action ([#18](https://github.com/deafrex/node-template/issues/18)) ([92299bf]())
+
+## [1.4.7](https://github.com/deafrex/node-template/compare/v1.4.6...v1.4.7) (2026-02-01)
+
+
+### Bug Fixes
+
+* clean clone ([#17](https://github.com/deafrex/node-template/issues/17)) ([a40666c]())
 
 *Changes:*
 - check for unstaged files before proceeding with clone
 
-## [1.4.6](https://github.com/Duncan3142Org/base-template/compare/v1.4.5...v1.4.6) (2026-02-01)
+## [1.4.6](https://github.com/deafrex/node-template/compare/v1.4.5...v1.4.6) (2026-02-01)
 
 
 ### Bug Fixes
 
-* root mise config ([#16](https://github.com/Duncan3142Org/base-template/issues/16)) ([2637fa7]())
+* root mise config ([#16](https://github.com/deafrex/node-template/issues/16)) ([2637fa7]())
 
-## [1.4.5](https://github.com/Duncan3142Org/base-template/compare/v1.4.4...v1.4.5) (2026-02-01)
+## [1.4.5](https://github.com/deafrex/node-template/compare/v1.4.4...v1.4.5) (2026-02-01)
 
 
 ### Bug Fixes
 
-* danger markdown parser ([#15](https://github.com/Duncan3142Org/base-template/issues/15)) ([12c4fc3]())
+* danger markdown parser ([#15](https://github.com/deafrex/node-template/issues/15)) ([12c4fc3]())
 
 *Changes:*
 - marked lexer
 
-## [1.4.4](https://github.com/Duncan3142Org/base-template/compare/v1.4.3...v1.4.4) (2026-02-01)
+## [1.4.4](https://github.com/deafrex/node-template/compare/v1.4.3...v1.4.4) (2026-02-01)
 
 
 ### Bug Fixes
 
-* release action ([#14](https://github.com/Duncan3142Org/base-template/issues/14)) ([c8a5cac]())
+* release action ([#14](https://github.com/deafrex/node-template/issues/14)) ([c8a5cac]())
 
-## [1.4.3](https://github.com/Duncan3142Org/base-template/compare/v1.4.2...v1.4.3) (2026-02-01)
+## [1.4.3](https://github.com/deafrex/node-template/compare/v1.4.2...v1.4.3) (2026-02-01)
 
 
 ### Bug Fixes
 
-* danger action ([#13](https://github.com/Duncan3142Org/base-template/issues/13)) ([ed600f3]())
+* danger action ([#13](https://github.com/deafrex/node-template/issues/13)) ([ed600f3]())
 
 *Changes:*
 - Danger action
 - Devcontainer extensions
 
-## [1.4.2](https://github.com/Duncan3142Org/base-template/compare/v1.4.1...v1.4.2) (2026-01-31)
+## [1.4.2](https://github.com/deafrex/node-template/compare/v1.4.1...v1.4.2) (2026-01-31)
 
 
 ### Bug Fixes
 
-* release config ([#12](https://github.com/Duncan3142Org/base-template/issues/12)) ([c79bab6]())
+* release config ([#12](https://github.com/deafrex/node-template/issues/12)) ([c79bab6]())
 
-## [1.4.1](https://github.com/Duncan3142Org/base-template/compare/v1.4.0...v1.4.1) (2026-01-31)
+## [1.4.1](https://github.com/deafrex/node-template/compare/v1.4.0...v1.4.1) (2026-01-31)
 
 
 ### Bug Fixes
 
-* release notes ([#11](https://github.com/Duncan3142Org/base-template/issues/11)) ([b2d5ac9]())
+* release notes ([#11](https://github.com/deafrex/node-template/issues/11)) ([b2d5ac9]())
 
 ## 1.4.0 (2026-01-31)
 
@@ -142,17 +142,17 @@ feat: terraform environment and secrets management
 
 * template setup (#4) ([](6d15dab))
 
-# [1.1.0](https://github.com/Duncan3142Org/base-template/compare/v1.0.0...v1.1.0) (2026-01-23)
+# [1.1.0](https://github.com/deafrex/node-template/compare/v1.0.0...v1.1.0) (2026-01-23)
 
 
 ### Features
 
-* devcontainer ([#3](https://github.com/Duncan3142Org/base-template/issues/3)) ([99a4159](https://github.com/Duncan3142Org/base-template/commit/99a4159d6f1cf94a8c2e969afe83ca11022a7350))
+* devcontainer ([#3](https://github.com/deafrex/node-template/issues/3)) ([99a4159](https://github.com/deafrex/node-template/commit/99a4159d6f1cf94a8c2e969afe83ca11022a7350))
 
 # 1.0.0 (2026-01-23)
 
 
 ### Features
 
-* init ([31431f0](https://github.com/Duncan3142Org/base-template/commit/31431f01fd717491e5b7030192069e16b4a086b0))
-* publish config ([#1](https://github.com/Duncan3142Org/base-template/issues/1)) ([28510b4](https://github.com/Duncan3142Org/base-template/commit/28510b40b024d875327ec6628aaa6e25c6f80123))
+* init ([31431f0](https://github.com/deafrex/node-template/commit/31431f01fd717491e5b7030192069e16b4a086b0))
+* publish config ([#1](https://github.com/deafrex/node-template/issues/1)) ([28510b4](https://github.com/deafrex/node-template/commit/28510b40b024d875327ec6628aaa6e25c6f80123))

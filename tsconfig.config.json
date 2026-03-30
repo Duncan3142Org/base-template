@@ -1,12 +1,5 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
-	"extends": ["./tsconfig.base.json"],
-	"compilerOptions": {
-		"allowJs": true,
-		"checkJs": true,
-		"isolatedDeclarations": false,
-		"outDir": "${configDir}/.tsc",
-		"tsBuildInfoFile": "${configDir}/.tsc/tsconfig.config.tsbuildinfo"
-	},
+	"extends": ["./tsconfig/tsconfig.config.json"],
 	"include": ["${configDir}/.*", "${configDir}/*", "${configDir}/eslint/**/*"]
 }
