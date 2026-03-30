@@ -29,10 +29,10 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: jdx/mise-action@v3
+      - name: Install PR Lint
+        uses: ./.github/actions/danger
       - name: CI
         run: |
           mise run ci
-      - name: Danger
-        uses: ./.github/actions/danger
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          pr-lint \
+            --github-token "${{ secrets.GITHUB_TOKEN }}"

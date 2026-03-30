@@ -1,20 +1,11 @@
-name: "Danger CI"
-description: "Runs Danger JS to lint PR metadata"
-inputs:
-  github-token:
-    description: "GitHub token for Danger to read/comment on PRs"
-    required: true
+name: "Install PR Lint CLI"
+description: "Installs the PR Lint CLI"
 runs:
   using: "composite"
   steps:
-    - name: Install Dependencies
+    - name: Install Package
       shell: bash
       working-directory: ${{ github.action_path }}
-      run: npm ci --omit=dev
-
-    - name: Run Danger
-      shell: bash
-      env:
-        DANGER_GITHUB_API_TOKEN: ${{ inputs.github-token }}
       run: |
-        '${{ github.action_path }}/node_modules/.bin/danger' ci --failOnErrors --failOnWarnings --dangerfile '${{ github.action_path }}/dangerfile.js'
+        npm ci
+        npm i -g

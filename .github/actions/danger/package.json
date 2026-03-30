@@ -1,13 +1,25 @@
 {
-	"name": "danger-ci",
+	"name": "@deafrex/pr-lint",
 	"private": true,
-	"description": "Danger CI action",
+	"description": "Lint GitHub PR title and body",
 	"type": "module",
+	"bin": {
+		"pr-lint": "./bin/cli.js"
+	},
+	"imports": {
+		"#lib": "./lib/index.js"
+	},
+	"exports": {
+		".": "./lib/index.js"
+	},
+	"files": [
+		"lib/",
+		"bin/"
+	],
 	"dependencies": {
-		"@commitlint/config-conventional": "^20.5.0",
 		"@commitlint/lint": "^20.4.0",
 		"@commitlint/load": "^20.4.0",
-		"danger": "^13.0.5",
+		"@octokit/rest": "^22.0.0",
 		"marked": "^17.0.1"
 	}
 }
