@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs"
 import { Octokit } from "@octokit/rest"
 import { validateTitle } from "./validate-title.js"
 import { validateBody } from "./validate-body.js"
+import { upsertComment, deleteComment } from "./comment.js"
 
 /** @import { TitleResult } from "./validate-title.js" */
 /** @import { BodyResult } from "./validate-body.js" */
@@ -97,15 +98,13 @@ async function prLint({ eventPath, githubToken }) {
 	const valid = titleResult.valid && bodyResult.valid
 	const errors = [...titleResult.errors, ...bodyResult.errors]
 
+	const octokit = new Octokit({ auth: githubToken })
+
 	if (!valid) {
 		const comment = formatComment(titleResult, bodyResult, title)
-		const octokit = new Octokit({ auth: githubToken })
-		await octokit.issues.createComment({
-			owner,
-			repo,
-			issue_number: prNumber,
-			body: comment,
-		})
+		await upsertComment(octokit, { owner, repo, prNumber, body: comment })
+	} else {
+		await deleteComment(octokit, { owner, repo, prNumber })
 	}
 
 	return { valid, errors }
