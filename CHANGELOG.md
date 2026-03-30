@@ -1,3 +1,15 @@
+## [1.4.17](https://github.com/deafrex/node-template/compare/v1.4.16...v1.4.17) (2026-03-30)
+
+
+### Bug Fixes
+
+* npm release ([#55](https://github.com/deafrex/node-template/issues/55)) ([d23a11e]())
+
+*Changes:*
+- Install Release CLI dependencies
+- Replace DangerJS with Octokit
+* sharable tsconfig ([#51](https://github.com/deafrex/node-template/issues/51)) ([a0fcf66]())
+
 ## [1.4.16](https://github.com/deafrex/node-template/compare/v1.4.15...v1.4.16) (2026-03-22)
 
 

@@ -1,7 +1,7 @@
 {
 	"name": "@deafrex/node-template",
 	"description": "Node.js repo template",
-	"version": "1.4.16",
+	"version": "1.4.17",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/deafrex/node-template.git"
