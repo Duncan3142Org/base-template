@@ -1,5 +1,5 @@
-name: "Install NPM Release CLI"
-description: "Installs the NPM Release CLI"
+name: "Install PR Lint CLI"
+description: "Installs the PR Lint CLI"
 runs:
   using: "composite"
   steps:

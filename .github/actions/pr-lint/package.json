@@ -1,0 +1,25 @@
+{
+	"name": "@deafrex/pr-lint",
+	"private": true,
+	"description": "Lint GitHub PR title and body",
+	"type": "module",
+	"bin": {
+		"pr-lint": "./bin/cli.js"
+	},
+	"imports": {
+		"#lib": "./lib/index.js"
+	},
+	"exports": {
+		".": "./lib/index.js"
+	},
+	"files": [
+		"lib/",
+		"bin/"
+	],
+	"dependencies": {
+		"@commitlint/lint": "^20.4.0",
+		"@commitlint/load": "^20.4.0",
+		"@octokit/rest": "^22.0.0",
+		"marked": "^17.0.1"
+	}
+}
