@@ -1,3 +1,10 @@
+## [1.4.19](https://github.com/deafrex/node-template/compare/v1.4.18...v1.4.19) (2026-04-05)
+
+
+### Bug Fixes
+
+* normal var ([#60](https://github.com/deafrex/node-template/issues/60)) ([294e2e3]())
+
 ## [1.4.18](https://github.com/deafrex/node-template/compare/v1.4.17...v1.4.18) (2026-04-05)
 
 
