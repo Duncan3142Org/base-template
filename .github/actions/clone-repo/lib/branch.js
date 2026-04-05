@@ -1,6 +1,6 @@
 import console from "node:console"
 import { execa } from "execa"
-import { COLOUR_CODES } from "./colour"
+import { COLOUR_CODES } from "./colour.js"
 
 /**
  * @typedef {object} BranchOptions

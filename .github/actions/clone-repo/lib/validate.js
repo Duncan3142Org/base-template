@@ -1,5 +1,5 @@
 import { execa } from "execa"
-import { COLOUR_CODES } from "./colour"
+import { COLOUR_CODES } from "./colour.js"
 
 /**
  * @typedef {object} ValidateOptions

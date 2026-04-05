@@ -1,6 +1,6 @@
 /*global fetch -- fetch*/
 import console from "node:console"
-import { COLOUR_CODES } from "./colour"
+import { COLOUR_CODES } from "./colour.js"
 
 /**
  * @typedef {object} TerraformOptions
@@ -80,7 +80,7 @@ async function terraform({ tfOrgToken, tfProjectId, tfOrgName, cloneRepoName }) 
 					type: "vars",
 					attributes: {
 						key: "github_repository_name",
-						value: cloneRepoName,
+						value: `"${cloneRepoName}"`,
 						category: "terraform",
 						hcl: true,
 						sensitive: false,

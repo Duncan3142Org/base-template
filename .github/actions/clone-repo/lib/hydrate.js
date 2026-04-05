@@ -4,7 +4,7 @@ import { glob, readFile, rm } from "node:fs/promises"
 import { resolve } from "node:path"
 import { execa } from "execa"
 import { parse } from "yaml"
-import { COLOUR_CODES } from "./colour"
+import { COLOUR_CODES } from "./colour.js"
 
 /**
  * @typedef {object} HydrateOptions
@@ -200,7 +200,7 @@ async function hydrate({ workspaceDir, repoOwner, sourceRepoName, cloneRepoName 
 	}, Promise.resolve())
 
 	// Post-hydration
-	const hasFormatTask = await $({ cwd: workspaceDir })`mise tasks info format`
+	const hasFormatTask = await $({ cwd: workspaceDir })`mise tasks info format:write`
 		.then(() => true)
 		.catch(() => false)
 	if (hasFormatTask) {
