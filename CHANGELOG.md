@@ -1,3 +1,10 @@
+## [1.4.20](https://github.com/deafrex/node-template/compare/v1.4.19...v1.4.20) (2026-04-05)
+
+
+### Bug Fixes
+
+* bin paths ([#61](https://github.com/deafrex/node-template/issues/61)) ([0c325e2]())
+
 ## [1.4.19](https://github.com/deafrex/node-template/compare/v1.4.18...v1.4.19) (2026-04-05)
 
 
