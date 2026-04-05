@@ -80,9 +80,9 @@ async function terraform({ tfOrgToken, tfProjectId, tfOrgName, cloneRepoName }) 
 					type: "vars",
 					attributes: {
 						key: "github_repository_name",
-						value: `"${cloneRepoName}"`,
+						value: cloneRepoName,
 						category: "terraform",
-						hcl: true,
+						hcl: false,
 						sensitive: false,
 					},
 				},
