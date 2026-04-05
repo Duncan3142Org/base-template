@@ -15,7 +15,7 @@ npm = "11"
 # 	env "FORMAT_MODE"
 # }
 # '''
-# run.tasks = [ "format:prettier --mode {{ usage.mode }}", "format:terraform --mode {{ usage.mode }}" ]
+# run.tasks = [ "format:prettier --mode {{usage.mode}}", "format:terraform --mode {{usage.mode}}" ]
 
 [tasks."format:check"]
 description = "Check source formatting"
