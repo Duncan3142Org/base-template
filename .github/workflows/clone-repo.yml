@@ -17,7 +17,7 @@ jobs:
     environment: GitHubAdmin
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/create-github-app-token@v2
+      - uses: actions/create-github-app-token@v3
         id: token
         with:
           app-id: ${{ vars.ADMIN_APP_ID }}

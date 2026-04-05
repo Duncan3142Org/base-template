@@ -9,8 +9,6 @@ runs:
       run: |
         npm ci
         npm i -g
-        clone_tools="$RUNNER_TEMP/clone-tools"
-        mkdir -p "$clone_tools"
         mise trust -q
-        mise install --shared "$clone_tools"
-        echo "$clone_tools" >> "$GITHUB_PATH"
+        mise install
+        mise bin-paths >> "$GITHUB_PATH"
