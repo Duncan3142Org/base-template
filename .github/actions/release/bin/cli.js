@@ -81,10 +81,21 @@ const requireArg = (name) => {
 	}
 }
 
-requireArg("github-pkg-token")
-requireArg("github-token")
-requireArg("git-author-name")
-requireArg("git-author-email")
+const args = [
+	"asset",
+	"major-branch",
+	"minor-branch",
+	"branch-prefix",
+	"branch",
+	"dry-run",
+	"ci",
+	"github-pkg-token",
+	"github-token",
+	"git-author-name",
+	"git-author-email",
+]
+
+args.forEach(requireArg)
 
 const [repoRoot = DEFAULT_OPTIONS.repoRoot] = positionals
 

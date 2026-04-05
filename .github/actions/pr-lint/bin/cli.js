@@ -30,8 +30,8 @@ const requireArg = (name) => {
 	}
 }
 
-requireArg("github-token")
-requireArg("event-path")
+const args = ["github-token", "event-path"]
+args.forEach(requireArg)
 
 await prLint({
 	eventPath: values["event-path"],

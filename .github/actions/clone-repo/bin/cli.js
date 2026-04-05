@@ -115,16 +115,14 @@ const steps = {
 
 const pipeline = ["validate", "terraform", "branch", "hydrate", "clone"]
 
-async function run() {
-	args.forEach(requireArg)
+args.forEach(requireArg)
 
-	await pipeline.reduce(async (prev, step) => {
+await pipeline
+	.reduce(async (prev, step) => {
 		await prev
 		await steps[step]()
 	}, Promise.resolve())
-}
-
-await run().catch((error) => {
-	console.error(error.message)
-	process.exit(1)
-})
+	.catch((error) => {
+		console.error(error.message)
+		process.exit(1)
+	})
