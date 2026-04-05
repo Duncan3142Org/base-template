@@ -37,6 +37,7 @@ services:
     # Mount project folder and Docker socket
     volumes:
       - ..:/workspace
+      - ./devcon/.npmrc:/root/.npmrc
       - ./devcon/profile.d/mise-tokens.sh:/etc/profile.d/mise-tokens.sh
       - ./devcon/apt/sources.list.d/docker.sources:/etc/apt/sources.list.d/docker.sources
       - ./runtime:/run/dbus-proxy

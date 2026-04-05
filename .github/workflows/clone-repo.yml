@@ -30,19 +30,25 @@ jobs:
         uses: actions/checkout@v6
         with:
           token: ${{ steps.token.outputs.token }}
-      - uses: jdx/mise-action@v3
+      - uses: jdx/mise-action@v4
       - uses: ./.github/actions/clone-repo
-        with:
-          repo_name: ${{ github.event.inputs.repo_name }}
-          source_repo_name: ${{ github.event.repository.name }}
-          template_branch: ${{ vars.TEMPLATE_BRANCH }}
-          github_token: ${{ steps.token.outputs.token }}
-          tf_org_token: ${{ secrets.ADMIN_TF_ORG_API_TOKEN }}
-          tf_project_id: ${{ vars.ADMIN_TF_PROJECT_ID }}
-          tf_org_name: ${{ vars.ADMIN_TF_ORG_NAME }}
-          workspace_dir: ${{ github.workspace }}
       - uses: ./.github/actions/sync-settings
-        with:
-          repo_name: ${{ github.event.inputs.repo_name }}
-          tf_token: ${{ secrets.ADMIN_TF_API_TOKEN }}
-          github_token: ${{ steps.token.outputs.token }}
+      - name: Clone Repo
+        run: |
+          clone-repo \
+            --repo-name "${{ github.event.inputs.repo_name }}" \
+            --repo-owner "${{ github.repository_owner }}" \
+            --source-repo-name "${{ github.event.repository.name }}" \
+            --template-branch "${{ vars.TEMPLATE_BRANCH }}" \
+            --github-token "${{ steps.token.outputs.token }}" \
+            --tf-org-token "${{ secrets.ADMIN_TF_ORG_API_TOKEN }}" \
+            --tf-project-id "${{ vars.ADMIN_TF_PROJECT_ID }}" \
+            --tf-org-name "${{ vars.ADMIN_TF_ORG_NAME }}" \
+            --workspace-dir "${{ github.workspace }}"
+      - name: Sync Settings
+        run: |
+          sync-settings \
+            --repo-name "${{ github.event.inputs.repo_name }}" \
+            --repo-owner "${{ github.repository_owner }}" \
+            --tf-token "${{ secrets.ADMIN_TF_API_TOKEN }}" \
+            --github-token "${{ steps.token.outputs.token }}"

@@ -1,10 +1,10 @@
 {
-	"name": "@deafrex/clone-repo",
+	"name": "@deafrex/sync-settings",
 	"private": true,
+	"description": "Sync GitHub repository settings",
 	"type": "module",
-	"description": "Clone a template repository",
 	"bin": {
-		"clone-repo": "./bin/cli.js"
+		"sync-settings": "./bin/cli.js"
 	},
 	"imports": {
 		"#lib": "./lib/index.js"
@@ -17,7 +17,6 @@
 		"bin/"
 	],
 	"dependencies": {
-		"execa": "^9.6.1",
-		"yaml": "^2.7.1"
+		"execa": "^9.6.1"
 	}
 }

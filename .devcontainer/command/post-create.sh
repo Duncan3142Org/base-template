@@ -10,9 +10,7 @@ apt-get install --yes --no-install-recommends \
 	libev4 libpcre3 \
 	docker-ce-cli docker-compose-plugin docker-buildx-plugin
 
-if command -v mise &>/dev/null; then
-	mise self-update -y -q
-else
+if ! command -v mise &>/dev/null; then
 	curl https://mise.run | sh
 fi
 mise trust -q
