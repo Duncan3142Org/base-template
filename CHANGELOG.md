@@ -1,3 +1,10 @@
+## [1.4.18](https://github.com/deafrex/node-template/compare/v1.4.17...v1.4.18) (2026-04-05)
+
+
+### Bug Fixes
+
+* clone cli ([#59](https://github.com/deafrex/node-template/issues/59)) ([c1b0758]())
+
 ## [1.4.17](https://github.com/deafrex/node-template/compare/v1.4.16...v1.4.17) (2026-03-30)
 
 
