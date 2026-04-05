@@ -11,6 +11,8 @@ if [ -z "${MISE_GITHUB_TOKEN:-}" ]; then
 	exit 1
 fi
 
+mise self-update -y -q
+
 mise_update() {
 	mise install
 	mise upgrade
