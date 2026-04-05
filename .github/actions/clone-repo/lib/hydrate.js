@@ -12,7 +12,6 @@ import { COLOUR_CODES } from "./colour"
  * @property {string} repoOwner - Target repository owner.
  * @property {string} sourceRepoName - Source (template) repository name.
  * @property {string} cloneRepoName - Cloned repository name.
- * @property {boolean} [noCommit] - Skip git add and commit after hydration.
  */
 
 const failManifest = (message) => {
@@ -45,13 +44,7 @@ const validateReplacement = (replacement, path) => {
  * Applies the declarative hydration manifest to transform template files.
  * @param {HydrateOptions} options - The options for the hydrate step.
  */
-async function hydrate({
-	workspaceDir,
-	repoOwner,
-	sourceRepoName,
-	cloneRepoName,
-	noCommit = false,
-}) {
+async function hydrate({ workspaceDir, repoOwner, sourceRepoName, cloneRepoName }) {
 	const templateVars = {
 		REPO_OWNER: repoOwner,
 		SOURCE_NAME: sourceRepoName,
@@ -215,21 +208,19 @@ async function hydrate({
 		await $({ stdout: "inherit", cwd: workspaceDir })`mise run format:write`
 	}
 
-	if (!noCommit) {
-		await $({ stdout: "inherit", cwd: workspaceDir })`git add .`
-		const hasStagedChanges = await $({ cwd: workspaceDir })`git diff --cached --quiet`
-			.then(() => false)
-			.catch(() => true)
-		if (hasStagedChanges) {
-			await $({
-				stdout: "inherit",
-				cwd: workspaceDir,
-			})`git commit -m ${"chore: bootstrap repository [no ci]"}`
-		} else {
-			console.log(
-				`${COLOUR_CODES.BLUE}ℹ️  No changes to commit after hydration.${COLOUR_CODES.NC}`
-			)
-		}
+	await $({ stdout: "inherit", cwd: workspaceDir })`git add .`
+	const hasStagedChanges = await $({ cwd: workspaceDir })`git diff --cached --quiet`
+		.then(() => false)
+		.catch(() => true)
+	if (hasStagedChanges) {
+		await $({
+			stdout: "inherit",
+			cwd: workspaceDir,
+		})`git commit -m ${"chore: bootstrap repository [no ci]"}`
+	} else {
+		console.log(
+			`${COLOUR_CODES.BLUE}ℹ️  No changes to commit after hydration.${COLOUR_CODES.NC}`
+		)
 	}
 
 	console.log(`${COLOUR_CODES.GREEN}✅ Hydration complete.${COLOUR_CODES.NC}`)

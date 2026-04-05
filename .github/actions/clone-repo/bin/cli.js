@@ -48,15 +48,7 @@ const { values } = parseArgs({
 			type: "string",
 			short: "w",
 			description: "Workspace root directory",
-		},
-		step: {
-			type: "string",
-			description: "Run a single step: validate, branch, terraform, hydrate, clone",
-		},
-		"no-commit": {
-			type: "boolean",
-			default: false,
-			description: "Skip git commit after hydration (hydrate step only)",
+			default: process.cwd(),
 		},
 	},
 	strict: true,
@@ -69,27 +61,17 @@ const requireArg = (name) => {
 	}
 }
 
-/**
- * Per-step required flags. Only the flags each step actually needs.
- */
-const stepRequirements = {
-	validate: ["repo-name", "repo-owner", "source-repo-name", "tf-org-name"],
-	branch: ["repo-name", "repo-owner", "github-token", "workspace-dir"],
-	terraform: ["repo-name", "tf-org-token", "tf-project-id", "tf-org-name"],
-	hydrate: ["repo-name", "repo-owner", "source-repo-name", "workspace-dir"],
-	clone: [
-		"repo-name",
-		"repo-owner",
-		"source-repo-name",
-		"template-branch",
-		"github-token",
-		"workspace-dir",
-	],
-}
-
-const requirements = new Set(Object.values(stepRequirements).flat())
-
-const VALID_STEPS = Object.keys(stepRequirements)
+const args = [
+	"repo-name",
+	"repo-owner",
+	"source-repo-name",
+	"template-branch",
+	"github-token",
+	"tf-org-token",
+	"tf-project-id",
+	"tf-org-name",
+	"workspace-dir",
+]
 
 const steps = {
 	validate: () =>
@@ -119,7 +101,6 @@ const steps = {
 			repoOwner: values["repo-owner"],
 			sourceRepoName: values["source-repo-name"],
 			cloneRepoName: values["repo-name"],
-			noCommit: values["no-commit"],
 		}),
 	clone: () =>
 		clone({
@@ -135,29 +116,12 @@ const steps = {
 const pipeline = ["validate", "terraform", "branch", "hydrate", "clone"]
 
 async function run() {
-	const selectedStep = values.step
+	args.forEach(requireArg)
 
-	if (selectedStep) {
-		if (!VALID_STEPS.includes(selectedStep)) {
-			console.error(
-				`Error: Unknown step "${selectedStep}". Valid steps: ${VALID_STEPS.join(", ")}`
-			)
-			process.exit(1)
-		}
-
-		const args = stepRequirements[selectedStep]
-		args.forEach(requireArg)
-
-		await steps[selectedStep]()
-	} else {
-		// Full pipeline — all flags required
-		requirements.forEach(requireArg)
-
-		await pipeline.reduce(async (prev, step) => {
-			await prev
-			await steps[step]()
-		}, Promise.resolve())
-	}
+	await pipeline.reduce(async (prev, step) => {
+		await prev
+		await steps[step]()
+	}, Promise.resolve())
 }
 
 await run().catch((error) => {
