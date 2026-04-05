@@ -35,7 +35,7 @@ async function validate({ repoOwner, cloneRepoName, sourceRepoName, tfOrgName })
 
 	await Promise.allSettled(
 		tools.map((tool) =>
-			$`which ${tool}`.catch(() => {
+			$`${tool} --version`.catch(() => {
 				missing.push(tool)
 			})
 		)
